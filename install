@@ -17,7 +17,7 @@ wget -q "$BASE_URL/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/bas
 wget -q "$BASE_URL/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
 wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
 wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
-wget -q "$BASE_URL/config_settings/penguin.sh" -O "$SCRIPT_DIR/config_settings/penguin.sh"
+wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
 chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
 chmod +x "$SCRIPT_DIR/config_settings/"*.sh
@@ -60,6 +60,6 @@ else
   echo "Skipping Anaconda installation."
 fi
 
-# Apply penguin configuration
-bash "$SCRIPT_DIR/config_settings/penguin.sh"
+# Apply fortune tuxsay configuration
+bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
