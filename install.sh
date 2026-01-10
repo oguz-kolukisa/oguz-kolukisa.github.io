@@ -7,4 +7,5 @@ sudo apt install git
 
 gh auth login
 
+curl https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh | bash
 
