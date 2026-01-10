@@ -2,6 +2,11 @@
 
 set -e
 
+if command -v conda &>/dev/null; then
+  printf "Anaconda already installed.\n"
+  exit 0
+fi
+
 printf "Downloading Anaconda installer..."
 curl -fsSL https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh -o anaconda.sh
 printf "\rDownloading Anaconda installer... Done\n"

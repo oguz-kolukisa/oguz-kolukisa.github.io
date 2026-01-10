@@ -2,6 +2,6 @@
 
 set -e
 
-printf "Installing basic command files..."
+printf "Installing basic command files...\r"
 sudo apt install -y -qq curl vim git 2>&1 >/dev/null
-printf "\rInstalling basic command files... Done\n"
+printf "Installing basic command files... Done\r"
