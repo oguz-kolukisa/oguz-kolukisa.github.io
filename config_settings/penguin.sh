@@ -2,47 +2,45 @@
 
 set -e
 
-# Create the penguin drawing function
-PENGUIN_FUNC='
+# Define separator markers
+SEPARATOR_START="# ========== PENGUIN CONFIG START =========="
+SEPARATOR_END="# ========== PENGUIN CONFIG END =========="
+
+# Create the penguin configuration block
+PENGUIN_CONFIG="
+$SEPARATOR_START
+
 # Penguin drawing function
 print_penguin() {
-<<EOC;
-   $thoughts
-    $thoughts
-        .--.
-       |o_o |
-       |:_/ |
-      //   \\ \\
-     (|     | )
-    /'\\_   _/`\\
-    \\___)=(___/
-
-EOC
+  cat << \"EOF\"
+    .---.
+   /     \\
+   \\.@-@./
+   /\`\\_/\`\\
+  //  _  \\\\
+ | \\     )|_
+/\`\\_\`>  <_/ \\
+\\__/'---'\\__/
+EOF
 }
-'
 
-# Add penguin function to bashrc if not already present
-if ! grep -q "print_penguin()" ~/.bashrc; then
-  echo "" >> ~/.bashrc
-  echo "# Penguin drawing function" >> ~/.bashrc
-  echo "$PENGUIN_FUNC" >> ~/.bashrc
-  echo "Added penguin function to ~/.bashrc"
+# Print penguin on startup
+print_penguin
+
+# Clear command with penguin
+alias clear=\"command clear && print_penguin\"
+
+$SEPARATOR_END
+"
+
+# Remove old penguin configuration if it exists
+if grep -q "$SEPARATOR_START" ~/.bashrc; then
+  echo "Removing old penguin configuration..."
+  sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" ~/.bashrc
 fi
 
-# Add penguin to be printed on terminal startup
-if ! grep -q "# Print penguin on startup" ~/.bashrc; then
-  echo "" >> ~/.bashrc
-  echo "# Print penguin on startup" >> ~/.bashrc
-  echo "print_penguin" >> ~/.bashrc
-  echo "Added penguin startup call to ~/.bashrc"
-fi
-
-# Create clear alias that prints penguin
-if ! grep -q 'alias clear=' ~/.bashrc; then
-  echo "" >> ~/.bashrc
-  echo "# Clear command with penguin" >> ~/.bashrc
-  echo 'alias clear="command clear && print_penguin"' >> ~/.bashrc
-  echo "Added clear alias with penguin to ~/.bashrc"
-fi
+# Add new penguin configuration
+echo "Adding penguin configuration to ~/.bashrc..."
+echo "$PENGUIN_CONFIG" >> ~/.bashrc
 
 echo "Penguin configuration complete!"
