@@ -6,16 +6,18 @@ set -e
 PENGUIN_FUNC='
 # Penguin drawing function
 print_penguin() {
-  cat << "EOF"
-    .---.
-   /     \
-   \.@-@./
-   /`\_/`\
-  //  _  \\
- | \     )|_
-/`\_`>  <_/ \
-\__/'---'\__/
-EOF
+<<EOC;
+   $thoughts
+    $thoughts
+        .--.
+       |o_o |
+       |:_/ |
+      //   \\ \\
+     (|     | )
+    /'\\_   _/`\\
+    \\___)=(___/
+
+EOC
 }
 '
 
