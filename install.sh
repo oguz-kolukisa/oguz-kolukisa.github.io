@@ -1,11 +1,27 @@
 #!/bin/bash
 
-sudo apt install curl
-sudo apt install vim
-sudo apt install gh
-sudo apt install git
+set -e
 
-gh auth login
+sudo apt update
+sudo apt upgrade -y
 
-curl https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh | bash
+sudo apt install -y curl vim gh git
+
+# Login to GitHub CLI only if not already authenticated
+if ! gh auth status &>/dev/null; then
+  echo "GitHub CLI not authenticated. Starting 'gh auth login'..."
+  gh auth login
+else
+  echo "GitHub CLI already authenticated."
+fi
+
+# Download Anaconda installer
+curl -fsSL https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh -o anaconda.sh
+
+# Run installer
+bash anaconda.sh
+
+# Remove installer after installation
+rm -f anaconda.sh
+echo "Removed Anaconda installer."
 
