@@ -12,17 +12,16 @@ $SEPARATOR_START
 
 # Penguin drawing function
 print_penguin() {
-  cat <<EOC;
+  cat << 'EOF'
         .--.
        |o_o |
        |:_/ |
       //   \ \\
      (|     | )
-    /'\_   _/`\\
+    /'\_   _/\`\\
     \\___)=(___/
 
-  EOC 
-
+EOF
 }
 
 # Print penguin on startup
