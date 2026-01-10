@@ -193,6 +193,12 @@
             transform: translateX(5px);
         }
 
+        button:hover {
+            background: var(--accent) !important;
+            color: var(--terminal-bg) !important;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
         footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -254,9 +260,15 @@
                 <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95em;">
                     Automated Linux setup script for development tools
                 </p>
-                <code style="display: block; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 3px; color: var(--accent); margin-bottom: 10px;">
-                    wget -qO- https://oguz-kolukisa.github.io/install | bash
-                </code>
+                <div style="position: relative; display: flex; align-items: center; gap: 10px;">
+                    <code id="install-command" style="flex: 1; display: block; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 3px; color: var(--accent); user-select: all;">wget -qO- https://oguz-kolukisa.github.io/install | bash</code>
+                    <button onclick="copyToClipboard()" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
+                        COPY
+                    </button>
+                </div>
+                <p id="copy-feedback" style="color: var(--text-secondary); font-size: 0.85em; margin-top: 8px; opacity: 0; transition: opacity 0.3s;">
+                    ✓ Copied to clipboard!
+                </p>
                 <details style="margin-top: 10px;">
                     <summary style="cursor: pointer; color: var(--text-muted); font-size: 0.9em; user-select: none;">
                         [ Show included tools ]
@@ -286,6 +298,21 @@
     </div>
 
     <script>
+        // Copy to clipboard function
+        function copyToClipboard() {
+            const command = document.getElementById('install-command').textContent;
+            const feedback = document.getElementById('copy-feedback');
+            
+            navigator.clipboard.writeText(command).then(() => {
+                feedback.style.opacity = '1';
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
