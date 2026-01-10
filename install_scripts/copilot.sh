@@ -2,15 +2,16 @@
 
 set -e
 
-echo "Installing GitHub Copilot CLI..."
+printf "Installing GitHub Copilot CLI..."
 wget -qO- https://gh.io/copilot-install | bash
+printf "\rInstalling GitHub Copilot CLI... Done\n"
 
 # Add local bin to PATH if not already present
 if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
   echo "" >> ~/.bashrc
   echo "# Add local bin to PATH" >> ~/.bashrc
   echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
-  echo "Added ~/.local/bin to PATH in ~/.bashrc"
+  printf "Added ~/.local/bin to PATH in ~/.bashrc\n"
 fi
 
-echo "Please restart your terminal or run 'source ~/.bashrc' to use Copilot CLI."
+printf "Please restart your terminal or run 'source ~/.bashrc' to use Copilot CLI.\n"
