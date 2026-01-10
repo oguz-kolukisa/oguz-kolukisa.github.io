@@ -2,8 +2,13 @@
 
 set -e
 
+if command -v gh-copilot &>/dev/null || command -v ghcs &>/dev/null; then
+  printf "GitHub Copilot CLI already installed.\n"
+  exit 0
+fi
+
 printf "Installing GitHub Copilot CLI..."
-wget -qO- https://gh.io/copilot-install | bash
+wget -qO- https://gh.io/copilot-install | bash 2>&1 >/dev/null
 printf "\rInstalling GitHub Copilot CLI... Done\n"
 
 # Add local bin to PATH if not already present

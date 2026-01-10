@@ -41,8 +41,8 @@ chmod +x "$SCRIPT_DIR/config_settings/"*.sh
 trap "rm -rf $TEMP_DIR" EXIT
 
 printf "Updating system packages..."
-sudo apt update -qq
-sudo apt upgrade -y -qq
+sudo apt update -qq 2>&1 >/dev/null
+sudo apt upgrade -y -qq 2>&1 >/dev/null
 printf "\rUpdating system packages... Done\n"
 
 # Ask to install basic command files
