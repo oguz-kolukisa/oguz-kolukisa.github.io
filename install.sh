@@ -2,8 +2,28 @@
 
 set -e
 
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+# Create temporary directory for scripts
+echo "Downloading installation scripts..."
+TEMP_DIR=$(mktemp -d)
+SCRIPT_DIR="$TEMP_DIR"
+mkdir -p "$SCRIPT_DIR/install_scripts"
+mkdir -p "$SCRIPT_DIR/config_settings"
+
+# Download all required scripts
+curl -fsSL "$BASE_URL/install_scripts/basic.sh" -o "$SCRIPT_DIR/install_scripts/basic.sh"
+curl -fsSL "$BASE_URL/install_scripts/github.sh" -o "$SCRIPT_DIR/install_scripts/github.sh"
+curl -fsSL "$BASE_URL/install_scripts/copilot.sh" -o "$SCRIPT_DIR/install_scripts/copilot.sh"
+curl -fsSL "$BASE_URL/install_scripts/anaconda.sh" -o "$SCRIPT_DIR/install_scripts/anaconda.sh"
+curl -fsSL "$BASE_URL/config_settings/penguin.sh" -o "$SCRIPT_DIR/config_settings/penguin.sh"
+
+chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
+chmod +x "$SCRIPT_DIR/config_settings/"*.sh
+
+# Cleanup function to remove temp directory on exit
+trap "rm -rf $TEMP_DIR" EXIT
 
 sudo apt update -qq
 sudo apt upgrade -y -qq
