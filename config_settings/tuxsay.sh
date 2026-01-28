@@ -23,7 +23,7 @@ $SEPARATOR_START
 
 # Fortune Tuxsay function
 fortune_tuxsay() {
-  fortune | cowsay -f tux
+  fortune -a | cowsay -f tux
 }
 
 # Print fortune tuxsay on startup
