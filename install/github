@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading github.sh script..."
+wget -q "$BASE_URL/install_scripts/github.sh" -O /tmp/github.sh
+chmod +x /tmp/github.sh
+echo "Downloading github.sh script... Done"
+
+echo "Running GitHub CLI installation..."
+bash /tmp/github.sh
+
+# Cleanup
+rm -f /tmp/github.sh
+
+echo ""
+echo "================================"
+echo "GitHub CLI installation complete!"
+echo "================================"

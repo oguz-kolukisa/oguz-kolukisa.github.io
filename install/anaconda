@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading anaconda.sh script..."
+wget -q "$BASE_URL/install_scripts/anaconda.sh" -O /tmp/anaconda.sh
+chmod +x /tmp/anaconda.sh
+echo "Downloading anaconda.sh script... Done"
+
+echo "Running Anaconda installation..."
+bash /tmp/anaconda.sh
+
+# Cleanup
+rm -f /tmp/anaconda.sh
+
+echo ""
+echo "================================"
+echo "Anaconda installation complete!"
+echo "================================"

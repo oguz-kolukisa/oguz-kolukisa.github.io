@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cat << 'EOF'
+Available Installation Endpoints:
+==================================
+
+Full Installation:
+  curl -sSL https://oguz-kolukisa.github.io/install | bash
+  
+Individual Components:
+  curl -sSL https://oguz-kolukisa.github.io/install/basic | bash     # Basic tools (curl, vim, git)
+  curl -sSL https://oguz-kolukisa.github.io/install/github | bash    # GitHub CLI
+  curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash   # GitHub Copilot CLI
+  curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash  # Anaconda Python
+  curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash     # Tuxsay terminal config
+
+Help:
+  curl -sSL https://oguz-kolukisa.github.io/help | bash              # Show this help
+EOF

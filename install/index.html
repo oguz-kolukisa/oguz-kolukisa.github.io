@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+# Create temporary directory for scripts
+echo "Downloading installation scripts..."
+TEMP_DIR=$(mktemp -d)
+SCRIPT_DIR="$TEMP_DIR"
+mkdir -p "$SCRIPT_DIR/install_scripts"
+mkdir -p "$SCRIPT_DIR/config_settings"
+
+# Download all required scripts
+wget -q "$BASE_URL/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
+wget -q "$BASE_URL/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
+wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
+wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
+wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
+echo "Downloading installation scripts... Done"
+
+chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
+chmod +x "$SCRIPT_DIR/config_settings/"*.sh
+
+# Cleanup function to remove temp directory on exit
+trap "rm -rf $TEMP_DIR" EXIT
+
+echo "Updating system packages..."
+sudo apt-get update
+sudo apt-get upgrade -y
+echo "Updating system packages... Done"
+
+# Install all components
+echo "Installing basic command files..."
+bash "$SCRIPT_DIR/install_scripts/basic.sh"
+
+echo "Installing GitHub CLI..."
+bash "$SCRIPT_DIR/install_scripts/github.sh"
+
+echo "Installing GitHub Copilot CLI..."
+bash "$SCRIPT_DIR/install_scripts/copilot.sh"
+
+echo "Installing Anaconda..."
+bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
+
+echo "Configuring Tuxsay..."
+bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
+
+echo ""
+echo "================================"
+echo "Installation complete!"
+echo "================================"
+

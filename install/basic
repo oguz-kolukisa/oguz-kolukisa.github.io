@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading basic.sh script..."
+wget -q "$BASE_URL/install_scripts/basic.sh" -O /tmp/basic.sh
+chmod +x /tmp/basic.sh
+echo "Downloading basic.sh script... Done"
+
+echo "Running basic installation..."
+bash /tmp/basic.sh
+
+# Cleanup
+rm -f /tmp/basic.sh
+
+echo ""
+echo "================================"
+echo "Basic tools installation complete!"
+echo "================================"

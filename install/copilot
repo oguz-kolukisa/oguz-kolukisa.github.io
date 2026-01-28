@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+# Check if GitHub CLI is installed
+if ! command -v gh &>/dev/null; then
+  echo "Error: GitHub CLI (gh) is not installed."
+  echo "Please install GitHub CLI first using:"
+  echo "  curl -sSL https://oguz-kolukisa.github.io/install/github | bash"
+  exit 1
+fi
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading copilot.sh script..."
+wget -q "$BASE_URL/install_scripts/copilot.sh" -O /tmp/copilot.sh
+chmod +x /tmp/copilot.sh
+echo "Downloading copilot.sh script... Done"
+
+echo "Running GitHub Copilot CLI installation..."
+bash /tmp/copilot.sh
+
+# Cleanup
+rm -f /tmp/copilot.sh
+
+echo ""
+echo "================================"
+echo "GitHub Copilot CLI installation complete!"
+echo "================================"
