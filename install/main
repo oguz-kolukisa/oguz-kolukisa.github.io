@@ -31,6 +31,7 @@ wget -q "$BASE_URL/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/bas
 wget -q "$BASE_URL/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
 wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
 wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
+wget -q "$BASE_URL/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
 wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
 printf "Downloading installation scripts... Done\r"
 
@@ -91,6 +92,18 @@ if [[ "$install_anaconda" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
 else
   printf "Skipping Anaconda installation.\r"
+fi
+
+# Ask to install VS Code
+if [ "$AUTO_YES" = true ]; then
+  install_code="y"
+else
+  read -p "Do you want to install Visual Studio Code? (y/n): " install_code </dev/tty
+fi
+if [[ "$install_code" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/code.sh"
+else
+  printf "Skipping Visual Studio Code installation.\r"
 fi
 
 # Apply fortune tuxsay configuration

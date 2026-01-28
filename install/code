@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading VS Code installation script..."
+wget -qO- "$BASE_URL/install_scripts/code.sh" | bash
