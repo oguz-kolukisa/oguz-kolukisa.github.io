@@ -3,7 +3,7 @@
 set -e
 
 # Core packages (always installed)
-CORE_PACKAGES="curl vim git"
+CORE_PACKAGES=("curl" "vim" "git")
 
 # Optional packages with descriptions
 declare -A OPTIONAL_PACKAGES
@@ -29,8 +29,8 @@ echo ""
 echo "Optional packages available:"
 echo ""
 
-# Display optional packages
-PACKAGE_NAMES=($(echo "${!OPTIONAL_PACKAGES[@]}" | tr ' ' '\n' | sort))
+# Display optional packages (sorted for consistency)
+mapfile -t PACKAGE_NAMES < <(printf '%s\n' "${!OPTIONAL_PACKAGES[@]}" | sort)
 for i in "${!PACKAGE_NAMES[@]}"; do
   pkg="${PACKAGE_NAMES[$i]}"
   echo "  $((i+1)). ${pkg}: ${OPTIONAL_PACKAGES[$pkg]}"
@@ -41,12 +41,12 @@ echo "=========================================="
 echo ""
 read -p "Do you want to install all optional packages? (y/n): " install_all
 
-PACKAGES_TO_INSTALL="$CORE_PACKAGES"
+PACKAGES_TO_INSTALL=("${CORE_PACKAGES[@]}")
 
 if [[ "$install_all" =~ ^[Yy]$ ]]; then
   # Install all packages (use sorted PACKAGE_NAMES for consistency)
   for pkg in "${PACKAGE_NAMES[@]}"; do
-    PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL $pkg"
+    PACKAGES_TO_INSTALL+=("$pkg")
   done
   echo "Installing all packages..."
 else
@@ -55,17 +55,26 @@ else
   echo "Select packages to install (enter numbers separated by spaces, or 'n' to skip):"
   read -p "Your selection: " selection
   
-  if [[ "$selection" =~ ^[Nn]$ ]]; then
+  if [[ -z "$selection" ]]; then
+    echo "No input provided. Installing core packages only."
+  elif [[ "$selection" =~ ^[Nn]$ ]]; then
     echo "No optional packages selected. Installing core packages only."
   else
     valid_selection=false
+    invalid_entries=()
     for num in $selection; do
       if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le "${#PACKAGE_NAMES[@]}" ]; then
         idx=$((num-1))
-        PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL ${PACKAGE_NAMES[$idx]}"
+        PACKAGES_TO_INSTALL+=("${PACKAGE_NAMES[$idx]}")
         valid_selection=true
+      else
+        invalid_entries+=("$num")
       fi
     done
+    
+    if [ "${#invalid_entries[@]}" -gt 0 ]; then
+      echo "Warning: Ignoring invalid selections: ${invalid_entries[*]}"
+    fi
     
     if [ "$valid_selection" = false ]; then
       echo "No valid selections made. Installing core packages only."
@@ -75,12 +84,11 @@ fi
 
 echo ""
 echo "Updating package lists..."
-sudo apt-get update
+sudo apt-get update || echo "Warning: apt-get update failed, but continuing with installation..."
 
 echo ""
-echo "Installing selected packages: $PACKAGES_TO_INSTALL"
-# shellcheck disable=SC2086
-sudo apt-get install -y $PACKAGES_TO_INSTALL
+echo "Installing selected packages: ${PACKAGES_TO_INSTALL[*]}"
+sudo apt-get install -y "${PACKAGES_TO_INSTALL[@]}"
 
 echo ""
 echo "=========================================="
