@@ -1,0 +1,111 @@
+#!/bin/bash
+
+set -e
+
+# Parse command line arguments
+AUTO_YES=false
+while getopts "y" opt; do
+  case $opt in
+    y)
+      AUTO_YES=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+# Create temporary directory for scripts
+printf "Downloading installation scripts...\r"
+TEMP_DIR=$(mktemp -d)
+SCRIPT_DIR="$TEMP_DIR"
+mkdir -p "$SCRIPT_DIR/install_scripts"
+mkdir -p "$SCRIPT_DIR/config_settings"
+
+# Download all required scripts
+wget -q "$BASE_URL/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
+wget -q "$BASE_URL/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
+wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
+wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
+wget -q "$BASE_URL/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
+wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
+printf "Downloading installation scripts... Done\r"
+
+chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
+chmod +x "$SCRIPT_DIR/config_settings/"*.sh
+
+# Cleanup function to remove temp directory on exit
+trap "rm -rf $TEMP_DIR" EXIT
+
+printf "Updating system packages...\r"
+sudo apt-get update -qq 2>&1 >/dev/null
+sudo apt-get upgrade -y -qq 2>&1 >/dev/null
+printf "\rUpdating system packages... Done\r"
+
+# Ask to install basic command files
+if [ "$AUTO_YES" = true ]; then
+  install_basics="y"
+else
+  read -p "Do you want to install basic command files (curl, vim, git)? (y/n): " install_basics </dev/tty
+fi
+if [[ "$install_basics" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/basic.sh"
+else
+  printf "Skipping basic command files installation.\r"
+fi
+
+# Ask to install GitHub CLI
+if [ "$AUTO_YES" = true ]; then
+  install_gh="y"
+else
+  read -p "Do you want to install GitHub CLI (gh)? (y/n): " install_gh </dev/tty
+fi
+if [[ "$install_gh" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/github.sh"
+  
+  # Ask to install GitHub Copilot CLI
+  if [ "$AUTO_YES" = true ]; then
+    install_copilot="y"
+  else
+    read -p "Do you want to install GitHub Copilot CLI? (y/n): " install_copilot </dev/tty
+  fi
+  if [[ "$install_copilot" =~ ^[Yy]$ ]]; then
+    bash "$SCRIPT_DIR/install_scripts/copilot.sh"
+  else
+    printf "Skipping GitHub Copilot CLI installation.\r"
+  fi
+else
+  printf "Skipping GitHub CLI installation.\r"
+fi
+
+# Ask to install Anaconda
+if [ "$AUTO_YES" = true ]; then
+  install_anaconda="y"
+else
+  read -p "Do you want to install Anaconda? (y/n): " install_anaconda </dev/tty
+fi
+if [[ "$install_anaconda" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
+else
+  printf "Skipping Anaconda installation.\r"
+fi
+
+# Ask to install VS Code
+if [ "$AUTO_YES" = true ]; then
+  install_code="y"
+else
+  read -p "Do you want to install Visual Studio Code? (y/n): " install_code </dev/tty
+fi
+if [[ "$install_code" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/code.sh"
+else
+  printf "Skipping Visual Studio Code installation.\r"
+fi
+
+# Apply fortune tuxsay configuration
+bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
+
