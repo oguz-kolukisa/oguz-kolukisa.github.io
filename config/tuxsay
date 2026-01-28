@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading tuxsay.sh script..."
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
+echo "Downloading tuxsay.sh script... Done"
+
+echo "Running Tuxsay configuration..."
+bash "$TEMP_SCRIPT"
+
+# Cleanup
+rm -f "$TEMP_SCRIPT"
+
+echo ""
+echo "================================"
+echo "Tuxsay configuration complete!"
+echo "================================"
