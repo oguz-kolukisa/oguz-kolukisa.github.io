@@ -6,15 +6,16 @@ set -e
 BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading anaconda.sh script..."
-wget -q "$BASE_URL/install_scripts/anaconda.sh" -O /tmp/anaconda.sh
-chmod +x /tmp/anaconda.sh
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
 echo "Downloading anaconda.sh script... Done"
 
 echo "Running Anaconda installation..."
-bash /tmp/anaconda.sh
+bash "$TEMP_SCRIPT"
 
 # Cleanup
-rm -f /tmp/anaconda.sh
+rm -f "$TEMP_SCRIPT"
 
 echo ""
 echo "================================"

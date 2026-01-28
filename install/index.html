@@ -32,19 +32,14 @@ sudo apt-get upgrade -y
 echo "Updating system packages... Done"
 
 # Install all components
-echo "Installing basic command files..."
 bash "$SCRIPT_DIR/install_scripts/basic.sh"
 
-echo "Installing GitHub CLI..."
 bash "$SCRIPT_DIR/install_scripts/github.sh"
 
-echo "Installing GitHub Copilot CLI..."
 bash "$SCRIPT_DIR/install_scripts/copilot.sh"
 
-echo "Installing Anaconda..."
 bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
 
-echo "Configuring Tuxsay..."
 bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
 echo ""

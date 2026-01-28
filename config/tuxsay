@@ -6,15 +6,16 @@ set -e
 BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading tuxsay.sh script..."
-wget -q "$BASE_URL/config_settings/tuxsay.sh" -O /tmp/tuxsay.sh
-chmod +x /tmp/tuxsay.sh
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
 echo "Downloading tuxsay.sh script... Done"
 
 echo "Running Tuxsay configuration..."
-bash /tmp/tuxsay.sh
+bash "$TEMP_SCRIPT"
 
 # Cleanup
-rm -f /tmp/tuxsay.sh
+rm -f "$TEMP_SCRIPT"
 
 echo ""
 echo "================================"

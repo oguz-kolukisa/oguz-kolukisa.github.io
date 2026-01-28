@@ -437,7 +437,7 @@
                     </div>
                 </details>
                 <div style="margin-top: 15px; text-align: center;">
-                    <button onclick="openModal()" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
+                    <button onclick="openModal()" aria-label="View all installation endpoints" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
                         📋 View All Endpoints
                     </button>
                 </div>
@@ -458,11 +458,11 @@
     </div>
 
     <!-- Modal for all endpoints -->
-    <div id="endpoints-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div id="endpoints-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">[ Installation Endpoints ]</div>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+                <div id="modal-title" class="modal-title">[ Installation Endpoints ]</div>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close modal">✕</button>
             </div>
             <div class="modal-body">
                 <div class="endpoint-section">
@@ -552,8 +552,15 @@
 
         // Modal functions
         function openModal() {
-            document.getElementById('endpoints-modal').classList.add('active');
+            const modal = document.getElementById('endpoints-modal');
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Set focus to close button for accessibility
+            setTimeout(() => {
+                const closeButton = modal.querySelector('.modal-close');
+                if (closeButton) closeButton.focus();
+            }, 100);
         }
 
         function closeModal() {
@@ -562,7 +569,8 @@
         }
 
         function closeModalOnOverlay(event) {
-            if (event.target.id === 'endpoints-modal') {
+            // Only close if clicking directly on the overlay, not its children
+            if (event.target === event.currentTarget) {
                 closeModal();
             }
         }

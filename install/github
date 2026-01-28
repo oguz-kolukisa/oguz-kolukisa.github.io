@@ -6,15 +6,16 @@ set -e
 BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading github.sh script..."
-wget -q "$BASE_URL/install_scripts/github.sh" -O /tmp/github.sh
-chmod +x /tmp/github.sh
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/install_scripts/github.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
 echo "Downloading github.sh script... Done"
 
 echo "Running GitHub CLI installation..."
-bash /tmp/github.sh
+bash "$TEMP_SCRIPT"
 
 # Cleanup
-rm -f /tmp/github.sh
+rm -f "$TEMP_SCRIPT"
 
 echo ""
 echo "================================"

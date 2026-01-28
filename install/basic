@@ -6,15 +6,16 @@ set -e
 BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading basic.sh script..."
-wget -q "$BASE_URL/install_scripts/basic.sh" -O /tmp/basic.sh
-chmod +x /tmp/basic.sh
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/install_scripts/basic.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
 echo "Downloading basic.sh script... Done"
 
 echo "Running basic installation..."
-bash /tmp/basic.sh
+bash "$TEMP_SCRIPT"
 
 # Cleanup
-rm -f /tmp/basic.sh
+rm -f "$TEMP_SCRIPT"
 
 echo ""
 echo "================================"

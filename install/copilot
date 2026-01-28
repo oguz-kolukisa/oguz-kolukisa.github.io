@@ -14,15 +14,16 @@ fi
 BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading copilot.sh script..."
-wget -q "$BASE_URL/install_scripts/copilot.sh" -O /tmp/copilot.sh
-chmod +x /tmp/copilot.sh
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
 echo "Downloading copilot.sh script... Done"
 
 echo "Running GitHub Copilot CLI installation..."
-bash /tmp/copilot.sh
+bash "$TEMP_SCRIPT"
 
 # Cleanup
-rm -f /tmp/copilot.sh
+rm -f "$TEMP_SCRIPT"
 
 echo ""
 echo "================================"
