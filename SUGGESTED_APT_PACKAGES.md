@@ -81,9 +81,9 @@ This document lists other basic apt packages that can be implemented in the inst
     - 7-Zip compression tool
     - Usage: `sudo apt-get install -y p7zip-full`
 
-16. **rar / unrar**
-    - RAR archive tools
-    - Usage: `sudo apt-get install -y rar unrar`
+16. **unrar**
+    - RAR archive extraction tool (Note: 'rar' is proprietary and not in standard repos)
+    - Usage: `sudo apt-get install -y unrar`
 
 17. **tree**
     - Display directory tree structure
@@ -229,9 +229,9 @@ This document lists other basic apt packages that can be implemented in the inst
     - Manual pages (usually pre-installed)
     - Usage: `sudo apt-get install -y man-db`
 
-51. **tldr**
-    - Simplified man pages
-    - Usage: `sudo apt-get install -y tldr`
+51. **tealdeer (tldr alternative)**
+    - Simplified man pages (Note: install via `cargo install tealdeer` or use tldr-py via pip)
+    - Usage: `pip3 install tldr` or install from cargo/snap
 
 ## Implementation Priority Suggestions
 
