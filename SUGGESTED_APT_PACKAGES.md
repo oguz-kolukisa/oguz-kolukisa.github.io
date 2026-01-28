@@ -208,8 +208,8 @@ This document lists other basic apt packages that can be implemented in the inst
     - Usage: `sudo apt-get install -y diffutils`
 
 46. **watch**
-    - Execute program periodically
-    - Usage: `sudo apt-get install -y watch`
+    - Execute program periodically (usually pre-installed as part of procps)
+    - Usage: `sudo apt-get install -y procps`
 
 ### Security Tools
 47. **gpg**
