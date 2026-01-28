@@ -44,8 +44,10 @@ read -p "Do you want to install all optional packages? (y/n): " install_all
 PACKAGES_TO_INSTALL="$CORE_PACKAGES"
 
 if [[ "$install_all" =~ ^[Yy]$ ]]; then
-  # Install all packages
-  PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL ${!OPTIONAL_PACKAGES[@]}"
+  # Install all packages (use sorted PACKAGE_NAMES for consistency)
+  for pkg in "${PACKAGE_NAMES[@]}"; do
+    PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL $pkg"
+  done
   echo "Installing all packages..."
 else
   # Ask for individual selections
@@ -53,13 +55,21 @@ else
   echo "Select packages to install (enter numbers separated by spaces, or 'n' to skip):"
   read -p "Your selection: " selection
   
-  if [[ ! "$selection" =~ ^[Nn]$ ]]; then
+  if [[ "$selection" =~ ^[Nn]$ ]]; then
+    echo "No optional packages selected. Installing core packages only."
+  else
+    valid_selection=false
     for num in $selection; do
       if [[ "$num" =~ ^[0-9]+$ ]] && [ "$num" -ge 1 ] && [ "$num" -le "${#PACKAGE_NAMES[@]}" ]; then
         idx=$((num-1))
         PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL ${PACKAGE_NAMES[$idx]}"
+        valid_selection=true
       fi
     done
+    
+    if [ "$valid_selection" = false ]; then
+      echo "No valid selections made. Installing core packages only."
+    fi
   fi
 fi
 
@@ -69,6 +79,7 @@ sudo apt-get update
 
 echo ""
 echo "Installing selected packages: $PACKAGES_TO_INSTALL"
+# shellcheck disable=SC2086
 sudo apt-get install -y $PACKAGES_TO_INSTALL
 
 echo ""
