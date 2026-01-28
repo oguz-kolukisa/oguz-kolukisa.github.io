@@ -3,20 +3,20 @@
 set -e
 
 if gh copilot --version &>/dev/null; then
-  echo "GitHub Copilot CLI already installed."
+  printf "GitHub Copilot CLI is already installed.\n"
   exit 0
 fi
 
-echo "Installing GitHub Copilot CLI..."
+printf "Installing GitHub Copilot CLI...\n"
 wget -qO- https://gh.io/copilot-install | bash
-echo "Installing GitHub Copilot CLI... Done"
+printf "GitHub Copilot CLI installed successfully!\n"
 
 # Add local bin to PATH if not already present
 if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
   echo "" >> ~/.bashrc
   echo "# Add local bin to PATH" >> ~/.bashrc
   echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
-  echo "Added ~/.local/bin to PATH in ~/.bashrc"
+  printf "Added ~/.local/bin to PATH in ~/.bashrc\n"
 fi
 
-echo "Please restart your terminal or run 'source ~/.bashrc' to use Copilot CLI."
+printf "Please restart your terminal or run 'source ~/.bashrc' to use Copilot CLI.\n"

@@ -7,7 +7,7 @@ BASE_URL="https://oguz-kolukisa.github.io"
 
 echo "Downloading github.sh script..."
 TEMP_SCRIPT=$(mktemp)
-wget -q "$BASE_URL/install_scripts/github.sh" -O "$TEMP_SCRIPT"
+wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$TEMP_SCRIPT"
 chmod +x "$TEMP_SCRIPT"
 echo "Downloading github.sh script... Done"
 

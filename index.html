@@ -424,19 +424,6 @@
                 <p id="copy-feedback" style="color: var(--text-secondary); font-size: 0.85em; margin-top: 8px; opacity: 0; transition: opacity 0.3s;">
                     ✓ Copied to clipboard!
                 </p>
-                <details style="margin-top: 10px;">
-                    <summary style="cursor: pointer; color: var(--text-muted); font-size: 0.9em; user-select: none;">
-                        [ Show included tools ]
-                    </summary>
-                    <div style="margin-top: 10px; padding: 10px; background: rgba(0, 0, 0, 0.2); border-left: 2px solid var(--accent); font-size: 0.85em; color: var(--text-secondary);">
-                        • curl, vim, git<br>
-                        • GitHub CLI (gh)<br>
-                        • GitHub Copilot CLI<br>
-                        • Anaconda (Python distribution)<br>
-                        • VS Code (via APT repository)<br>
-                        • Custom terminal configuration
-                    </div>
-                </details>
                 <div style="margin-top: 15px; text-align: center;">
                     <button onclick="openModal()" aria-label="View all installation endpoints" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
                         📋 View All Endpoints
@@ -469,10 +456,10 @@
                 <div class="endpoint-section">
                     <h3>Full Installation</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Installs all tools and configurations</div>
+                        <div class="endpoint-description">Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install | bash')">COPY</button>
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install.sh | bash</code>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -481,7 +468,10 @@
                     <h3>Individual Components</h3>
                     
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Basic tools: curl, vim, git</div>
+                        <div class="endpoint-description">
+                            Basic development tools 
+                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" style="color: var(--accent); text-decoration: underline; margin-left: 5px; font-size: 0.9em;">[view packages]</a>
+                        </div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/basic | bash</code>
                             <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
@@ -513,6 +503,17 @@
                     </div>
 
                     <div class="endpoint-item">
+                        <div class="endpoint-description">Visual Studio Code</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/code | bash</code>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint-section">
+                    <h3>Configuration</h3>
+                    <div class="endpoint-item">
                         <div class="endpoint-description">Tuxsay terminal configuration (Fortune + Cowsay)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
@@ -530,6 +531,61 @@
                             <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')">COPY</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Basic Tools Details -->
+    <div id="basic-details-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="basic-modal-title" onclick="closeBasicDetailsModalOnOverlay(event)">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <div id="basic-modal-title" class="modal-title">[ Basic Tools Packages ]</div>
+                <button class="modal-close" onclick="closeBasicDetailsModal()" aria-label="Close modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="endpoint-section">
+                    <h3>Development Tools</h3>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>curl</code> - Command line tool for transferring data</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>vim</code> - Text editor</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>git</code> - Version control system</li>
+                    </ul>
+                </div>
+                
+                <div class="endpoint-section">
+                    <h3>Build Tools</h3>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>cmake</code> - Cross-platform build system</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>pkg-config</code> - Package configuration tool</li>
+                    </ul>
+                </div>
+                
+                <div class="endpoint-section">
+                    <h3>Network Tools</h3>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>net-tools</code> - Network utilities (ifconfig, netstat)</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>openssh-client</code> - SSH client</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>nmap</code> - Network scanner</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>telnet</code> - Telnet client</li>
+                    </ul>
+                </div>
+                
+                <div class="endpoint-section">
+                    <h3>Compression Tools</h3>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>zip</code> / <code>unzip</code> - ZIP archive tools</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>unrar</code> - RAR archive extractor</li>
+                    </ul>
+                </div>
+                
+                <div class="endpoint-section">
+                    <h3>System Monitoring</h3>
+                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>htop</code> - Interactive process viewer</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>tmux</code> - Terminal multiplexer</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>sysstat</code> - System performance tools</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -591,10 +647,31 @@
             });
         }
 
-        // Close modal on Escape key
+        // Basic Details Modal functions
+        function openBasicDetailsModal() {
+            const modal = document.getElementById('basic-details-modal');
+            modal.style.display = 'flex';
+            modal.focus();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBasicDetailsModal() {
+            const modal = document.getElementById('basic-details-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeBasicDetailsModalOnOverlay(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeBasicDetailsModal();
+            }
+        }
+
+        // Close modals on Escape key
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 closeModal();
+                closeBasicDetailsModal();
             }
         });
 

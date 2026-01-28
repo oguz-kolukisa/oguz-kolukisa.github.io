@@ -25,10 +25,10 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/package
 
 # Update package cache and install VS Code
 printf "Updating package cache...\n"
-sudo apt-get update
+sudo apt-get update -qq
 
 printf "Installing VS Code...\n"
 sudo apt-get install -y code
 
 printf "Visual Studio Code installed successfully!\n"
-printf "You can launch it by typing 'code' in your terminal.\n"
+printf "Launch it by typing 'code' in your terminal.\n"

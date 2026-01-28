@@ -1,19 +1,47 @@
 #!/bin/bash
 
 cat << 'EOF'
-Available Installation Endpoints:
-==================================
+╔══════════════════════════════════════════════════════════════════╗
+║           Installation Scripts - Quick Reference                 ║
+╚══════════════════════════════════════════════════════════════════╝
 
-Full Installation:
-  curl -sSL https://oguz-kolukisa.github.io/install | bash
-  
-Individual Components:
-  curl -sSL https://oguz-kolukisa.github.io/install/basic | bash     # Basic tools (curl, vim, git)
-  curl -sSL https://oguz-kolukisa.github.io/install/github | bash    # GitHub CLI
-  curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash   # GitHub Copilot CLI
-  curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash  # Anaconda Python
-  curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash     # Tuxsay terminal config
+FULL INSTALLATION:
+──────────────────
+  curl -sSL https://oguz-kolukisa.github.io/install.sh | bash
+  curl -sSL https://oguz-kolukisa.github.io/install.sh | bash -s -- -y  (auto-yes)
 
-Help:
-  curl -sSL https://oguz-kolukisa.github.io/help | bash              # Show this help
+INDIVIDUAL COMPONENTS:
+──────────────────────
+  Basic Tools (curl, vim, git, etc.):
+    curl -sSL https://oguz-kolukisa.github.io/install/basic | bash
+
+  GitHub CLI:
+    curl -sSL https://oguz-kolukisa.github.io/install/github | bash
+
+  GitHub Copilot CLI:
+    curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash
+
+  Visual Studio Code:
+    curl -sSL https://oguz-kolukisa.github.io/install/code | bash
+
+  Anaconda Python:
+    curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash
+
+CONFIGURATION:
+──────────────
+  Tuxsay Terminal Config:
+    curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash
+
+HELP & INFO:
+────────────
+  Show this help:
+    curl -sSL https://oguz-kolukisa.github.io/help | bash
+
+  View full documentation:
+    https://github.com/oguz-kolukisa/oguz-kolukisa.github.io
+
+╔══════════════════════════════════════════════════════════════════╗
+║  For more details, visit the GitHub repository README           ║
+╚══════════════════════════════════════════════════════════════════╝
 EOF
+

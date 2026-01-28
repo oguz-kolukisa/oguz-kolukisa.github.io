@@ -20,20 +20,20 @@ done
 BASE_URL="https://oguz-kolukisa.github.io"
 
 # Create temporary directory for scripts
-printf "Downloading installation scripts...\r"
+printf "Downloading installation scripts...\n"
 TEMP_DIR=$(mktemp -d)
 SCRIPT_DIR="$TEMP_DIR"
 mkdir -p "$SCRIPT_DIR/install_scripts"
 mkdir -p "$SCRIPT_DIR/config_settings"
 
 # Download all required scripts
-wget -q "$BASE_URL/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
-wget -q "$BASE_URL/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
-wget -q "$BASE_URL/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
-wget -q "$BASE_URL/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
-wget -q "$BASE_URL/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
-wget -q "$BASE_URL/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
-printf "Downloading installation scripts... Done\r"
+wget -q "$BASE_URL/scripts/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
+wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
+wget -q "$BASE_URL/scripts/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
+wget -q "$BASE_URL/scripts/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
+wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
+wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
+printf "Download complete!\n"
 
 chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
 chmod +x "$SCRIPT_DIR/config_settings/"*.sh
@@ -41,10 +41,10 @@ chmod +x "$SCRIPT_DIR/config_settings/"*.sh
 # Cleanup function to remove temp directory on exit
 trap "rm -rf $TEMP_DIR" EXIT
 
-printf "Updating system packages...\r"
+printf "\nUpdating system packages...\n"
 sudo apt-get update -qq 2>&1 >/dev/null
 sudo apt-get upgrade -y -qq 2>&1 >/dev/null
-printf "\rUpdating system packages... Done\r"
+printf "System packages updated!\n"
 
 # Ask to install basic command files
 if [ "$AUTO_YES" = true ]; then
@@ -55,7 +55,7 @@ fi
 if [[ "$install_basics" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/basic.sh"
 else
-  printf "Skipping basic command files installation.\r"
+  printf "Skipping basic command files installation.\n"
 fi
 
 # Ask to install GitHub CLI
@@ -76,10 +76,10 @@ if [[ "$install_gh" =~ ^[Yy]$ ]]; then
   if [[ "$install_copilot" =~ ^[Yy]$ ]]; then
     bash "$SCRIPT_DIR/install_scripts/copilot.sh"
   else
-    printf "Skipping GitHub Copilot CLI installation.\r"
+    printf "Skipping GitHub Copilot CLI installation.\n"
   fi
 else
-  printf "Skipping GitHub CLI installation.\r"
+  printf "Skipping GitHub CLI installation.\n"
 fi
 
 # Ask to install Anaconda
@@ -91,7 +91,7 @@ fi
 if [[ "$install_anaconda" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
 else
-  printf "Skipping Anaconda installation.\r"
+  printf "Skipping Anaconda installation.\n"
 fi
 
 # Ask to install VS Code
@@ -103,9 +103,13 @@ fi
 if [[ "$install_code" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/code.sh"
 else
-  printf "Skipping Visual Studio Code installation.\r"
+  printf "Skipping Visual Studio Code installation.\n"
 fi
 
 # Apply fortune tuxsay configuration
 bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
+echo ""
+echo "================================"
+echo "Installation complete!"
+echo "================================"

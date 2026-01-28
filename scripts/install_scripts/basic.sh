@@ -2,10 +2,10 @@
 
 set -e
 
-echo "Installing basic command files..."
+printf "Installing basic command files...\n"
 
 # Update package cache
-echo "Updating package cache..."
+printf "Updating package cache...\n"
 sudo apt-get update -qq
 
 # Install packages
@@ -16,4 +16,4 @@ sudo apt-get install -y \
   zip unzip unrar \
   htop tmux sysstat
 
-echo "Installing basic command files... Done"
+printf "Basic command files installed successfully!\n"

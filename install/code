@@ -6,4 +6,4 @@ set -e
 BASE_URL="https://oguz-kolukisa.github.io"
 
 printf "Downloading VS Code installation script...\n"
-wget -qO- "$BASE_URL/install_scripts/code.sh" | bash
+wget -qO- "$BASE_URL/scripts/install_scripts/code.sh" | bash
