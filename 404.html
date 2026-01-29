@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="404 - Page Not Found">
+    <title>404 - Command Not Found | Oguz Kolukisa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e27;
+            --terminal-bg: #1a1f35;
+            --text-primary: #00ff41;
+            --text-secondary: #33ff77;
+            --text-muted: #5f8a6f;
+            --text-error: #ff5555;
+            --border-color: #00ff41;
+            --accent: #00ff41;
+        }
+
+        body {
+            font-family: 'Courier New', 'Consolas', monospace;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Mobile optimization for Matrix canvas */
+        @media (max-width: 768px) {
+            #matrix-canvas {
+                opacity: 0.25;
+            }
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px var(--text-error), 0 0 20px var(--text-error); }
+            50% { text-shadow: 0 0 20px var(--text-error), 0 0 30px var(--text-error), 0 0 40px var(--text-error); }
+        }
+
+        .container {
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
+            max-width: 800px;
+            width: 100%;
+            border: 2px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #0d1117;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f56;
+            cursor: pointer;
+        }
+
+        /* Mobile touch-friendly buttons */
+        @media (max-width: 768px) {
+            .terminal-button {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        .terminal-button:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .terminal-button:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .terminal-title {
+            margin-left: auto;
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        .lang-switcher {
+            margin-left: 15px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            border-color: var(--accent);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .terminal-body {
+            padding: 40px 30px;
+            text-align: left;
+        }
+
+        .error-code {
+            font-size: 3em;
+            color: var(--text-error);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: glow 2s infinite;
+        }
+
+        .command-line {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .command-line::before {
+            content: '$ ';
+            color: var(--accent);
+        }
+
+        .error-message {
+            color: var(--text-error);
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .penguin {
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: var(--text-primary);
+            white-space: pre;
+            display: block;
+            margin: 30px auto;
+            text-align: center;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .help-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .help-title {
+            color: var(--accent);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .help-title::before {
+            content: '> ';
+        }
+
+        .help-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .help-list li {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid var(--accent);
+            border-radius: 3px;
+        }
+
+        .command {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin: 10px 5px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .link-button::before {
+            content: '> ';
+        }
+
+        .link-button:hover {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 20px var(--accent);
+            transform: translateX(5px);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: var(--accent);
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .error-code {
+                font-size: 2.5em;
+            }
+
+            .terminal-body {
+                padding: 25px 15px;
+            }
+
+            .terminal-header {
+                padding: 12px;
+            }
+
+            .terminal-title {
+                font-size: 0.8em;
+            }
+
+            .penguin {
+                font-size: 9px;
+            }
+
+            .link-button {
+                padding: 14px 20px;
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .help-section {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .error-code {
+                font-size: 2em;
+            }
+
+            .terminal-body {
+                padding: 20px 10px;
+            }
+
+            .penguin {
+                font-size: 7px;
+            }
+
+            .command-line, .error-message {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="container">
+        <div class="terminal-header">
+            <div class="terminal-button"></div>
+            <div class="terminal-button"></div>
+            <div class="terminal-button"></div>
+            <div class="terminal-title">okolukisa@computer:~</div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr">TR</button>
+            </div>
+        </div>
+        <div class="terminal-body">
+            <div class="error-code" data-i18n="errorCode">404</div>
+            
+            <p class="command-line" data-i18n="commandLine">cd /requested-page</p>
+            <p class="error-message" data-i18n="errorMessage">bash: cd: /requested-page: No such file or directory</p>
+            
+            <div class="penguin" id="penguin-animation">
+   <(o )___
+    ( ._> /
+     `---'
+            </div>
+
+            <div class="help-section">
+                <div class="help-title" data-i18n="helpTitle">Available Commands</div>
+                <ul class="help-list">
+                    <li>
+                        <div class="command">home</div>
+                        <div class="description" data-i18n="homeDesc">Return to homepage</div>
+                    </li>
+                    <li>
+                        <div class="command">github</div>
+                        <div class="description" data-i18n="githubDesc">Visit GitHub profile</div>
+                    </li>
+                    <li>
+                        <div class="command">linkedin</div>
+                        <div class="description" data-i18n="linkedinDesc">View LinkedIn profile</div>
+                    </li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="/" class="link-button" data-i18n="goHome">Return Home</a>
+                </div>
+            </div>
+
+            <footer>
+                <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Internationalization (i18n) for 404 page
+        const i18n = {
+            en: {
+                errorCode: "404",
+                commandLine: "cd /requested-page",
+                errorMessage: "bash: cd: /requested-page: No such file or directory",
+                helpTitle: "Available Commands",
+                homeDesc: "Return to homepage",
+                githubDesc: "Visit GitHub profile",
+                linkedinDesc: "View LinkedIn profile",
+                goHome: "Return Home",
+                footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]"
+            },
+            tr: {
+                errorCode: "404",
+                commandLine: "cd /istenen-sayfa",
+                errorMessage: "bash: cd: /istenen-sayfa: Böyle bir dosya veya dizin yok",
+                helpTitle: "Kullanılabilir Komutlar",
+                homeDesc: "Ana sayfaya dön",
+                githubDesc: "GitHub profilini ziyaret et",
+                linkedinDesc: "LinkedIn profilini görüntüle",
+                goHome: "Ana Sayfaya Dön",
+                footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]"
+            }
+        };
+
+        // Get current language from localStorage or default to English
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        // Function to update translations
+        function updateTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (i18n[currentLang] && i18n[currentLang][key]) {
+                    element.textContent = i18n[currentLang][key];
+                }
+            });
+        }
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            
+            // Update translations
+            updateTranslations();
+            
+            // Animate penguin on language change
+            animatePenguin(2000);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${currentLang}`).classList.add('active');
+            
+            // Update translations
+            updateTranslations();
+        });
+
+        // Walking Penguin Animation
+        const penguinFrames = [
+            `   <(o )___
+    ( ._> /
+     \`---'`,
+            `   <( o)___
+    ( ._>/
+     \`---'`,
+            `   <(o )___
+    ( ._> /
+     \`---'`
+        ];
+
+        let currentPenguinFrame = 0;
+        let penguinAnimationInterval = null;
+
+        function animatePenguin(duration = 3000) {
+            const penguinElement = document.getElementById('penguin-animation');
+            if (!penguinElement || penguinAnimationInterval) return;
+
+            let frameCount = 0;
+            const maxFrames = Math.floor(duration / 400);
+
+            penguinAnimationInterval = setInterval(() => {
+                currentPenguinFrame = (currentPenguinFrame + 1) % penguinFrames.length;
+                penguinElement.textContent = penguinFrames[currentPenguinFrame];
+                frameCount++;
+
+                if (frameCount >= maxFrames) {
+                    clearInterval(penguinAnimationInterval);
+                    penguinAnimationInterval = null;
+                    // Reset to first frame
+                    penguinElement.textContent = penguinFrames[0];
+                    currentPenguinFrame = 0;
+                }
+            }, 400);
+        }
+
+        // Play penguin animation on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => animatePenguin(3000), 500);
+        });
+
+        // Play penguin animation occasionally (every 20 seconds)
+        setInterval(() => {
+            if (!penguinAnimationInterval && Math.random() > 0.3) {
+                animatePenguin(2000);
+            }
+        }, 20000);
+
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
+        const fontSize = 14;
+        
+        // Optimize for mobile devices
+        const isMobile = window.innerWidth <= 768;
+        const columns = Math.floor(canvas.width / fontSize);
+
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        // Use slower interval on mobile for better performance
+        setInterval(draw, isMobile ? 50 : 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
