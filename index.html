@@ -929,12 +929,11 @@
 
         function copyEndpoint(button, text) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
                 button.textContent = i18n[currentLang].copied || '✓ COPIED';
                 button.classList.add('copied');
                 
                 setTimeout(() => {
-                    button.textContent = originalText;
+                    button.textContent = i18n[currentLang].copy || 'COPY';
                     button.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
