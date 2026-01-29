@@ -603,81 +603,81 @@
             </div>
             <div class="modal-body">
                 <div class="endpoint-section">
-                    <h3>Full Installation</h3>
+                    <h3 data-i18n="fullInstallation">Full Installation</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config</div>
+                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install.sh | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="endpoint-section">
-                    <h3>Individual Components</h3>
+                    <h3 data-i18n="individualComponents">Individual Components</h3>
                     
                     <div class="endpoint-item">
                         <div class="endpoint-description">
-                            Basic development tools 
-                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" style="color: var(--accent); text-decoration: underline; margin-left: 5px; font-size: 0.9em;">[view packages]</a>
+                            <span data-i18n="basicTools">Basic development tools</span> 
+                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" style="color: var(--accent); text-decoration: underline; margin-left: 5px; font-size: 0.9em;" data-i18n="viewPackages">[view packages]</a>
                         </div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/basic | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
-                        <div class="endpoint-description">GitHub CLI (gh)</div>
+                        <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/github | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/github | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
-                        <div class="endpoint-description">GitHub Copilot CLI (requires GitHub CLI)</div>
+                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Anaconda Python distribution</div>
+                        <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Visual Studio Code</div>
+                        <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/code | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="endpoint-section">
-                    <h3>Configuration</h3>
+                    <h3 data-i18n="configuration">Configuration</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Tuxsay terminal configuration (Fortune + Cowsay)</div>
+                        <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="endpoint-section">
-                    <h3>Help</h3>
+                    <h3 data-i18n="help">Help</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description">Show all available endpoints</div>
+                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')">COPY</button>
+                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')" data-i18n="copy">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -689,51 +689,51 @@
     <div id="basic-details-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="basic-modal-title" onclick="closeBasicDetailsModalOnOverlay(event)">
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
-                <div id="basic-modal-title" class="modal-title">[ Basic Tools Packages ]</div>
+                <div id="basic-modal-title" class="modal-title" data-i18n="basicModalTitle">[ Basic Tools Packages ]</div>
                 <button class="modal-close" onclick="closeBasicDetailsModal()" aria-label="Close modal">✕</button>
             </div>
             <div class="modal-body">
                 <div class="endpoint-section">
-                    <h3>Development Tools</h3>
+                    <h3 data-i18n="devTools">Development Tools</h3>
                     <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>curl</code> - Command line tool for transferring data</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>vim</code> - Text editor</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>git</code> - Version control system</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>curl</code> - <span data-i18n="curlDesc">Command line tool for transferring data</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>vim</code> - <span data-i18n="vimDesc">Text editor</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>git</code> - <span data-i18n="gitDesc">Version control system</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
-                    <h3>Build Tools</h3>
+                    <h3 data-i18n="buildTools">Build Tools</h3>
                     <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>cmake</code> - Cross-platform build system</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>pkg-config</code> - Package configuration tool</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>cmake</code> - <span data-i18n="cmakeDesc">Cross-platform build system</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>pkg-config</code> - <span data-i18n="pkgConfigDesc">Package configuration tool</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
-                    <h3>Network Tools</h3>
+                    <h3 data-i18n="networkTools">Network Tools</h3>
                     <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>net-tools</code> - Network utilities (ifconfig, netstat)</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>openssh-client</code> - SSH client</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>nmap</code> - Network scanner</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>telnet</code> - Telnet client</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>net-tools</code> - <span data-i18n="netToolsDesc">Network utilities (ifconfig, netstat)</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>openssh-client</code> - <span data-i18n="sshDesc">SSH client</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>nmap</code> - <span data-i18n="nmapDesc">Network scanner</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>telnet</code> - <span data-i18n="telnetDesc">Telnet client</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
-                    <h3>Compression Tools</h3>
+                    <h3 data-i18n="compressionTools">Compression Tools</h3>
                     <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>zip</code> / <code>unzip</code> - ZIP archive tools</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>unrar</code> - RAR archive extractor</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="zipDesc">ZIP archive tools</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>unrar</code> - <span data-i18n="unrarDesc">RAR archive extractor</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
-                    <h3>System Monitoring</h3>
+                    <h3 data-i18n="systemMonitoring">System Monitoring</h3>
                     <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>htop</code> - Interactive process viewer</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>tmux</code> - Terminal multiplexer</li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>sysstat</code> - System performance tools</li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>htop</code> - <span data-i18n="htopDesc">Interactive process viewer</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>tmux</code> - <span data-i18n="tmuxDesc">Terminal multiplexer</span></li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>sysstat</code> - <span data-i18n="sysstatDesc">System performance tools</span></li>
                     </ul>
                 </div>
             </div>
@@ -749,6 +749,7 @@
                 quickSetup: "[ ⚔ QUICK SETUP ⚔ ]",
                 setupDesc: "Automated Linux setup script for development tools",
                 copy: "COPY",
+                copied: "✓ COPIED",
                 copyFeedback: "✓ Copied to clipboard!",
                 viewEndpoints: "📋 View All Endpoints",
                 connections: "[ ⚔ CONNECTIONS ⚔ ]",
@@ -775,7 +776,21 @@
                 buildTools: "Build Tools",
                 networkTools: "Network Tools",
                 compressionTools: "Compression Tools",
-                systemMonitoring: "System Monitoring"
+                systemMonitoring: "System Monitoring",
+                curlDesc: "Command line tool for transferring data",
+                vimDesc: "Text editor",
+                gitDesc: "Version control system",
+                cmakeDesc: "Cross-platform build system",
+                pkgConfigDesc: "Package configuration tool",
+                netToolsDesc: "Network utilities (ifconfig, netstat)",
+                sshDesc: "SSH client",
+                nmapDesc: "Network scanner",
+                telnetDesc: "Telnet client",
+                zipDesc: "ZIP archive tools",
+                unrarDesc: "RAR archive extractor",
+                htopDesc: "Interactive process viewer",
+                tmuxDesc: "Terminal multiplexer",
+                sysstatDesc: "System performance tools"
             },
             tr: {
                 prompt: "cat /home/oguz/profil.txt",
@@ -783,6 +798,7 @@
                 quickSetup: "[ ⚔ HIZLI KURULUM ⚔ ]",
                 setupDesc: "Geliştirme araçları için otomatik Linux kurulum betiği",
                 copy: "KOPYALA",
+                copied: "✓ KOPYALANDI",
                 copyFeedback: "✓ Panoya kopyalandı!",
                 viewEndpoints: "📋 Tüm Uç Noktaları Göster",
                 connections: "[ ⚔ BAĞLANTILAR ⚔ ]",
@@ -809,7 +825,21 @@
                 buildTools: "Yapım Araçları",
                 networkTools: "Ağ Araçları",
                 compressionTools: "Sıkıştırma Araçları",
-                systemMonitoring: "Sistem İzleme"
+                systemMonitoring: "Sistem İzleme",
+                curlDesc: "Veri aktarımı için komut satırı aracı",
+                vimDesc: "Metin düzenleyici",
+                gitDesc: "Sürüm kontrol sistemi",
+                cmakeDesc: "Çapraz platform yapım sistemi",
+                pkgConfigDesc: "Paket yapılandırma aracı",
+                netToolsDesc: "Ağ araçları (ifconfig, netstat)",
+                sshDesc: "SSH istemcisi",
+                nmapDesc: "Ağ tarayıcı",
+                telnetDesc: "Telnet istemcisi",
+                zipDesc: "ZIP arşiv araçları",
+                unrarDesc: "RAR arşiv çıkarıcı",
+                htopDesc: "Etkileşimli süreç görüntüleyici",
+                tmuxDesc: "Terminal çoklayıcı",
+                sysstatDesc: "Sistem performans araçları"
             }
         };
 
@@ -841,8 +871,7 @@
             // Update translations
             updateTranslations();
             
-            // Animate penguin on language change
-            animatePenguin(2000);
+            // Penguin animation is always running, no need to trigger on language change
         }
 
         // Initialize language on page load
@@ -899,12 +928,11 @@
 
         function copyEndpoint(button, text) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
-                button.textContent = '✓ COPIED';
+                button.textContent = i18n[currentLang].copied || '✓ COPIED';
                 button.classList.add('copied');
                 
                 setTimeout(() => {
-                    button.textContent = originalText;
+                    button.textContent = i18n[currentLang].copy || 'COPY';
                     button.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
@@ -956,46 +984,28 @@
         let currentPenguinFrame = 0;
         let penguinAnimationInterval = null;
 
-        function animatePenguin(duration = 3000) {
+        function animatePenguin() {
             const penguinElement = document.getElementById('penguin-animation');
             if (!penguinElement || penguinAnimationInterval) return;
 
-            let frameCount = 0;
-            const maxFrames = Math.floor(duration / 400);
-
+            // Continuous animation - no frame count limit
             penguinAnimationInterval = setInterval(() => {
                 currentPenguinFrame = (currentPenguinFrame + 1) % penguinFrames.length;
                 penguinElement.textContent = penguinFrames[currentPenguinFrame];
-                frameCount++;
-
-                if (frameCount >= maxFrames) {
-                    clearInterval(penguinAnimationInterval);
-                    penguinAnimationInterval = null;
-                    // Reset to first frame
-                    penguinElement.textContent = penguinFrames[0];
-                    currentPenguinFrame = 0;
-                }
             }, 400);
         }
 
-        // Play penguin animation on page load
+        // Start penguin animation on page load and keep it running continuously
         window.addEventListener('load', () => {
-            setTimeout(() => animatePenguin(3000), 500);
+            setTimeout(() => animatePenguin(), 500);
         });
-
-        // Play penguin animation occasionally (every 30 seconds)
-        setInterval(() => {
-            if (!penguinAnimationInterval && Math.random() > 0.5) {
-                animatePenguin(2000);
-            }
-        }, 30000);
 
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
-        const fontSize = 14;
+        const fontSize = 10; // Reduced from 14 to fit more columns
         
         let drops = [];
         let matrixInterval = null;
