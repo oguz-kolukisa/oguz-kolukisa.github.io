@@ -509,8 +509,8 @@
             <div class="terminal-button"></div>
             <div class="terminal-title">okolukisa@computer:~</div>
             <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en">EN</button>
-                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr">TR</button>
+                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish">TR</button>
             </div>
         </div>
         <div class="terminal-body">
@@ -960,19 +960,21 @@
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
         const fontSize = 14;
         
-        // Optimize for mobile devices
-        const isMobile = window.innerWidth <= 768;
-        const columns = Math.floor(canvas.width / fontSize);
+        let drops = [];
+        let matrixInterval = null;
 
-        const drops = [];
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.random() * -100;
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const columns = Math.floor(canvas.width / fontSize);
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * -100;
+            }
         }
 
         function draw() {
@@ -993,12 +995,19 @@
             }
         }
 
-        // Use slower interval on mobile for better performance
-        setInterval(draw, isMobile ? 50 : 35);
+        function getDrawInterval() {
+            return window.innerWidth <= 768 ? 50 : 35;
+        }
+
+        // Initialize and start
+        initMatrix();
+        matrixInterval = setInterval(draw, getDrawInterval());
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            initMatrix();
+            // Restart interval with appropriate speed for new screen size
+            if (matrixInterval) clearInterval(matrixInterval);
+            matrixInterval = setInterval(draw, getDrawInterval());
         });
     </script>
 </body>
