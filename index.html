@@ -871,8 +871,7 @@
             // Update translations
             updateTranslations();
             
-            // Animate penguin on language change
-            animatePenguin(2000);
+            // Penguin animation is always running, no need to trigger on language change
         }
 
         // Initialize language on page load
@@ -985,46 +984,28 @@
         let currentPenguinFrame = 0;
         let penguinAnimationInterval = null;
 
-        function animatePenguin(duration = 3000) {
+        function animatePenguin() {
             const penguinElement = document.getElementById('penguin-animation');
             if (!penguinElement || penguinAnimationInterval) return;
 
-            let frameCount = 0;
-            const maxFrames = Math.floor(duration / 400);
-
+            // Continuous animation - no frame count limit
             penguinAnimationInterval = setInterval(() => {
                 currentPenguinFrame = (currentPenguinFrame + 1) % penguinFrames.length;
                 penguinElement.textContent = penguinFrames[currentPenguinFrame];
-                frameCount++;
-
-                if (frameCount >= maxFrames) {
-                    clearInterval(penguinAnimationInterval);
-                    penguinAnimationInterval = null;
-                    // Reset to first frame
-                    penguinElement.textContent = penguinFrames[0];
-                    currentPenguinFrame = 0;
-                }
             }, 400);
         }
 
-        // Play penguin animation on page load
+        // Start penguin animation on page load and keep it running continuously
         window.addEventListener('load', () => {
-            setTimeout(() => animatePenguin(3000), 500);
+            setTimeout(() => animatePenguin(), 500);
         });
-
-        // Play penguin animation occasionally (every 30 seconds)
-        setInterval(() => {
-            if (!penguinAnimationInterval && Math.random() > 0.5) {
-                animatePenguin(2000);
-            }
-        }, 30000);
 
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
-        const fontSize = 14;
+        const fontSize = 10; // Reduced from 14 to fit more columns
         
         let drops = [];
         let matrixInterval = null;
