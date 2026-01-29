@@ -46,6 +46,13 @@
             opacity: 0.4;
         }
 
+        /* Mobile optimization for Matrix canvas */
+        @media (max-width: 768px) {
+            #matrix-canvas {
+                opacity: 0.25;
+            }
+        }
+
         @keyframes blink {
             0%, 49% { opacity: 1; }
             50%, 100% { opacity: 0; }
@@ -86,6 +93,15 @@
             height: 12px;
             border-radius: 50%;
             background: #ff5f56;
+            cursor: pointer;
+        }
+
+        /* Mobile touch-friendly buttons */
+        @media (max-width: 768px) {
+            .terminal-button {
+                width: 18px;
+                height: 18px;
+            }
         }
 
         .terminal-button:nth-child(2) {
@@ -100,6 +116,36 @@
             margin-left: auto;
             color: var(--text-muted);
             font-size: 0.9em;
+        }
+
+        .lang-switcher {
+            margin-left: 15px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            border-color: var(--accent);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .terminal-body {
@@ -345,25 +391,54 @@
             color: var(--terminal-bg);
         }
 
-        @media (max-width: 600px) {
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
             h1 {
-                font-size: 2em;
+                font-size: 2.2em;
+                letter-spacing: 1px;
+            }
+
+            .tagline {
+                font-size: 1.1em;
             }
 
             .terminal-body {
-                padding: 25px 20px;
+                padding: 20px 15px;
+            }
+
+            .terminal-header {
+                padding: 12px;
+            }
+
+            .terminal-title {
+                font-size: 0.8em;
             }
 
             .penguin {
-                font-size: 8px;
-            }
-
-            .links {
-                flex-direction: column;
+                font-size: 9px;
             }
 
             .link-button {
-                width: 100%;
+                padding: 14px 20px;
+                min-height: 44px;
+                min-width: 44px;
+                font-size: 1em;
+            }
+
+            .dragon-divider {
+                font-size: 1.3em;
+                margin: 20px 0;
+            }
+
+            button {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 18px;
+                font-size: 0.9em;
             }
 
             .modal-content {
@@ -383,6 +458,46 @@
                 width: 100%;
             }
         }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .tagline {
+                font-size: 1em;
+            }
+
+            .terminal-body {
+                padding: 15px 10px;
+            }
+
+            .penguin {
+                font-size: 7px;
+            }
+
+            .links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .link-button {
+                width: 100%;
+            }
+
+            .dragon-divider {
+                font-size: 1.1em;
+            }
+
+            footer {
+                font-size: 0.8em;
+                margin-top: 30px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -393,54 +508,54 @@
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
             <div class="terminal-title">okolukisa@computer:~</div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr">TR</button>
+            </div>
         </div>
         <div class="terminal-body">
-            <div class="penguin">
-    .--.
-   |o_o |
-   |:_/ |
-  //   \ \
- (|     | )
-/'\_   _/`\
-\___)=(___/
+            <div class="penguin" id="penguin-animation">
+   <(o )___
+    ( ._> /
+     `---'
             </div>
 
-            <p class="prompt">cat /home/oguz/profile.txt</p>
+            <p class="prompt" data-i18n="prompt">cat /home/oguz/profile.txt</p>
             <h1>OGUZ KOLUKISA</h1>
-            <p class="tagline">// Humanoid Robot<span class="cursor"></span></p>
+            <p class="tagline"><span data-i18n="tagline">// Humanoid Robot</span><span class="cursor"></span></p>
             
-            <div class="dragon-divider">[ ⚔ QUICK SETUP ⚔ ]</div>
+            <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
             
             <div style="margin-bottom: 30px; padding: 15px; background: rgba(0, 255, 65, 0.05); border: 1px solid var(--border-color); border-radius: 5px;">
-                <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95em;">
+                <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95em;" data-i18n="setupDesc">
                     Automated Linux setup script for development tools
                 </p>
                 <div style="position: relative; display: flex; align-items: center; gap: 10px;">
                     <code id="install-command" style="flex: 1; display: block; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 3px; color: var(--accent); user-select: all;">wget -qO- https://oguz-kolukisa.github.io/install/main | bash</code>
-                    <button onclick="copyToClipboard()" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
+                    <button onclick="copyToClipboard()" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;" data-i18n="copy">
                         COPY
                     </button>
                 </div>
-                <p id="copy-feedback" style="color: var(--text-secondary); font-size: 0.85em; margin-top: 8px; opacity: 0; transition: opacity 0.3s;">
+                <p id="copy-feedback" style="color: var(--text-secondary); font-size: 0.85em; margin-top: 8px; opacity: 0; transition: opacity 0.3s;" data-i18n="copyFeedback">
                     ✓ Copied to clipboard!
                 </p>
                 <div style="margin-top: 15px; text-align: center;">
-                    <button onclick="openModal()" aria-label="View all installation endpoints" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;">
+                    <button onclick="openModal()" aria-label="View all installation endpoints" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;" data-i18n="viewEndpoints">
                         📋 View All Endpoints
                     </button>
                 </div>
             </div>
             
-            <div class="dragon-divider">[ ⚔ CONNECTIONS ⚔ ]</div>
+            <div class="dragon-divider" data-i18n="connections">[ ⚔ CONNECTIONS ⚔ ]</div>
             
             <div class="links">
-                <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer">github</a>
-                <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer">linkedin</a>
-                <a href="mailto:your-email@domain.com" class="link-button">email</a>
+                <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="github">github</a>
+                <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="linkedin">linkedin</a>
+                <a href="mailto:your-email@domain.com" class="link-button" data-i18n="email">email</a>
             </div>
             
             <footer>
-                <p>[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
+                <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
             </footer>
         </div>
     </div>
@@ -449,7 +564,7 @@
     <div id="endpoints-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <div id="modal-title" class="modal-title">[ Installation Endpoints ]</div>
+                <div id="modal-title" class="modal-title" data-i18n="modalTitle">[ Installation Endpoints ]</div>
                 <button class="modal-close" onclick="closeModal()" aria-label="Close modal">✕</button>
             </div>
             <div class="modal-body">
@@ -592,6 +707,122 @@
     </div>
 
     <script>
+        // Internationalization (i18n)
+        const i18n = {
+            en: {
+                prompt: "cat /home/oguz/profile.txt",
+                tagline: "// Humanoid Robot",
+                quickSetup: "[ ⚔ QUICK SETUP ⚔ ]",
+                setupDesc: "Automated Linux setup script for development tools",
+                copy: "COPY",
+                copyFeedback: "✓ Copied to clipboard!",
+                viewEndpoints: "📋 View All Endpoints",
+                connections: "[ ⚔ CONNECTIONS ⚔ ]",
+                github: "github",
+                linkedin: "linkedin",
+                email: "email",
+                footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]",
+                modalTitle: "[ Installation Endpoints ]",
+                fullInstallation: "Full Installation",
+                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config",
+                individualComponents: "Individual Components",
+                basicTools: "Basic development tools",
+                viewPackages: "[view packages]",
+                githubCLI: "GitHub CLI (gh)",
+                copilotCLI: "GitHub Copilot CLI (requires GitHub CLI)",
+                anacondaPython: "Anaconda Python distribution",
+                vsCode: "Visual Studio Code",
+                configuration: "Configuration",
+                tuxsayConfig: "Tuxsay terminal configuration (Fortune + Cowsay)",
+                help: "Help",
+                helpDesc: "Show all available endpoints",
+                basicModalTitle: "[ Basic Tools Packages ]",
+                devTools: "Development Tools",
+                buildTools: "Build Tools",
+                networkTools: "Network Tools",
+                compressionTools: "Compression Tools",
+                systemMonitoring: "System Monitoring"
+            },
+            tr: {
+                prompt: "cat /home/oguz/profil.txt",
+                tagline: "// Humanoid Robot",
+                quickSetup: "[ ⚔ HIZLI KURULUM ⚔ ]",
+                setupDesc: "Geliştirme araçları için otomatik Linux kurulum betiği",
+                copy: "KOPYALA",
+                copyFeedback: "✓ Panoya kopyalandı!",
+                viewEndpoints: "📋 Tüm Uç Noktaları Göster",
+                connections: "[ ⚔ BAĞLANTILAR ⚔ ]",
+                github: "github",
+                linkedin: "linkedin",
+                email: "e-posta",
+                footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]",
+                modalTitle: "[ Kurulum Uç Noktaları ]",
+                fullInstallation: "Tam Kurulum",
+                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code ve Tuxsay yapılandırması",
+                individualComponents: "Tekil Bileşenler",
+                basicTools: "Temel geliştirme araçları",
+                viewPackages: "[paketleri görüntüle]",
+                githubCLI: "GitHub CLI (gh)",
+                copilotCLI: "GitHub Copilot CLI (GitHub CLI gerektirir)",
+                anacondaPython: "Anaconda Python dağıtımı",
+                vsCode: "Visual Studio Code",
+                configuration: "Yapılandırma",
+                tuxsayConfig: "Tuxsay terminal yapılandırması (Fortune + Cowsay)",
+                help: "Yardım",
+                helpDesc: "Tüm mevcut uç noktaları göster",
+                basicModalTitle: "[ Temel Araç Paketleri ]",
+                devTools: "Geliştirme Araçları",
+                buildTools: "Yapım Araçları",
+                networkTools: "Ağ Araçları",
+                compressionTools: "Sıkıştırma Araçları",
+                systemMonitoring: "Sistem İzleme"
+            }
+        };
+
+        // Get current language from localStorage or default to English
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        // Function to update translations
+        function updateTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (i18n[currentLang] && i18n[currentLang][key]) {
+                    element.textContent = i18n[currentLang][key];
+                }
+            });
+        }
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            
+            // Update translations
+            updateTranslations();
+            
+            // Animate penguin on language change
+            animatePenguin(2000);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${currentLang}`).classList.add('active');
+            
+            // Update translations
+            updateTranslations();
+        });
+
         // Copy to clipboard function
         function copyToClipboard() {
             const command = document.getElementById('install-command').textContent;
@@ -675,6 +906,56 @@
             }
         });
 
+        // Walking Penguin Animation
+        const penguinFrames = [
+            `   <(o )___
+    ( ._> /
+     \`---'`,
+            `   <( o)___
+    ( ._>/
+     \`---'`,
+            `   <(o )___
+    ( ._> /
+     \`---'`
+        ];
+
+        let currentPenguinFrame = 0;
+        let penguinAnimationInterval = null;
+
+        function animatePenguin(duration = 3000) {
+            const penguinElement = document.getElementById('penguin-animation');
+            if (!penguinElement || penguinAnimationInterval) return;
+
+            let frameCount = 0;
+            const maxFrames = Math.floor(duration / 400);
+
+            penguinAnimationInterval = setInterval(() => {
+                currentPenguinFrame = (currentPenguinFrame + 1) % penguinFrames.length;
+                penguinElement.textContent = penguinFrames[currentPenguinFrame];
+                frameCount++;
+
+                if (frameCount >= maxFrames) {
+                    clearInterval(penguinAnimationInterval);
+                    penguinAnimationInterval = null;
+                    // Reset to first frame
+                    penguinElement.textContent = penguinFrames[0];
+                    currentPenguinFrame = 0;
+                }
+            }, 400);
+        }
+
+        // Play penguin animation on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => animatePenguin(3000), 500);
+        });
+
+        // Play penguin animation occasionally (every 30 seconds)
+        setInterval(() => {
+            if (!penguinAnimationInterval && Math.random() > 0.5) {
+                animatePenguin(2000);
+            }
+        }, 30000);
+
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
@@ -684,7 +965,10 @@
 
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
         const fontSize = 14;
-        const columns = canvas.width / fontSize;
+        
+        // Optimize for mobile devices
+        const isMobile = window.innerWidth <= 768;
+        const columns = Math.floor(canvas.width / fontSize);
 
         const drops = [];
         for (let i = 0; i < columns; i++) {
@@ -709,7 +993,8 @@
             }
         }
 
-        setInterval(draw, 35);
+        // Use slower interval on mobile for better performance
+        setInterval(draw, isMobile ? 50 : 35);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
