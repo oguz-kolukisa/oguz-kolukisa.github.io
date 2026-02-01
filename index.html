@@ -512,6 +512,54 @@
             }
         }
 
+        /* Collapsible details/summary sections */
+        .endpoint-section details {
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .endpoint-section details summary {
+            color: var(--text-secondary);
+            font-size: 1em;
+            font-weight: bold;
+            font-family: 'Courier New', 'Consolas', monospace;
+            padding: 10px 15px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .endpoint-section details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .endpoint-section details summary::before {
+            content: '▶';
+            font-size: 0.7em;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .endpoint-section details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .endpoint-section details summary:hover {
+            color: var(--accent);
+        }
+
+        .endpoint-section details[open] {
+            border-color: var(--accent);
+        }
+
+        .endpoint-section details .details-content {
+            padding: 0 15px 15px;
+        }
+
         .setup-box {
             margin-bottom: 30px;
             padding: 15px;
@@ -717,8 +765,9 @@
                 <button class="modal-close" onclick="closeModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
             </div>
             <div class="modal-body">
+                <!-- 1. Full Installation -->
                 <div class="endpoint-section">
-                    <h3 data-i18n="fullInstallation">Full Installation</h3>
+                    <h3 data-i18n="fullInstallation">⚡ Full Installation</h3>
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, grpadd)</div>
                         <div class="endpoint-command-wrapper">
@@ -728,83 +777,9 @@
                     </div>
                 </div>
 
+                <!-- 2. Configuration -->
                 <div class="endpoint-section">
-                    <h3 data-i18n="help">Help</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="individualComponents">Individual Components</h3>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description">
-                            <span data-i18n="basicTools">Basic development tools</span>
-                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" class="view-packages-link" data-i18n="viewPackages">[view packages]</a>
-                        </div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="aiCodingAssistants">AI Coding Assistants</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash')">COPY</button>
-                        </div>
-                    </div>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="claudeCode">Claude Code (AI coding assistant)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash')">COPY</button>
-                        </div>
-                    </div>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="configuration">Configuration</h3>
+                    <h3 data-i18n="configuration">⚙ Configuration</h3>
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="allConfigDesc">All configurations: LSD, Tuxsay, grpadd (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)</div>
                         <div class="endpoint-command-wrapper">
@@ -813,27 +788,117 @@
                         </div>
                     </div>
 
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
-                        </div>
-                    </div>
+                    <details>
+                        <summary data-i18n="individualConfigs">Individual configurations</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
+                                </div>
+                            </div>
 
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
-                        </div>
-                    </div>
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                                </div>
+                            </div>
 
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- 3. Individual Components (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="individualComponents">📦 Individual Components</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description">
+                                    <span data-i18n="basicTools">Basic development tools</span>
+                                    <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" class="view-packages-link" data-i18n="viewPackages">[view packages]</a>
+                                </div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- 4. AI Coding Assistants (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="aiCodingAssistants">🤖 AI Coding Assistants</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash')">COPY</button>
+                                </div>
+                            </div>
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="claudeCode">Claude Code (AI coding assistant)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash')">COPY</button>
+                                </div>
+                            </div>
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash')">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- 5. Help -->
+                <div class="endpoint-section">
+                    <h3 data-i18n="help">❓ Help</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
+                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -915,12 +980,13 @@
                 email: "email",
                 footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]",
                 modalTitle: "[ Installation Endpoints ]",
-                fullInstallation: "Full Installation",
+                fullInstallation: "⚡ Full Installation",
                 fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, grpadd)",
                 allConfigDesc: "All configurations: LSD, Tuxsay, grpadd (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)",
                 grpaddConfig: "Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)",
-                individualComponents: "Individual Components",
-                aiCodingAssistants: "AI Coding Assistants",
+                individualConfigs: "Individual configurations",
+                individualComponents: "📦 Individual Components",
+                aiCodingAssistants: "🤖 AI Coding Assistants",
                 cursorDesc: "Cursor agent CLI (terminal; not IDE)",
                 basicTools: "Basic development tools",
                 viewPackages: "[view packages]",
@@ -929,10 +995,10 @@
                 anacondaPython: "Anaconda Python distribution",
                 vsCode: "Visual Studio Code",
                 claudeCode: "Claude Code (AI coding assistant)",
-                configuration: "Configuration",
+                configuration: "⚙ Configuration",
                 lsdConfig: "LSD aliases configuration (ls, ll, lt)",
                 tuxsayConfig: "Tuxsay terminal configuration (Fortune + Cowsay)",
-                help: "Help",
+                help: "❓ Help",
                 helpDesc: "Show all available endpoints",
                 basicModalTitle: "[ Basic Tools Packages ]",
                 devTools: "Development Tools",
@@ -977,12 +1043,13 @@
                 email: "e-posta",
                 footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]",
                 modalTitle: "[ Kurulum Uç Noktaları ]",
-                fullInstallation: "Tam Kurulum",
+                fullInstallation: "⚡ Tam Kurulum",
                 fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, yapay zeka asistanları (Cursor, Claude, Copilot), Anaconda, VS Code ve tüm yapılandırmalar (LSD, Tuxsay, grpadd)",
                 allConfigDesc: "Tüm yapılandırmalar: LSD, Tuxsay, grpadd (~/.config/oguz-setup/shell-config.sh, bashrc'den yüklenir)",
                 grpaddConfig: "grpadd komutunu kur (kullanıcıları gruplara ekle: grpadd -u user1,user2 -g sudo,docker)",
-                individualComponents: "Tekil Bileşenler",
-                aiCodingAssistants: "Yapay Zeka Kodlama Asistanları",
+                individualConfigs: "Tekil yapılandırmalar",
+                individualComponents: "📦 Tekil Bileşenler",
+                aiCodingAssistants: "🤖 Yapay Zeka Kodlama Asistanları",
                 cursorDesc: "Cursor agent CLI (terminal; IDE değil)",
                 basicTools: "Temel geliştirme araçları",
                 viewPackages: "[paketleri görüntüle]",
@@ -991,10 +1058,10 @@
                 anacondaPython: "Anaconda Python dağıtımı",
                 vsCode: "Visual Studio Code",
                 claudeCode: "Claude Code (yapay zeka kodlama asistanı)",
-                configuration: "Yapılandırma",
+                configuration: "⚙ Yapılandırma",
                 lsdConfig: "LSD takma ad yapılandırması (ls, ll, lt)",
                 tuxsayConfig: "Tuxsay terminal yapılandırması (Fortune + Cowsay)",
-                help: "Yardım",
+                help: "❓ Yardım",
                 helpDesc: "Tüm mevcut uç noktaları göster",
                 basicModalTitle: "[ Temel Araç Paketleri ]",
                 devTools: "Geliştirme Araçları",
