@@ -1428,10 +1428,11 @@
                         content.removeEventListener('transitionend', handler);
                     });
                 } else {
-                    details.open = true;
-                    const height = content.scrollHeight;
                     content.style.maxHeight = '0';
                     content.style.opacity = '0';
+                    details.open = true;
+                    const height = content.scrollHeight;
+                    content.offsetHeight; // force reflow
                     requestAnimationFrame(() => {
                         content.style.maxHeight = height + 'px';
                         content.style.opacity = '1';
