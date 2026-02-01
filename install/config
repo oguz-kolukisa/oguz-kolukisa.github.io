@@ -16,7 +16,7 @@ fi
 chmod +x "$TEMP_SCRIPT"
 printf "Download complete.\n\n"
 
-printf "Running all configurations (LSD, Tuxsay, Sudo users)...\n"
+printf "Running all configurations (LSD, Tuxsay, grpadd)...\n"
 bash "$TEMP_SCRIPT"
 
 # Cleanup

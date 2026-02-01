@@ -71,7 +71,7 @@ bash "$TEMP_DIR/lsd.sh"
 printf "\n--- Tuxsay configuration ---\n"
 bash "$TEMP_DIR/tuxsay.sh"
 
-printf "\n--- Sudo users / group configuration ---\n"
+printf "\n--- grpadd shell function ---\n"
 bash "$TEMP_DIR/sudo_users.sh"
 
 printf "\n================================\n"

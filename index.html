@@ -720,7 +720,7 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="fullInstallation">Full Installation</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, Sudo users)</div>
+                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, grpadd)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
                             <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
@@ -806,7 +806,7 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="configuration">Configuration</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="allConfigDesc">All configurations: LSD, Tuxsay, Sudo users (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)</div>
+                        <div class="endpoint-description" data-i18n="allConfigDesc">All configurations: LSD, Tuxsay, grpadd (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
                             <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/config | bash')">COPY</button>
@@ -830,10 +830,10 @@
                     </div>
 
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="sudoUsersConfig">Add list of users to groups (e.g. user1 user2 → sudo docker)</div>
+                        <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -916,9 +916,9 @@
                 footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]",
                 modalTitle: "[ Installation Endpoints ]",
                 fullInstallation: "Full Installation",
-                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, Sudo users)",
-                allConfigDesc: "All configurations: LSD, Tuxsay, Sudo users (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)",
-                sudoUsersConfig: "Add list of users to groups (e.g. user1 user2 → sudo docker)",
+                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, grpadd)",
+                allConfigDesc: "All configurations: LSD, Tuxsay, grpadd (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)",
+                grpaddConfig: "Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)",
                 individualComponents: "Individual Components",
                 aiCodingAssistants: "AI Coding Assistants",
                 cursorDesc: "Cursor agent CLI (terminal; not IDE)",
@@ -978,9 +978,9 @@
                 footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]",
                 modalTitle: "[ Kurulum Uç Noktaları ]",
                 fullInstallation: "Tam Kurulum",
-                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, yapay zeka asistanları (Cursor, Claude, Copilot), Anaconda, VS Code ve tüm yapılandırmalar (LSD, Tuxsay, Sudo kullanıcıları)",
-                allConfigDesc: "Tüm yapılandırmalar: LSD, Tuxsay, Sudo kullanıcıları (~/.config/oguz-setup/shell-config.sh, bashrc'den yüklenir)",
-                sudoUsersConfig: "Kullanıcı listesini gruplara ekle (örn. user1 user2 → sudo docker)",
+                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, yapay zeka asistanları (Cursor, Claude, Copilot), Anaconda, VS Code ve tüm yapılandırmalar (LSD, Tuxsay, grpadd)",
+                allConfigDesc: "Tüm yapılandırmalar: LSD, Tuxsay, grpadd (~/.config/oguz-setup/shell-config.sh, bashrc'den yüklenir)",
+                grpaddConfig: "grpadd komutunu kur (kullanıcıları gruplara ekle: grpadd -u user1,user2 -g sudo,docker)",
                 individualComponents: "Tekil Bileşenler",
                 aiCodingAssistants: "Yapay Zeka Kodlama Asistanları",
                 cursorDesc: "Cursor agent CLI (terminal; IDE değil)",

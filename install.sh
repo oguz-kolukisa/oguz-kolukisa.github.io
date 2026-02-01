@@ -129,7 +129,7 @@ else
   printf "Skipping Visual Studio Code installation.\n"
 fi
 
-# Apply all configurations (LSD, Tuxsay, Sudo users) via single config installer
+# Apply all configurations (LSD, Tuxsay, grpadd) via single config installer
 printf "\n--- Configurations ---\n"
 TEMP_CONFIG=$(mktemp)
 wget -q "$BASE_URL/scripts/config_settings/install_all_configs.sh" -O "$TEMP_CONFIG"

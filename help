@@ -37,7 +37,7 @@ AI CODING ASSISTANTS (install/ai/):
 
 CONFIGURATION:
 ──────────────
-  All configurations (LSD, Tuxsay, Sudo users → ~/.config/oguz-setup/shell-config.sh):
+  All configurations (LSD, Tuxsay, grpadd → ~/.config/oguz-setup/shell-config.sh):
     wget -qO- https://oguz-kolukisa.github.io/install/config | bash
 
   LSD Aliases Config (ls, ll, lt):
@@ -46,8 +46,9 @@ CONFIGURATION:
   Tuxsay Terminal Config:
     wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash
 
-  Sudo users / groups (add users to groups, e.g. sudo docker):
-    wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash
+  grpadd (add users to groups shell function):
+    wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash
+    Then use:  grpadd -u user1,user2 -g sudo,docker
 
 HELP & INFO:
 ────────────

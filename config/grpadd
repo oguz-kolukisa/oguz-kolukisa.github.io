@@ -5,24 +5,22 @@ set -euo pipefail
 # Base URL for downloading scripts
 BASE_URL="https://oguz-kolukisa.github.io"
 
-printf "Downloading sudo_users.sh script...\n"
+printf "Downloading grpadd config script...\n"
 TEMP_SCRIPT=$(mktemp)
+trap 'rm -f "$TEMP_SCRIPT"' EXIT
 wget -q "$BASE_URL/scripts/config_settings/sudo_users.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
   printf "Error: Failed to download script.\n" >&2
-  rm -f "$TEMP_SCRIPT"
   exit 1
 fi
 chmod +x "$TEMP_SCRIPT"
-printf "Downloading sudo_users.sh script... Done\n"
+printf "Downloading grpadd config script... Done\n"
 
-printf "Running sudo users / group configuration...\n"
+printf "Installing grpadd shell function...\n"
 bash "$TEMP_SCRIPT"
-
-# Cleanup
-rm -f "$TEMP_SCRIPT"
 
 printf "\n"
 printf "================================\n"
-printf "Sudo users configuration complete!\n"
+printf "grpadd installed! Restart your shell or run:\n"
+printf "  source ~/.bashrc\n"
 printf "================================\n"

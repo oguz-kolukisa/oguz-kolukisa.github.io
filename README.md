@@ -76,7 +76,7 @@ Configurations are written to `~/.config/oguz-setup/shell-config.sh` and sourced
 ```bash
 wget -qO- https://oguz-kolukisa.github.io/install/config | bash
 ```
-Installs LSD, Tuxsay, and Sudo users config; creates shared shell config file and sources it from bashrc.
+Installs LSD, Tuxsay, and grpadd config; creates shared shell config file and sources it from bashrc.
 
 ### LSD Aliases Config
 ```bash
@@ -90,11 +90,14 @@ wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash
 ```
 Configures a fun tuxsay greeting in your terminal
 
-### Sudo users / groups
+### grpadd (add users to groups)
 ```bash
-wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash
+wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash
 ```
-Adds a list of users to a list of groups (e.g. `user1 user2 user3` → groups `sudo` and `docker`). Prompts for users and groups, or use env: `SUDO_USERS="u1 u2" SUDO_GROUPS="sudo docker" wget -qO- ... | bash`
+Installs the `grpadd` shell function. After installation, use it to add users to groups:
+```bash
+grpadd -u user1,user2,user3 -g sudo,docker
+```
 
 ## Help
 
@@ -127,7 +130,7 @@ wget -qO- https://oguz-kolukisa.github.io/help | bash
 │   ├── github                  # GitHub CLI installer
 │   ├── code                    # VS Code installer
 │   ├── anaconda                # Anaconda installer
-│   ├── config                  # All configurations (LSD, Tuxsay, Sudo users)
+│   ├── config                  # All configurations (LSD, Tuxsay, grpadd)
 │   └── ai/                     # AI Coding Assistants
 │       ├── cursor              # Cursor agent CLI installer
 │       ├── claude              # Claude Code installer
@@ -143,7 +146,7 @@ wget -qO- https://oguz-kolukisa.github.io/help | bash
 ├── config/                     # Individual configuration scripts
 │   ├── lsd                     # LSD aliases
 │   ├── tuxsay                  # Tuxsay terminal
-│   └── sudo-users              # Add users to groups (e.g. sudo, docker)
+│   └── grpadd                  # Install grpadd command (add users to groups)
 └── help                        # Help information
 ```
 
