@@ -579,13 +579,8 @@
                 <a href="mailto:your-email@domain.com" class="link-button" data-i18n="email">email</a>
             </div>
             
-            <!-- Walking penguin greeting -->
-            <div style="text-align: center; margin-top: 30px; padding: 15px; background: rgba(0, 255, 65, 0.03); border-radius: 5px;">
-                <div class="penguin" id="penguin-animation" style="font-size: 8px; margin: 10px auto;">
-   <(o )___
-    ( ._> /
-     `---'
-                </div>
+            <!-- Walking duck greeting -->
+            <div id="duck-container" style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 30px; padding: 15px; background: rgba(0, 255, 65, 0.03); border-radius: 5px; overflow: hidden;">
             </div>
             
             <footer>
@@ -940,55 +935,76 @@
             }
         });
 
-        // Walking Penguin Animation
-        const penguinFrames = [
-            `   <(o )___
-    ( ._> /
-     \`---'`,
-            `   <( o)___
-    ( ._>/
-     \`---'`,
-            `   <(o )___
-    ( ._> /
-     \`---'`
+        // Walking Duck Animation
+        const duckFrames = [
+            `   <(o )___\n    ( ._> /\n     \`---'`,
+            `   <( o)___\n    ( ._>/\n     \`---'`,
+            `   <(o )___\n    ( ._> /\n     \`---'`
         ];
 
-        let currentPenguinFrame = 0;
-        let penguinAnimationInterval = null;
+        let duckElements = [];
+        let duckFrameCounters = [];
 
-        function animatePenguin(duration = 3000) {
-            const penguinElement = document.getElementById('penguin-animation');
-            if (!penguinElement || penguinAnimationInterval) return;
+        function populateDucks() {
+            const container = document.getElementById('duck-container');
+            if (!container) return;
 
-            let frameCount = 0;
-            const maxFrames = Math.floor(duration / 400);
+            container.innerHTML = '';
+            duckElements = [];
+            duckFrameCounters = [];
 
-            penguinAnimationInterval = setInterval(() => {
-                currentPenguinFrame = (currentPenguinFrame + 1) % penguinFrames.length;
-                penguinElement.textContent = penguinFrames[currentPenguinFrame];
-                frameCount++;
+            // Create a temporary duck to measure its width
+            const temp = document.createElement('div');
+            temp.className = 'penguin';
+            temp.style.fontSize = '8px';
+            temp.style.margin = '5px';
+            temp.style.display = 'inline-block';
+            temp.style.visibility = 'hidden';
+            temp.textContent = duckFrames[0];
+            container.appendChild(temp);
 
-                if (frameCount >= maxFrames) {
-                    clearInterval(penguinAnimationInterval);
-                    penguinAnimationInterval = null;
-                    // Reset to first frame
-                    penguinElement.textContent = penguinFrames[0];
-                    currentPenguinFrame = 0;
-                }
+            const duckWidth = temp.offsetWidth + 10; // width + margin
+            const containerWidth = container.clientWidth - 30; // minus padding
+            const count = Math.max(1, Math.floor(containerWidth / duckWidth));
+
+            container.removeChild(temp);
+
+            for (let i = 0; i < count; i++) {
+                const duck = document.createElement('div');
+                duck.className = 'penguin';
+                duck.style.fontSize = '8px';
+                duck.style.margin = '5px';
+                duck.style.display = 'inline-block';
+                duck.textContent = duckFrames[0];
+                container.appendChild(duck);
+                duckElements.push(duck);
+                duckFrameCounters.push(i % duckFrames.length); // offset frames for variety
+            }
+        }
+
+        // Animate all ducks forever
+        function startDuckAnimation() {
+            setInterval(() => {
+                duckElements.forEach((duck, i) => {
+                    duckFrameCounters[i] = (duckFrameCounters[i] + 1) % duckFrames.length;
+                    duck.textContent = duckFrames[duckFrameCounters[i]];
+                });
             }, 400);
         }
 
-        // Play penguin animation on page load
+        // Initialize ducks on load
         window.addEventListener('load', () => {
-            setTimeout(() => animatePenguin(3000), 500);
+            populateDucks();
+            startDuckAnimation();
         });
 
-        // Play penguin animation occasionally (every 30 seconds)
-        setInterval(() => {
-            if (!penguinAnimationInterval && Math.random() > 0.5) {
-                animatePenguin(2000);
-            }
-        }, 30000);
+        // Recalculate duck count on resize
+        window.addEventListener('resize', () => {
+            populateDucks();
+        });
+
+        // Keep backward compat for language switch
+        function animatePenguin() {}
 
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
