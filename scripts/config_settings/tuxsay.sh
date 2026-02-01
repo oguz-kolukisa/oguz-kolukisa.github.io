@@ -13,6 +13,9 @@ if ! command -v cowsay &> /dev/null; then
   sudo apt-get install -y cowsay
 fi
 
+# Target file: shared config if set, else bashrc
+TARGET="${OGUZ_SHELL_CONFIG:-$HOME/.bashrc}"
+
 # Define separator markers
 SEPARATOR_START="# ========== TUXSAY CONFIG START =========="
 SEPARATOR_END="# ========== TUXSAY CONFIG END =========="
@@ -35,20 +38,26 @@ alias clear=\"command clear && fortune_tuxsay\"
 $SEPARATOR_END
 "
 
-# Remove old tuxsay configuration if it exists
-if grep -q "$SEPARATOR_START" ~/.bashrc; then
-  printf "Removing old tuxsay configuration...\n"
+# Always remove old tuxsay and penguin configuration from bashrc
+if grep -q "$SEPARATOR_START" ~/.bashrc 2>/dev/null; then
+  printf "Removing old tuxsay configuration from ~/.bashrc...\n"
   sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" ~/.bashrc
 fi
-
-# Remove old penguin configuration if it exists
-if grep -q "# ========== PENGUIN CONFIG START ==========" ~/.bashrc; then
-  printf "Removing old penguin configuration...\n"
+if grep -q "# ========== PENGUIN CONFIG START ==========" ~/.bashrc 2>/dev/null; then
+  printf "Removing old penguin configuration from ~/.bashrc...\n"
   sed -i '\|# ========== PENGUIN CONFIG START ==========|,\|# ========== PENGUIN CONFIG END ==========|d' ~/.bashrc
 fi
 
-# Add new tuxsay configuration
-printf "Adding fortune tuxsay configuration to ~/.bashrc...\n"
-echo "$TUXSAY_CONFIG" >> ~/.bashrc
+# If writing to shared config, remove old block from that file too
+if [ "$TARGET" != "$HOME/.bashrc" ] && [ -f "$TARGET" ]; then
+  if grep -q "$SEPARATOR_START" "$TARGET" 2>/dev/null; then
+    printf "Removing old tuxsay configuration from shared config...\n"
+    sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" "$TARGET"
+  fi
+fi
+
+# Add new tuxsay configuration to target
+printf "Adding fortune tuxsay configuration to %s...\n" "$TARGET"
+echo "$TUXSAY_CONFIG" >> "$TARGET"
 
 printf "Fortune Tuxsay configuration complete!\n"

@@ -8,7 +8,7 @@ if command -v claude &>/dev/null; then
 fi
 
 printf "Installing Claude Code...\n"
-curl -fsSL https://claude.ai/install.sh | bash
+wget -qO- https://claude.ai/install.sh | bash
 
 # Verify installation
 if ! command -v claude &>/dev/null; then

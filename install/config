@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+printf "Downloading configuration installer...\n"
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/scripts/config_settings/install_all_configs.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  printf "Error: Failed to download script.\n" >&2
+  rm -f "$TEMP_SCRIPT"
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+printf "Download complete.\n\n"
+
+printf "Running all configurations (LSD, Tuxsay, Sudo users)...\n"
+bash "$TEMP_SCRIPT"
+
+# Cleanup
+rm -f "$TEMP_SCRIPT"

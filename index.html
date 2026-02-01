@@ -14,6 +14,7 @@
     <meta name="twitter:title" content="Oguz Kolukisa | Terminal">
     <meta name="twitter:description" content="Oguz Kolukisa's Personal Website">
     <meta name="twitter:image" content="https://oguz-kolukisa.github.io/og-image.png">
+    <link rel="canonical" href="https://oguz-kolukisa.github.io/">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0e27'/%3E%3Ctext x='50' y='50' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='10' fill='%2300ff41' xml:space='preserve'%3E%3Ctspan x='50' dy='-21'%3E .--.%3C/tspan%3E%3Ctspan x='50' dy='7'%3E|o_o |%3C/tspan%3E%3Ctspan x='50' dy='7'%3E|:_/ |%3C/tspan%3E%3Ctspan x='50' dy='7'%3E// \ \%3C/tspan%3E%3Ctspan x='50' dy='7'%3E(| | )%3C/tspan%3E%3Ctspan x='50' dy='7'%3E/'\ _/'\%3C/tspan%3E%3Ctspan x='50' dy='7'%3E\___)=(___/%3C/tspan%3E%3C/text%3E%3C/svg%3E">
     <title>Oguz Kolukisa | Terminal</title>
     <style>
@@ -61,6 +62,21 @@
         @media (max-width: 768px) {
             #matrix-canvas {
                 opacity: 0.25;
+            }
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            #matrix-canvas {
+                opacity: 0.08;
+                animation: none;
+            }
+            .cursor {
+                animation: none;
+                opacity: 1;
+            }
+            .duck {
+                animation: none;
             }
         }
 
@@ -704,10 +720,10 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="fullInstallation">Full Installation</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, Claude Code, LSD config, and Tuxsay config</div>
+                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, Sudo users)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install.sh | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -717,8 +733,8 @@
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -732,48 +748,57 @@
                             <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" class="view-packages-link" data-i18n="viewPackages">[view packages]</a>
                         </div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/basic | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/github | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/code | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
                         </div>
                     </div>
+                </div>
 
+                <div class="endpoint-section">
+                    <h3 data-i18n="aiCodingAssistants">AI Coding Assistants</h3>
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash')">COPY</button>
+                        </div>
+                    </div>
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="claudeCode">Claude Code (AI coding assistant)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/claude | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/claude | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash')">COPY</button>
+                        </div>
+                    </div>
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -781,18 +806,34 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="configuration">Configuration</h3>
                     <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="allConfigDesc">All configurations: LSD, Tuxsay, Sudo users (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/config | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
                         </div>
                     </div>
 
                     <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="sudoUsersConfig">Add list of users to groups (e.g. user1 user2 → sudo docker)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -875,8 +916,12 @@
                 footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]",
                 modalTitle: "[ Installation Endpoints ]",
                 fullInstallation: "Full Installation",
-                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, Claude Code, LSD config, and Tuxsay config",
+                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, Sudo users)",
+                allConfigDesc: "All configurations: LSD, Tuxsay, Sudo users (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)",
+                sudoUsersConfig: "Add list of users to groups (e.g. user1 user2 → sudo docker)",
                 individualComponents: "Individual Components",
+                aiCodingAssistants: "AI Coding Assistants",
+                cursorDesc: "Cursor agent CLI (terminal; not IDE)",
                 basicTools: "Basic development tools",
                 viewPackages: "[view packages]",
                 githubCLI: "GitHub CLI (gh)",
@@ -933,8 +978,12 @@
                 footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]",
                 modalTitle: "[ Kurulum Uç Noktaları ]",
                 fullInstallation: "Tam Kurulum",
-                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, Claude Code, LSD ve Tuxsay yapılandırması",
+                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, yapay zeka asistanları (Cursor, Claude, Copilot), Anaconda, VS Code ve tüm yapılandırmalar (LSD, Tuxsay, Sudo kullanıcıları)",
+                allConfigDesc: "Tüm yapılandırmalar: LSD, Tuxsay, Sudo kullanıcıları (~/.config/oguz-setup/shell-config.sh, bashrc'den yüklenir)",
+                sudoUsersConfig: "Kullanıcı listesini gruplara ekle (örn. user1 user2 → sudo docker)",
                 individualComponents: "Tekil Bileşenler",
+                aiCodingAssistants: "Yapay Zeka Kodlama Asistanları",
+                cursorDesc: "Cursor agent CLI (terminal; IDE değil)",
                 basicTools: "Temel geliştirme araçları",
                 viewPackages: "[paketleri görüntüle]",
                 githubCLI: "GitHub CLI (gh)",
@@ -1268,6 +1317,10 @@
         }
 
         function matrixLoop(timestamp) {
+            if (document.hidden) {
+                requestAnimationFrame(matrixLoop);
+                return;
+            }
             const interval = getDrawInterval();
             if (timestamp - lastDrawTime >= interval) {
                 draw();

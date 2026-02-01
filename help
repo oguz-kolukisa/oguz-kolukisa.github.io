@@ -7,41 +7,52 @@ cat << 'EOF'
 
 FULL INSTALLATION:
 ──────────────────
-  curl -sSL https://oguz-kolukisa.github.io/install.sh | bash
-  curl -sSL https://oguz-kolukisa.github.io/install.sh | bash -s -- -y  (auto-yes)
+  wget -qO- https://oguz-kolukisa.github.io/install.sh | bash
+  wget -qO- https://oguz-kolukisa.github.io/install.sh | bash -s -- -y  (auto-yes)
 
 INDIVIDUAL COMPONENTS:
 ──────────────────────
   Basic Tools (curl, vim, git, etc.):
-    curl -sSL https://oguz-kolukisa.github.io/install/basic | bash
+    wget -qO- https://oguz-kolukisa.github.io/install/basic | bash
 
   GitHub CLI:
-    curl -sSL https://oguz-kolukisa.github.io/install/github | bash
-
-  GitHub Copilot CLI:
-    curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash
+    wget -qO- https://oguz-kolukisa.github.io/install/github | bash
 
   Visual Studio Code:
-    curl -sSL https://oguz-kolukisa.github.io/install/code | bash
+    wget -qO- https://oguz-kolukisa.github.io/install/code | bash
 
   Anaconda Python:
-    curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash
+    wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash
+
+AI CODING ASSISTANTS (install/ai/):
+───────────────────────────────────
+  Cursor agent CLI:
+    wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash
 
   Claude Code:
-    curl -sSL https://oguz-kolukisa.github.io/install/claude | bash
+    wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash
+
+  GitHub Copilot CLI (requires GitHub CLI):
+    wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash
 
 CONFIGURATION:
 ──────────────
+  All configurations (LSD, Tuxsay, Sudo users → ~/.config/oguz-setup/shell-config.sh):
+    wget -qO- https://oguz-kolukisa.github.io/install/config | bash
+
   LSD Aliases Config (ls, ll, lt):
-    curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash
+    wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash
 
   Tuxsay Terminal Config:
-    curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash
+    wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash
+
+  Sudo users / groups (add users to groups, e.g. sudo docker):
+    wget -qO- https://oguz-kolukisa.github.io/config/sudo-users | bash
 
 HELP & INFO:
 ────────────
   Show this help:
-    curl -sSL https://oguz-kolukisa.github.io/help | bash
+    wget -qO- https://oguz-kolukisa.github.io/help | bash
 
   View full documentation:
     https://github.com/oguz-kolukisa/oguz-kolukisa.github.io
@@ -50,4 +61,3 @@ HELP & INFO:
 ║  For more details, visit the GitHub repository README           ║
 ╚══════════════════════════════════════════════════════════════════╝
 EOF
-

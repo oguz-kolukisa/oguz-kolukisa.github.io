@@ -16,6 +16,9 @@ fi
 chmod +x "$TEMP_SCRIPT"
 printf "Downloading tuxsay.sh script... Done\n"
 
+# Use shared config if present (so we don't duplicate in bashrc)
+[ -f "${HOME}/.config/oguz-setup/shell-config.sh" ] && export OGUZ_SHELL_CONFIG="${HOME}/.config/oguz-setup/shell-config.sh"
+
 printf "Running Tuxsay configuration...\n"
 bash "$TEMP_SCRIPT"
 

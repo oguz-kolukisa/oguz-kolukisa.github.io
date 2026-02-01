@@ -11,11 +11,20 @@ printf "Installing GitHub Copilot CLI...\n"
 wget -qO- https://gh.io/copilot-install | bash
 printf "GitHub Copilot CLI installed successfully!\n"
 
-# Add local bin to PATH if not already present
-if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
+# Add local bin to PATH: use shared config if present, else bashrc
+SHELL_CONFIG="${HOME}/.config/oguz-setup/shell-config.sh"
+PATH_LINE='export PATH="$PATH:$HOME/.local/bin"'
+if [ -f "$SHELL_CONFIG" ]; then
+  if ! grep -qF '.local/bin' "$SHELL_CONFIG"; then
+    echo "" >> "$SHELL_CONFIG"
+    echo "# Add local bin to PATH" >> "$SHELL_CONFIG"
+    echo "$PATH_LINE" >> "$SHELL_CONFIG"
+    printf "Added ~/.local/bin to PATH in shared config (%s)\n" "$SHELL_CONFIG"
+  fi
+elif ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
   echo "" >> ~/.bashrc
   echo "# Add local bin to PATH" >> ~/.bashrc
-  echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+  echo "$PATH_LINE" >> ~/.bashrc
   printf "Added ~/.local/bin to PATH in ~/.bashrc\n"
 fi
 

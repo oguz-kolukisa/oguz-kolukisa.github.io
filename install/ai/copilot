@@ -6,7 +6,7 @@ set -euo pipefail
 if ! command -v gh &>/dev/null; then
   printf "Error: GitHub CLI (gh) is not installed.\n" >&2
   printf "Please install GitHub CLI first using:\n" >&2
-  printf "  curl -sSL https://oguz-kolukisa.github.io/install/github | bash\n" >&2
+  printf "  wget -qO- https://oguz-kolukisa.github.io/install/github | bash\n" >&2
   exit 1
 fi
 
@@ -15,7 +15,7 @@ BASE_URL="https://oguz-kolukisa.github.io"
 
 printf "Downloading copilot.sh script...\n"
 TEMP_SCRIPT=$(mktemp)
-wget -q "$BASE_URL/scripts/install_scripts/copilot.sh" -O "$TEMP_SCRIPT"
+wget -q "$BASE_URL/scripts/install_scripts/ai/copilot.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
   printf "Error: Failed to download script.\n" >&2
   rm -f "$TEMP_SCRIPT"

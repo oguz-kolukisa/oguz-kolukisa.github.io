@@ -5,18 +5,18 @@ set -euo pipefail
 # Base URL for downloading scripts
 BASE_URL="https://oguz-kolukisa.github.io"
 
-printf "Downloading claude.sh script...\n"
+printf "Downloading sudo_users.sh script...\n"
 TEMP_SCRIPT=$(mktemp)
-wget -q "$BASE_URL/scripts/install_scripts/claude.sh" -O "$TEMP_SCRIPT"
+wget -q "$BASE_URL/scripts/config_settings/sudo_users.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
   printf "Error: Failed to download script.\n" >&2
   rm -f "$TEMP_SCRIPT"
   exit 1
 fi
 chmod +x "$TEMP_SCRIPT"
-printf "Downloading claude.sh script... Done\n"
+printf "Downloading sudo_users.sh script... Done\n"
 
-printf "Running Claude Code installation...\n"
+printf "Running sudo users / group configuration...\n"
 bash "$TEMP_SCRIPT"
 
 # Cleanup
@@ -24,5 +24,5 @@ rm -f "$TEMP_SCRIPT"
 
 printf "\n"
 printf "================================\n"
-printf "Claude Code installation complete!\n"
+printf "Sudo users configuration complete!\n"
 printf "================================\n"

@@ -9,6 +9,9 @@ if ! command -v lsd &> /dev/null; then
   sudo apt-get install -y lsd
 fi
 
+# Target file: shared config if set, else bashrc
+TARGET="${OGUZ_SHELL_CONFIG:-$HOME/.bashrc}"
+
 # Define separator markers
 SEPARATOR_START="# ========== LSD CONFIG START =========="
 SEPARATOR_END="# ========== LSD CONFIG END =========="
@@ -35,14 +38,20 @@ lt() {
 $SEPARATOR_END
 "
 
-# Remove old lsd configuration if it exists
-if grep -q "$SEPARATOR_START" ~/.bashrc; then
-  printf "Removing old lsd configuration...\n"
+# Always remove old lsd configuration from bashrc (so we don't leave duplicates)
+if grep -q "$SEPARATOR_START" ~/.bashrc 2>/dev/null; then
+  printf "Removing old lsd configuration from ~/.bashrc...\n"
   sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" ~/.bashrc
 fi
 
-# Add new lsd configuration
-printf "Adding lsd configuration to ~/.bashrc...\n"
-echo "$LSD_CONFIG" >> ~/.bashrc
+# If writing to shared config, remove old block from that file too
+if [ "$TARGET" != "$HOME/.bashrc" ] && [ -f "$TARGET" ] && grep -q "$SEPARATOR_START" "$TARGET" 2>/dev/null; then
+  printf "Removing old lsd configuration from shared config...\n"
+  sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" "$TARGET"
+fi
+
+# Add new lsd configuration to target
+printf "Adding lsd configuration to %s...\n" "$TARGET"
+echo "$LSD_CONFIG" >> "$TARGET"
 
 printf "LSD configuration complete!\n"

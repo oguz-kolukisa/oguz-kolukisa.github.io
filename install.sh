@@ -23,22 +23,19 @@ BASE_URL="https://oguz-kolukisa.github.io"
 printf "Downloading installation scripts...\n"
 TEMP_DIR=$(mktemp -d)
 SCRIPT_DIR="$TEMP_DIR"
-mkdir -p "$SCRIPT_DIR/install_scripts"
-mkdir -p "$SCRIPT_DIR/config_settings"
+mkdir -p "$SCRIPT_DIR/install_scripts/ai"
 
-# Download all required scripts
+# Download install scripts only (config is applied via single config installer at the end)
 wget -q "$BASE_URL/scripts/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
 wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
-wget -q "$BASE_URL/scripts/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
+wget -q "$BASE_URL/scripts/install_scripts/ai/copilot.sh" -O "$SCRIPT_DIR/install_scripts/ai/copilot.sh"
+wget -q "$BASE_URL/scripts/install_scripts/ai/cursor.sh" -O "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
+wget -q "$BASE_URL/scripts/install_scripts/ai/claude.sh" -O "$SCRIPT_DIR/install_scripts/ai/claude.sh"
 wget -q "$BASE_URL/scripts/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
 wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
-wget -q "$BASE_URL/scripts/install_scripts/claude.sh" -O "$SCRIPT_DIR/install_scripts/claude.sh"
-wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
-wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$SCRIPT_DIR/config_settings/lsd.sh"
 printf "Download complete!\n"
 
-chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
-chmod +x "$SCRIPT_DIR/config_settings/"*.sh
+chmod +x "$SCRIPT_DIR/install_scripts/"*.sh "$SCRIPT_DIR/install_scripts/ai/"*.sh
 
 # Cleanup function to remove temp directory on exit
 trap 'rm -rf "$TEMP_DIR"' EXIT
@@ -68,20 +65,44 @@ else
 fi
 if [[ "$install_gh" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/github.sh"
-  
-  # Ask to install GitHub Copilot CLI
-  if [ "$AUTO_YES" = true ]; then
-    install_copilot="y"
-  else
-    read -p "Do you want to install GitHub Copilot CLI? (y/n): " install_copilot </dev/tty
-  fi
-  if [[ "$install_copilot" =~ ^[Yy]$ ]]; then
-    bash "$SCRIPT_DIR/install_scripts/copilot.sh"
-  else
-    printf "Skipping GitHub Copilot CLI installation.\n"
-  fi
 else
   printf "Skipping GitHub CLI installation.\n"
+fi
+
+# --- AI Coding Assistants (Cursor, Claude Code, Copilot CLI) ---
+printf "\n--- AI Coding Assistants ---\n"
+
+if [ "$AUTO_YES" = true ]; then
+  install_cursor="y"
+else
+  read -p "Do you want to install Cursor agent CLI? (y/n): " install_cursor </dev/tty
+fi
+if [[ "$install_cursor" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
+else
+  printf "Skipping Cursor installation.\n"
+fi
+
+if [ "$AUTO_YES" = true ]; then
+  install_claude="y"
+else
+  read -p "Do you want to install Claude Code (AI coding assistant)? (y/n): " install_claude </dev/tty
+fi
+if [[ "$install_claude" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/ai/claude.sh"
+else
+  printf "Skipping Claude Code installation.\n"
+fi
+
+if [ "$AUTO_YES" = true ]; then
+  install_copilot="y"
+else
+  read -p "Do you want to install GitHub Copilot CLI? (y/n): " install_copilot </dev/tty
+fi
+if [[ "$install_copilot" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/ai/copilot.sh"
+else
+  printf "Skipping GitHub Copilot CLI installation.\n"
 fi
 
 # Ask to install Anaconda
@@ -108,21 +129,13 @@ else
   printf "Skipping Visual Studio Code installation.\n"
 fi
 
-# Ask to install Claude Code
-if [ "$AUTO_YES" = true ]; then
-  install_claude="y"
-else
-  read -p "Do you want to install Claude Code? (y/n): " install_claude </dev/tty
-fi
-if [[ "$install_claude" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/claude.sh"
-else
-  printf "Skipping Claude Code installation.\n"
-fi
-
-# Apply configurations
-bash "$SCRIPT_DIR/config_settings/lsd.sh"
-bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
+# Apply all configurations (LSD, Tuxsay, Sudo users) via single config installer
+printf "\n--- Configurations ---\n"
+TEMP_CONFIG=$(mktemp)
+wget -q "$BASE_URL/scripts/config_settings/install_all_configs.sh" -O "$TEMP_CONFIG"
+chmod +x "$TEMP_CONFIG"
+bash "$TEMP_CONFIG"
+rm -f "$TEMP_CONFIG"
 
 printf "\n"
 printf "================================\n"
