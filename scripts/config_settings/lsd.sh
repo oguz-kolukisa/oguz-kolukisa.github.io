@@ -20,7 +20,7 @@ $SEPARATOR_START
 # lsd aliases
 alias ls='lsd'
 alias ll='lsd -l'
-lt() { lsd --tree --depth \"\${1:-3}\"; }
+lt() { lsd --tree --depth \"\${1:-2}\"; }
 
 $SEPARATOR_END
 "
