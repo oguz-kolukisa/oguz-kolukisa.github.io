@@ -285,14 +285,6 @@
             font-size: 0.9em;
         }
 
-        /* Command copy container */
-        .command-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
         /* Modal styles */
         .modal-overlay {
             display: none;
@@ -498,18 +490,6 @@
                 width: 100%;
             }
 
-            .command-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .command-container code {
-                margin-bottom: 10px;
-            }
-
-            .command-container button {
-                width: 100%;
-            }
         }
 
         /* Collapsible details/summary sections */
@@ -576,16 +556,6 @@
             font-size: 0.95em;
         }
 
-        .install-command {
-            flex: 1;
-            display: block;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 3px;
-            color: var(--accent);
-            user-select: all;
-        }
-
         .action-btn {
             padding: 10px 20px;
             background: transparent;
@@ -596,14 +566,6 @@
             font-family: 'Courier New', monospace;
             font-weight: bold;
             transition: all 0.3s ease;
-        }
-
-        .copy-feedback {
-            color: var(--text-secondary);
-            font-size: 0.85em;
-            margin-top: 8px;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
 
         .endpoints-btn-wrapper {
@@ -722,52 +684,7 @@
             <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
             
             <div class="setup-box">
-                <p class="setup-desc" data-i18n="setupDesc">
-                    Automated Linux setup script for development tools
-                </p>
-                <div class="command-container">
-                    <code id="install-command" class="install-command">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
-                    <button class="action-btn" onclick="copyToClipboard()" data-i18n="copy">
-                        COPY
-                    </button>
-                </div>
-                <p id="copy-feedback" class="copy-feedback" data-i18n="copyFeedback">
-                    ✓ Copied to clipboard!
-                </p>
-                <div class="endpoints-btn-wrapper">
-                    <button class="action-btn" onclick="openModal()" aria-label="View all installation endpoints" data-i18n-aria="ariaViewEndpoints" data-i18n="viewEndpoints">
-                        📋 View All Endpoints
-                    </button>
-                </div>
-            </div>
-            
-            <div class="dragon-divider" data-i18n="connections">[ ⚔ CONNECTIONS ⚔ ]</div>
-            
-            <div class="links">
-                <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="github">github</a>
-                <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="linkedin">linkedin</a>
-                <a href="mailto:oguzkolukisa@gmail.com" class="link-button" data-i18n="email">email</a>
-            </div>
-            
-            <!-- Walking duck greeting -->
-            <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
-            </div>
-            
-            <footer>
-                <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
-            </footer>
-        </div>
-    </div>
-
-    <!-- Modal for all endpoints -->
-    <div id="endpoints-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div id="modal-title" class="modal-title" data-i18n="modalTitle">[ Installation Endpoints ]</div>
-                <button class="modal-close" onclick="closeModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
-            </div>
-            <div class="modal-body">
-                <!-- 1. Full Installation -->
+                <!-- Full Installation -->
                 <div class="endpoint-section">
                     <h3 data-i18n="fullInstallation">⚡ Full Installation</h3>
                     <div class="endpoint-item">
@@ -779,7 +696,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Configuration -->
+                <!-- Configuration -->
                 <div class="endpoint-section">
                     <h3 data-i18n="configuration">⚙ Configuration</h3>
                     <div class="endpoint-item">
@@ -820,7 +737,52 @@
                     </details>
                 </div>
 
-                <!-- 3. Individual Components (collapsible) -->
+                <div class="endpoints-btn-wrapper">
+                    <button class="action-btn" onclick="openModal()" aria-label="View all installation endpoints" data-i18n-aria="ariaViewEndpoints" data-i18n="viewEndpoints">
+                        📋 View All Endpoints
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dragon-divider" data-i18n="connections">[ ⚔ CONNECTIONS ⚔ ]</div>
+            
+            <div class="links">
+                <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="github">github</a>
+                <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="linkedin">linkedin</a>
+                <a href="mailto:oguzkolukisa@gmail.com" class="link-button" data-i18n="email">email</a>
+            </div>
+            
+            <!-- Walking duck greeting -->
+            <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
+            </div>
+            
+            <footer>
+                <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal for all endpoints -->
+    <div id="endpoints-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="modal-title" class="modal-title" data-i18n="modalTitle">[ Installation Endpoints ]</div>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- 1. Help -->
+                <div class="endpoint-section">
+                    <h3 data-i18n="help">❓ Help</h3>
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Individual Components (collapsible) -->
                 <div class="endpoint-section">
                     <details>
                         <summary data-i18n="individualComponents">📦 Individual Components</summary>
@@ -893,18 +855,6 @@
                     </details>
                 </div>
 
-                <!-- 5. Help -->
-                <div class="endpoint-section">
-                    <h3 data-i18n="help">❓ Help</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -972,9 +922,7 @@
                 prompt: "cat /home/oguz/profile.txt",
                 tagline: "// Humanoid Robot",
                 quickSetup: "[ ⚔ QUICK SETUP ⚔ ]",
-                setupDesc: "Automated Linux setup script for development tools",
                 copy: "COPY",
-                copyFeedback: "✓ Copied to clipboard!",
                 viewEndpoints: "📋 View All Endpoints",
                 connections: "[ ⚔ CONNECTIONS ⚔ ]",
                 github: "github",
@@ -1035,9 +983,7 @@
                 prompt: "cat /home/oguz/profil.txt",
                 tagline: "// Humanoid Robot",
                 quickSetup: "[ ⚔ HIZLI KURULUM ⚔ ]",
-                setupDesc: "Geliştirme araçları için otomatik Linux kurulum betiği",
                 copy: "KOPYALA",
-                copyFeedback: "✓ Panoya kopyalandı!",
                 viewEndpoints: "📋 Tüm Uç Noktaları Göster",
                 connections: "[ ⚔ BAĞLANTILAR ⚔ ]",
                 github: "github",
@@ -1157,21 +1103,6 @@
             // Update translations
             updateTranslations();
         });
-
-        // Copy to clipboard function
-        function copyToClipboard() {
-            const command = document.getElementById('install-command').textContent;
-            const feedback = document.getElementById('copy-feedback');
-            
-            navigator.clipboard.writeText(command).then(() => {
-                feedback.style.opacity = '1';
-                setTimeout(() => {
-                    feedback.style.opacity = '0';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-            });
-        }
 
         // Focus trap for modals
         let activeFocusTrap = null;
