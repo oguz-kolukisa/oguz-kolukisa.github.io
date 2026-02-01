@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Oguz Kolukisa's Personal Website">
+    <meta name="theme-color" content="#0a0e27">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0e27'/%3E%3Ctext x='50' y='50' text-anchor='middle' dominant-baseline='central' font-family='monospace' font-size='10' fill='%2300ff41' xml:space='preserve'%3E%3Ctspan x='50' dy='-21'%3E .--.%3C/tspan%3E%3Ctspan x='50' dy='7'%3E|o_o |%3C/tspan%3E%3Ctspan x='50' dy='7'%3E|:_/ |%3C/tspan%3E%3Ctspan x='50' dy='7'%3E// \ \%3C/tspan%3E%3Ctspan x='50' dy='7'%3E(| | )%3C/tspan%3E%3Ctspan x='50' dy='7'%3E/'\ _/'\%3C/tspan%3E%3Ctspan x='50' dy='7'%3E\___)=(___/%3C/tspan%3E%3C/text%3E%3C/svg%3E">
     <title>Oguz Kolukisa | Terminal</title>
     <style>
         * {
@@ -480,6 +482,94 @@
             }
         }
 
+        .setup-box {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .setup-desc {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .install-command {
+            flex: 1;
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 3px;
+            color: var(--accent);
+            user-select: all;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .copy-feedback {
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .endpoints-btn-wrapper {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        #duck-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(0, 255, 65, 0.03);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .duck {
+            font-size: 8px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .view-packages-link {
+            color: var(--accent);
+            text-decoration: underline;
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+
+        .modal-content--narrow {
+            max-width: 600px;
+        }
+
+        .package-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-secondary);
+        }
+
+        .package-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
         @media (max-width: 480px) {
             body {
                 padding: 5px;
@@ -530,8 +620,8 @@
             <div class="terminal-button"></div>
             <div class="terminal-title">okolukisa@computer:~</div>
             <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English">EN</button>
-                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish">TR</button>
+                <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English" data-i18n-aria="ariaLangEn">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish" data-i18n-aria="ariaLangTr">TR</button>
             </div>
         </div>
         <div class="terminal-body">
@@ -551,21 +641,21 @@
             
             <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
             
-            <div style="margin-bottom: 30px; padding: 15px; background: rgba(0, 255, 65, 0.05); border: 1px solid var(--border-color); border-radius: 5px;">
-                <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95em;" data-i18n="setupDesc">
+            <div class="setup-box">
+                <p class="setup-desc" data-i18n="setupDesc">
                     Automated Linux setup script for development tools
                 </p>
                 <div class="command-container">
-                    <code id="install-command" style="flex: 1; display: block; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 3px; color: var(--accent); user-select: all;">wget -qO- https://oguz-kolukisa.github.io/install/main | bash</code>
-                    <button onclick="copyToClipboard()" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;" data-i18n="copy">
+                    <code id="install-command" class="install-command">wget -qO- https://oguz-kolukisa.github.io/install/main | bash</code>
+                    <button class="action-btn" onclick="copyToClipboard()" data-i18n="copy">
                         COPY
                     </button>
                 </div>
-                <p id="copy-feedback" style="color: var(--text-secondary); font-size: 0.85em; margin-top: 8px; opacity: 0; transition: opacity 0.3s;" data-i18n="copyFeedback">
+                <p id="copy-feedback" class="copy-feedback" data-i18n="copyFeedback">
                     ✓ Copied to clipboard!
                 </p>
-                <div style="margin-top: 15px; text-align: center;">
-                    <button onclick="openModal()" aria-label="View all installation endpoints" style="padding: 10px 20px; background: transparent; color: var(--accent); border: 2px solid var(--accent); border-radius: 4px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.3s ease;" data-i18n="viewEndpoints">
+                <div class="endpoints-btn-wrapper">
+                    <button class="action-btn" onclick="openModal()" aria-label="View all installation endpoints" data-i18n-aria="ariaViewEndpoints" data-i18n="viewEndpoints">
                         📋 View All Endpoints
                     </button>
                 </div>
@@ -576,11 +666,11 @@
             <div class="links">
                 <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="github">github</a>
                 <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="linkedin">linkedin</a>
-                <a href="mailto:your-email@domain.com" class="link-button" data-i18n="email">email</a>
+                <a href="mailto:oguzkolukisa@gmail.com" class="link-button" data-i18n="email">email</a>
             </div>
             
             <!-- Walking duck greeting -->
-            <div id="duck-container" style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 30px; padding: 15px; background: rgba(0, 255, 65, 0.03); border-radius: 5px; overflow: hidden;">
+            <div id="duck-container">
             </div>
             
             <footer>
@@ -594,7 +684,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div id="modal-title" class="modal-title" data-i18n="modalTitle">[ Installation Endpoints ]</div>
-                <button class="modal-close" onclick="closeModal()" aria-label="Close modal">✕</button>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
             </div>
             <div class="modal-body">
                 <div class="endpoint-section">
@@ -603,65 +693,7 @@
                         <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install.sh | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="individualComponents">Individual Components</h3>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description">
-                            <span data-i18n="basicTools">Basic development tools</span>
-                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" style="color: var(--accent); text-decoration: underline; margin-left: 5px; font-size: 0.9em;" data-i18n="viewPackages">[view packages]</a>
-                        </div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/basic | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/github | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
-                        </div>
-                    </div>
-
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/code | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="configuration">Configuration</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -672,63 +704,122 @@
                         <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')">COPY</button>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/help | bash')">COPY</button>
                         </div>
                     </div>
                 </div>
+
+                <div class="endpoint-section">
+                    <h3 data-i18n="individualComponents">Individual Components</h3>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description">
+                            <span data-i18n="basicTools">Basic development tools</span>
+                            <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" class="view-packages-link" data-i18n="viewPackages">[view packages]</a>
+                        </div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/basic | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/github | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/copilot | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/install/code | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint-section">
+                    <h3 data-i18n="configuration">Configuration</h3>
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <!-- Modal for Basic Tools Details -->
     <div id="basic-details-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="basic-modal-title" onclick="closeBasicDetailsModalOnOverlay(event)">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content modal-content--narrow">
             <div class="modal-header">
                 <div id="basic-modal-title" class="modal-title" data-i18n="basicModalTitle">[ Basic Tools Packages ]</div>
-                <button class="modal-close" onclick="closeBasicDetailsModal()" aria-label="Close modal">✕</button>
+                <button class="modal-close" onclick="closeBasicDetailsModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
             </div>
             <div class="modal-body">
                 <div class="endpoint-section">
                     <h3 data-i18n="devTools">Development Tools</h3>
-                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
+                    <ul class="package-list">
+                        <li>📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
+                        <li>📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
+                        <li>📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
                     <h3 data-i18n="buildTools">Build Tools</h3>
-                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>cmake</code> - <span data-i18n="descCmake">Cross-platform build system</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>pkg-config</code> - <span data-i18n="descPkgConfig">Package configuration tool</span></li>
+                    <ul class="package-list">
+                        <li>📦 <code>cmake</code> - <span data-i18n="descCmake">Cross-platform build system</span></li>
+                        <li>📦 <code>pkg-config</code> - <span data-i18n="descPkgConfig">Package configuration tool</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
                     <h3 data-i18n="networkTools">Network Tools</h3>
-                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>net-tools</code> - <span data-i18n="descNetTools">Network utilities (ifconfig, netstat)</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>openssh-client</code> - <span data-i18n="descOpenssh">SSH client</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>nmap</code> - <span data-i18n="descNmap">Network scanner</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>telnet</code> - <span data-i18n="descTelnet">Telnet client</span></li>
+                    <ul class="package-list">
+                        <li>📦 <code>net-tools</code> - <span data-i18n="descNetTools">Network utilities (ifconfig, netstat)</span></li>
+                        <li>📦 <code>openssh-client</code> - <span data-i18n="descOpenssh">SSH client</span></li>
+                        <li>📦 <code>nmap</code> - <span data-i18n="descNmap">Network scanner</span></li>
+                        <li>📦 <code>telnet</code> - <span data-i18n="descTelnet">Telnet client</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
                     <h3 data-i18n="compressionTools">Compression Tools</h3>
-                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="descZip">ZIP archive tools</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>unrar</code> - <span data-i18n="descUnrar">RAR archive extractor</span></li>
+                    <ul class="package-list">
+                        <li>📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="descZip">ZIP archive tools</span></li>
+                        <li>📦 <code>unrar</code> - <span data-i18n="descUnrar">RAR archive extractor</span></li>
                     </ul>
                 </div>
                 
                 <div class="endpoint-section">
                     <h3 data-i18n="systemMonitoring">System Monitoring</h3>
-                    <ul style="list-style: none; padding-left: 0; color: var(--text-secondary);">
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>htop</code> - <span data-i18n="descHtop">Interactive process viewer</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>tmux</code> - <span data-i18n="descTmux">Terminal multiplexer</span></li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.1);">📦 <code>sysstat</code> - <span data-i18n="descSysstat">System performance tools</span></li>
+                    <ul class="package-list">
+                        <li>📦 <code>htop</code> - <span data-i18n="descHtop">Interactive process viewer</span></li>
+                        <li>📦 <code>tmux</code> - <span data-i18n="descTmux">Terminal multiplexer</span></li>
+                        <li>📦 <code>sysstat</code> - <span data-i18n="descSysstat">System performance tools</span></li>
                     </ul>
                 </div>
             </div>
@@ -771,6 +862,13 @@
                 networkTools: "Network Tools",
                 compressionTools: "Compression Tools",
                 systemMonitoring: "System Monitoring",
+                copied: "✓ COPIED",
+                pageTitle: "Oguz Kolukisa | Terminal",
+                metaDescription: "Oguz Kolukisa's Personal Website",
+                ariaLangEn: "Switch to English",
+                ariaLangTr: "Switch to Turkish",
+                ariaViewEndpoints: "View all installation endpoints",
+                ariaCloseModal: "Close modal",
                 descCurl: "Command line tool for transferring data",
                 descVim: "Text editor",
                 descGit: "Version control system",
@@ -819,6 +917,13 @@
                 networkTools: "Ağ Araçları",
                 compressionTools: "Sıkıştırma Araçları",
                 systemMonitoring: "Sistem İzleme",
+                copied: "✓ KOPYALANDI",
+                pageTitle: "Oguz Kolukisa | Terminal",
+                metaDescription: "Oguz Kolukisa'nın Kişisel Web Sitesi",
+                ariaLangEn: "İngilizce'ye geç",
+                ariaLangTr: "Türkçe'ye geç",
+                ariaViewEndpoints: "Tüm kurulum uç noktalarını görüntüle",
+                ariaCloseModal: "Pencereyi kapat",
                 descCurl: "Veri aktarımı için komut satırı aracı",
                 descVim: "Metin düzenleyici",
                 descGit: "Sürüm kontrol sistemi",
@@ -848,6 +953,27 @@
                     element.textContent = i18n[currentLang][key];
                 }
             });
+
+            // Update aria-label translations
+            const ariaElements = document.querySelectorAll('[data-i18n-aria]');
+            ariaElements.forEach(element => {
+                const key = element.getAttribute('data-i18n-aria');
+                if (i18n[currentLang] && i18n[currentLang][key]) {
+                    element.setAttribute('aria-label', i18n[currentLang][key]);
+                }
+            });
+
+            // Update html lang attribute
+            document.documentElement.lang = currentLang;
+
+            // Update page title and meta description
+            if (i18n[currentLang].pageTitle) {
+                document.title = i18n[currentLang].pageTitle;
+            }
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && i18n[currentLang].metaDescription) {
+                metaDesc.setAttribute('content', i18n[currentLang].metaDescription);
+            }
         }
 
         // Function to switch language
@@ -922,10 +1048,10 @@
 
         function copyEndpoint(button, text) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
-                button.textContent = '✓ COPIED';
+                const originalText = i18n[currentLang].copy || 'COPY';
+                button.textContent = i18n[currentLang].copied || '✓ COPIED';
                 button.classList.add('copied');
-                
+
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.classList.remove('copied');
@@ -983,10 +1109,7 @@
 
             // Create a temporary duck to measure its width
             const temp = document.createElement('div');
-            temp.className = 'penguin';
-            temp.style.fontSize = '8px';
-            temp.style.margin = '5px';
-            temp.style.display = 'inline-block';
+            temp.className = 'penguin duck';
             temp.style.visibility = 'hidden';
             temp.textContent = duckFrames[0];
             container.appendChild(temp);
@@ -999,10 +1122,7 @@
 
             for (let i = 0; i < count; i++) {
                 const duck = document.createElement('div');
-                duck.className = 'penguin';
-                duck.style.fontSize = '8px';
-                duck.style.margin = '5px';
-                duck.style.display = 'inline-block';
+                duck.className = 'penguin duck';
                 duck.textContent = duckFrames[0];
                 container.appendChild(duck);
                 duckElements.push(duck);
@@ -1011,8 +1131,11 @@
         }
 
         // Animate all ducks forever
+        let duckAnimationInterval = null;
+
         function startDuckAnimation() {
-            setInterval(() => {
+            if (duckAnimationInterval) clearInterval(duckAnimationInterval);
+            duckAnimationInterval = setInterval(() => {
                 duckElements.forEach((duck, i) => {
                     duckFrameCounters[i] = (duckFrameCounters[i] + 1) % duckFrames.length;
                     duck.textContent = duckFrames[duckFrameCounters[i]];
@@ -1029,6 +1152,7 @@
         // Recalculate duck count on resize
         window.addEventListener('resize', () => {
             populateDucks();
+            startDuckAnimation();
         });
 
         // Keep backward compat for language switch
@@ -1040,14 +1164,14 @@
 
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~';
         const fontSize = 14;
-        
+
         let drops = [];
-        let matrixInterval = null;
+        let lastDrawTime = 0;
 
         function initMatrix() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            
+
             const columns = Math.floor(canvas.width / fontSize);
             drops = [];
             for (let i = 0; i < columns; i++) {
@@ -1077,15 +1201,21 @@
             return window.innerWidth <= 768 ? 50 : 35;
         }
 
+        function matrixLoop(timestamp) {
+            const interval = getDrawInterval();
+            if (timestamp - lastDrawTime >= interval) {
+                draw();
+                lastDrawTime = timestamp;
+            }
+            requestAnimationFrame(matrixLoop);
+        }
+
         // Initialize and start
         initMatrix();
-        matrixInterval = setInterval(draw, getDrawInterval());
+        requestAnimationFrame(matrixLoop);
 
         window.addEventListener('resize', () => {
             initMatrix();
-            // Restart interval with appropriate speed for new screen size
-            if (matrixInterval) clearInterval(matrixInterval);
-            matrixInterval = setInterval(draw, getDrawInterval());
         });
     </script>
 </body>
