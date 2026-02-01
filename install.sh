@@ -40,11 +40,11 @@ chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
 chmod +x "$SCRIPT_DIR/config_settings/"*.sh
 
 # Cleanup function to remove temp directory on exit
-trap "rm -rf $TEMP_DIR" EXIT
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
 printf "\nUpdating system packages...\n"
-sudo apt-get update -qq 2>&1 >/dev/null
-sudo apt-get upgrade -y -qq 2>&1 >/dev/null
+sudo apt-get update -qq >/dev/null 2>&1
+sudo apt-get upgrade -y -qq >/dev/null 2>&1
 printf "System packages updated!\n"
 
 # Ask to install basic command files

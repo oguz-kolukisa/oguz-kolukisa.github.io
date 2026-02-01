@@ -20,7 +20,17 @@ $SEPARATOR_START
 # lsd aliases
 alias ls='lsd'
 alias ll='lsd -l'
-lt() { lsd --tree --depth \"\${1:-2}\"; }
+lt() {
+  local depth=2
+  local dir=\".\"
+  while [[ \$# -gt 0 ]]; do
+    case \"\$1\" in
+      -d|--depth) depth=\"\$2\"; shift 2 ;;
+      *) dir=\"\$1\"; shift ;;
+    esac
+  done
+  lsd --tree --depth \"\$depth\" \"\$dir\"
+}
 
 $SEPARATOR_END
 "

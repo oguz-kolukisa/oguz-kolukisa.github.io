@@ -44,7 +44,7 @@ fi
 # Remove old penguin configuration if it exists
 if grep -q "# ========== PENGUIN CONFIG START ==========" ~/.bashrc; then
   echo "Removing old penguin configuration..."
-  sed -i "/# ========== PENGUIN CONFIG START ===========/,/# ========== PENGUIN CONFIG END ===========/d" ~/.bashrc
+  sed -i '\|# ========== PENGUIN CONFIG START ==========|,\|# ========== PENGUIN CONFIG END ==========|d' ~/.bashrc
 fi
 
 # Add new tuxsay configuration

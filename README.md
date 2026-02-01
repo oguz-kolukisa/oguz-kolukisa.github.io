@@ -24,7 +24,7 @@ Install only what you need:
 ```bash
 curl -sSL https://oguz-kolukisa.github.io/install/basic | bash
 ```
-Installs: `curl`, `vim`, `git`, `cmake`, `pkg-config`, `net-tools`, `openssh-client`, `nmap`, `telnet`, `zip`, `unzip`, `unrar`, `htop`, `tmux`, `sysstat`
+Installs: `curl`, `vim`, `git`, `cmake`, `pkg-config`, `net-tools`, `openssh-client`, `nmap`, `telnet`, `zip`, `unzip`, `unrar`, `htop`, `tmux`, `sysstat`, `lsd`
 
 #### GitHub CLI
 ```bash
@@ -51,6 +51,12 @@ curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash
 Installs Anaconda3 Python distribution
 
 ## Configuration
+
+### LSD Aliases Config
+```bash
+curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash
+```
+Configures `lsd` aliases: `ls` → `lsd`, `ll` → `lsd -l`, `lt` → `lsd --tree` (supports `-d`/`--depth` and directory arguments)
 
 ### Tuxsay Terminal Config
 ```bash
@@ -98,8 +104,10 @@ curl -sSL https://oguz-kolukisa.github.io/help | bash
 │   │   ├── code.sh
 │   │   └── anaconda.sh
 │   └── config_settings/
+│       ├── lsd.sh
 │       └── tuxsay.sh
 ├── config/                   # Configuration scripts
+│   ├── lsd                  # LSD aliases configuration
 │   └── tuxsay               # Tuxsay configuration
 └── help                      # Help information
 ```
