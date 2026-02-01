@@ -5,12 +5,12 @@ set -e
 # Install fortune and cowsay if not already installed
 if ! command -v fortune &> /dev/null; then
   echo "Installing fortune..."
-  sudo apt install -y fortune-mod fortunes
+  sudo apt-get install -y fortune-mod fortunes
 fi
 
 if ! command -v cowsay &> /dev/null; then
   echo "Installing cowsay..."
-  sudo apt install -y cowsay
+  sudo apt-get install -y cowsay
 fi
 
 # Define separator markers

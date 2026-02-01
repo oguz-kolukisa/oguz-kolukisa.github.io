@@ -29,6 +29,9 @@ INDIVIDUAL COMPONENTS:
 
 CONFIGURATION:
 ──────────────
+  LSD Aliases Config (ls, ll, lt):
+    curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash
+
   Tuxsay Terminal Config:
     curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash
 

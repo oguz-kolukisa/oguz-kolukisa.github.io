@@ -8,6 +8,11 @@ BASE_URL="https://oguz-kolukisa.github.io"
 echo "Downloading github.sh script..."
 TEMP_SCRIPT=$(mktemp)
 wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  echo "Error: Failed to download script."
+  rm -f "$TEMP_SCRIPT"
+  exit 1
+fi
 chmod +x "$TEMP_SCRIPT"
 echo "Downloading github.sh script... Done"
 

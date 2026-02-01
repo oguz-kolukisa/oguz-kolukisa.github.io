@@ -5,5 +5,24 @@ set -e
 # Base URL for downloading scripts
 BASE_URL="https://oguz-kolukisa.github.io"
 
-printf "Downloading VS Code installation script...\n"
-wget -qO- "$BASE_URL/scripts/install_scripts/code.sh" | bash
+echo "Downloading code.sh script..."
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  echo "Error: Failed to download script."
+  rm -f "$TEMP_SCRIPT"
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+echo "Downloading code.sh script... Done"
+
+echo "Running VS Code installation..."
+bash "$TEMP_SCRIPT"
+
+# Cleanup
+rm -f "$TEMP_SCRIPT"
+
+echo ""
+echo "================================"
+echo "VS Code installation complete!"
+echo "================================"
