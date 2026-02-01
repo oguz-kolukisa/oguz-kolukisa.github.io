@@ -362,10 +362,11 @@
 
         .endpoint-section h3 {
             color: var(--text-secondary);
-            font-size: 1.1em;
-            margin-bottom: 15px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
+            text-align: left;
         }
 
         .endpoint-item {
@@ -688,7 +689,6 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="fullInstallation">⚡ Full Installation</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="fullInstallDesc">Installs all components: Basic tools, GitHub CLI, AI assistants (Cursor, Claude, Copilot), Anaconda, VS Code, and all configurations (LSD, Tuxsay, grpadd)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
                             <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
@@ -700,41 +700,11 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="configuration">⚙ Configuration</h3>
                     <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="allConfigDesc">All configurations: LSD, Tuxsay, grpadd (writes to ~/.config/oguz-setup/shell-config.sh, sourced from bashrc)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
                             <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/config | bash')">COPY</button>
                         </div>
                     </div>
-
-                    <details>
-                        <summary data-i18n="individualConfigs">🔧 Individual configurations</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
                 </div>
 
                 <div class="endpoints-btn-wrapper">
@@ -782,7 +752,39 @@
                     </div>
                 </div>
 
-                <!-- 2. Individual Components (collapsible) -->
+                <!-- 2. Individual Configurations (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="individualConfigs">🔧 Individual configurations</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- 3. Individual Components (collapsible) -->
                 <div class="endpoint-section">
                     <details>
                         <summary data-i18n="individualComponents">📦 Individual Components</summary>
