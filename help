@@ -27,6 +27,9 @@ INDIVIDUAL COMPONENTS:
   Anaconda Python:
     curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash
 
+  Claude Code:
+    curl -sSL https://oguz-kolukisa.github.io/install/claude | bash
+
 CONFIGURATION:
 ──────────────
   LSD Aliases Config (ls, ll, lt):

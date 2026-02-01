@@ -50,6 +50,12 @@ curl -sSL https://oguz-kolukisa.github.io/install/anaconda | bash
 ```
 Installs Anaconda3 Python distribution
 
+#### Claude Code
+```bash
+curl -sSL https://oguz-kolukisa.github.io/install/claude | bash
+```
+Installs Claude Code AI coding assistant
+
 ## Configuration
 
 ### LSD Aliases Config
@@ -95,14 +101,16 @@ curl -sSL https://oguz-kolukisa.github.io/help | bash
 │   ├── github                # GitHub CLI installer
 │   ├── copilot               # Copilot CLI installer
 │   ├── code                  # VS Code installer
-│   └── anaconda              # Anaconda installer
+│   ├── anaconda              # Anaconda installer
+│   └── claude                # Claude Code installer
 ├── scripts/                  # Actual installation scripts
 │   ├── install_scripts/
 │   │   ├── basic.sh
 │   │   ├── github.sh
 │   │   ├── copilot.sh
 │   │   ├── code.sh
-│   │   └── anaconda.sh
+│   │   ├── anaconda.sh
+│   │   └── claude.sh
 │   └── config_settings/
 │       ├── lsd.sh
 │       └── tuxsay.sh

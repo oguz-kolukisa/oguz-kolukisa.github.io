@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading claude.sh script..."
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/scripts/install_scripts/claude.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  echo "Error: Failed to download script."
+  rm -f "$TEMP_SCRIPT"
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+echo "Downloading claude.sh script... Done"
+
+echo "Running Claude Code installation..."
+bash "$TEMP_SCRIPT"
+
+# Cleanup
+rm -f "$TEMP_SCRIPT"
+
+echo ""
+echo "================================"
+echo "Claude Code installation complete!"
+echo "================================"

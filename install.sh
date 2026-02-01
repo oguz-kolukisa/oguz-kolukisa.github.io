@@ -32,6 +32,7 @@ wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$SCRIPT_DIR/install_sc
 wget -q "$BASE_URL/scripts/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_scripts/copilot.sh"
 wget -q "$BASE_URL/scripts/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
 wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
+wget -q "$BASE_URL/scripts/install_scripts/claude.sh" -O "$SCRIPT_DIR/install_scripts/claude.sh"
 wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
 wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$SCRIPT_DIR/config_settings/lsd.sh"
 printf "Download complete!\n"
@@ -105,6 +106,18 @@ if [[ "$install_code" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/code.sh"
 else
   printf "Skipping Visual Studio Code installation.\n"
+fi
+
+# Ask to install Claude Code
+if [ "$AUTO_YES" = true ]; then
+  install_claude="y"
+else
+  read -p "Do you want to install Claude Code? (y/n): " install_claude </dev/tty
+fi
+if [[ "$install_claude" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/claude.sh"
+else
+  printf "Skipping Claude Code installation.\n"
 fi
 
 # Apply configurations
