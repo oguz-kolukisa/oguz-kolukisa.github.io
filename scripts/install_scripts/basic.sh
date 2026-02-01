@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 printf "Installing basic command files...\n"
 
@@ -16,5 +16,10 @@ sudo apt-get install -y \
   zip unzip unrar \
   htop tmux sysstat \
   lsd
+
+# Verify installation
+if ! command -v git &>/dev/null; then
+  printf "Warning: git installation may have failed. Please check manually.\n" >&2
+fi
 
 printf "Basic command files installed successfully!\n"

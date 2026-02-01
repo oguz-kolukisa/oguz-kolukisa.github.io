@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 if ! command -v gh &>/dev/null; then
   printf "Installing GitHub CLI...\n"
@@ -12,6 +12,11 @@ if ! command -v gh &>/dev/null; then
   printf "GitHub CLI installed successfully!\n"
 else
   printf "GitHub CLI is already installed.\n"
+fi
+
+# Verify installation
+if ! command -v gh &>/dev/null; then
+  printf "Warning: GitHub CLI installation may have failed. Please check manually.\n" >&2
 fi
 
 # Login to GitHub CLI only if not already authenticated

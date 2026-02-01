@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Check if code is already installed
 if command -v code &>/dev/null; then
@@ -12,7 +12,7 @@ printf "Installing Visual Studio Code...\n"
 
 # Create a temporary file for the GPG key
 TEMP_GPG=$(mktemp)
-trap "rm -f $TEMP_GPG" EXIT
+trap 'rm -f "$TEMP_GPG"' EXIT
 
 # Download and install Microsoft GPG key
 printf "Adding Microsoft GPG key...\n"
@@ -29,6 +29,11 @@ sudo apt-get update -qq
 
 printf "Installing VS Code...\n"
 sudo apt-get install -y code
+
+# Verify installation
+if ! command -v code &>/dev/null; then
+  printf "Warning: VS Code installation may have failed. Please check manually.\n" >&2
+fi
 
 printf "Visual Studio Code installed successfully!\n"
 printf "Launch it by typing 'code' in your terminal.\n"

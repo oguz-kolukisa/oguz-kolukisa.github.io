@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Parse command line arguments
 AUTO_YES=false
@@ -124,7 +124,7 @@ fi
 bash "$SCRIPT_DIR/config_settings/lsd.sh"
 bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
-echo ""
-echo "================================"
-echo "Installation complete!"
-echo "================================"
+printf "\n"
+printf "================================\n"
+printf "Installation complete!\n"
+printf "================================\n"

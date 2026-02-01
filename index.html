@@ -28,7 +28,7 @@
             --terminal-bg: #1a1f35;
             --text-primary: #00ff41;
             --text-secondary: #33ff77;
-            --text-muted: #5f8a6f;
+            --text-muted: #7aaa8f;
             --border-color: #00ff41;
             --accent: #00ff41;
         }
@@ -1055,21 +1055,50 @@
             });
         }
 
+        // Focus trap for modals
+        let activeFocusTrap = null;
+
+        function trapFocus(modal) {
+            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            activeFocusTrap = function(e) {
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) {
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+                } else {
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            };
+            modal.addEventListener('keydown', activeFocusTrap);
+        }
+
+        function removeFocusTrap(modal) {
+            if (activeFocusTrap) {
+                modal.removeEventListener('keydown', activeFocusTrap);
+                activeFocusTrap = null;
+            }
+        }
+
         // Modal functions
         function openModal() {
             const modal = document.getElementById('endpoints-modal');
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             // Set focus to close button for accessibility
             setTimeout(() => {
                 const closeButton = modal.querySelector('.modal-close');
                 if (closeButton) closeButton.focus();
+                trapFocus(modal);
             }, 100);
         }
 
         function closeModal() {
-            document.getElementById('endpoints-modal').classList.remove('active');
+            const modal = document.getElementById('endpoints-modal');
+            removeFocusTrap(modal);
+            modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
@@ -1104,11 +1133,14 @@
             setTimeout(() => {
                 const closeButton = modal.querySelector('.modal-close');
                 if (closeButton) closeButton.focus();
+                trapFocus(modal);
             }, 100);
         }
 
         function closeBasicDetailsModal() {
-            document.getElementById('basic-details-modal').classList.remove('active');
+            const modal = document.getElementById('basic-details-modal');
+            removeFocusTrap(modal);
+            modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 

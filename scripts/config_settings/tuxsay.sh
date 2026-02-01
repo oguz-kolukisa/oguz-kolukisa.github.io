@@ -1,15 +1,15 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Install fortune and cowsay if not already installed
 if ! command -v fortune &> /dev/null; then
-  echo "Installing fortune..."
+  printf "Installing fortune...\n"
   sudo apt-get install -y fortune-mod fortunes
 fi
 
 if ! command -v cowsay &> /dev/null; then
-  echo "Installing cowsay..."
+  printf "Installing cowsay...\n"
   sudo apt-get install -y cowsay
 fi
 
@@ -37,18 +37,18 @@ $SEPARATOR_END
 
 # Remove old tuxsay configuration if it exists
 if grep -q "$SEPARATOR_START" ~/.bashrc; then
-  echo "Removing old tuxsay configuration..."
+  printf "Removing old tuxsay configuration...\n"
   sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" ~/.bashrc
 fi
 
 # Remove old penguin configuration if it exists
 if grep -q "# ========== PENGUIN CONFIG START ==========" ~/.bashrc; then
-  echo "Removing old penguin configuration..."
+  printf "Removing old penguin configuration...\n"
   sed -i '\|# ========== PENGUIN CONFIG START ==========|,\|# ========== PENGUIN CONFIG END ==========|d' ~/.bashrc
 fi
 
 # Add new tuxsay configuration
-echo "Adding fortune tuxsay configuration to ~/.bashrc..."
+printf "Adding fortune tuxsay configuration to ~/.bashrc...\n"
 echo "$TUXSAY_CONFIG" >> ~/.bashrc
 
-echo "Fortune Tuxsay configuration complete!"
+printf "Fortune Tuxsay configuration complete!\n"

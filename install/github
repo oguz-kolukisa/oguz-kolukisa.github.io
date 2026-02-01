@@ -1,28 +1,28 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Base URL for downloading scripts
 BASE_URL="https://oguz-kolukisa.github.io"
 
-echo "Downloading github.sh script..."
+printf "Downloading github.sh script...\n"
 TEMP_SCRIPT=$(mktemp)
 wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
-  echo "Error: Failed to download script."
+  printf "Error: Failed to download script.\n" >&2
   rm -f "$TEMP_SCRIPT"
   exit 1
 fi
 chmod +x "$TEMP_SCRIPT"
-echo "Downloading github.sh script... Done"
+printf "Downloading github.sh script... Done\n"
 
-echo "Running GitHub CLI installation..."
+printf "Running GitHub CLI installation...\n"
 bash "$TEMP_SCRIPT"
 
 # Cleanup
 rm -f "$TEMP_SCRIPT"
 
-echo ""
-echo "================================"
-echo "GitHub CLI installation complete!"
-echo "================================"
+printf "\n"
+printf "================================\n"
+printf "GitHub CLI installation complete!\n"
+printf "================================\n"

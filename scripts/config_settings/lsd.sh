@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Install lsd if not already installed
 if ! command -v lsd &> /dev/null; then
-  echo "Installing lsd..."
+  printf "Installing lsd...\n"
   sudo apt-get update -qq
   sudo apt-get install -y lsd
 fi
@@ -37,12 +37,12 @@ $SEPARATOR_END
 
 # Remove old lsd configuration if it exists
 if grep -q "$SEPARATOR_START" ~/.bashrc; then
-  echo "Removing old lsd configuration..."
+  printf "Removing old lsd configuration...\n"
   sed -i "/$SEPARATOR_START/,/$SEPARATOR_END/d" ~/.bashrc
 fi
 
 # Add new lsd configuration
-echo "Adding lsd configuration to ~/.bashrc..."
+printf "Adding lsd configuration to ~/.bashrc...\n"
 echo "$LSD_CONFIG" >> ~/.bashrc
 
-echo "LSD configuration complete!"
+printf "LSD configuration complete!\n"

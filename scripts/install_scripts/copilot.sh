@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 if gh copilot --version &>/dev/null; then
   printf "GitHub Copilot CLI is already installed.\n"
@@ -17,6 +17,11 @@ if ! grep -q 'export PATH="$PATH:$HOME/.local/bin"' ~/.bashrc; then
   echo "# Add local bin to PATH" >> ~/.bashrc
   echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
   printf "Added ~/.local/bin to PATH in ~/.bashrc\n"
+fi
+
+# Verify installation
+if ! gh copilot --version &>/dev/null; then
+  printf "Warning: GitHub Copilot CLI installation may have failed. Please check manually.\n" >&2
 fi
 
 printf "Please restart your terminal or run 'source ~/.bashrc' to use Copilot CLI.\n"

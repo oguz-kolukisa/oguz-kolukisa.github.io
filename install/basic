@@ -1,28 +1,28 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # Base URL for downloading scripts
 BASE_URL="https://oguz-kolukisa.github.io"
 
-echo "Downloading basic.sh script..."
+printf "Downloading basic.sh script...\n"
 TEMP_SCRIPT=$(mktemp)
 wget -q "$BASE_URL/scripts/install_scripts/basic.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
-  echo "Error: Failed to download script."
+  printf "Error: Failed to download script.\n" >&2
   rm -f "$TEMP_SCRIPT"
   exit 1
 fi
 chmod +x "$TEMP_SCRIPT"
-echo "Downloading basic.sh script... Done"
+printf "Downloading basic.sh script... Done\n"
 
-echo "Running basic installation..."
+printf "Running basic installation...\n"
 bash "$TEMP_SCRIPT"
 
 # Cleanup
 rm -f "$TEMP_SCRIPT"
 
-echo ""
-echo "================================"
-echo "Basic tools installation complete!"
-echo "================================"
+printf "\n"
+printf "================================\n"
+printf "Basic tools installation complete!\n"
+printf "================================\n"
