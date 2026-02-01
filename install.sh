@@ -33,6 +33,7 @@ wget -q "$BASE_URL/scripts/install_scripts/copilot.sh" -O "$SCRIPT_DIR/install_s
 wget -q "$BASE_URL/scripts/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
 wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
 wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$SCRIPT_DIR/config_settings/tuxsay.sh"
+wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$SCRIPT_DIR/config_settings/lsd.sh"
 printf "Download complete!\n"
 
 chmod +x "$SCRIPT_DIR/install_scripts/"*.sh
@@ -106,7 +107,8 @@ else
   printf "Skipping Visual Studio Code installation.\n"
 fi
 
-# Apply fortune tuxsay configuration
+# Apply configurations
+bash "$SCRIPT_DIR/config_settings/lsd.sh"
 bash "$SCRIPT_DIR/config_settings/tuxsay.sh"
 
 echo ""

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+echo "Downloading lsd.sh script..."
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$TEMP_SCRIPT"
+chmod +x "$TEMP_SCRIPT"
+echo "Downloading lsd.sh script... Done"
+
+echo "Running LSD configuration..."
+bash "$TEMP_SCRIPT"
+
+# Cleanup
+rm -f "$TEMP_SCRIPT"
+
+echo ""
+echo "================================"
+echo "LSD configuration complete!"
+echo "================================"

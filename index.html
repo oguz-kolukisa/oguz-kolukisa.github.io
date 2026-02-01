@@ -773,6 +773,14 @@
                 <div class="endpoint-section">
                     <h3 data-i18n="configuration">Configuration</h3>
                     <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'curl -sSL https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
+                        </div>
+                    </div>
+
+                    <div class="endpoint-item">
                         <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
                         <div class="endpoint-command-wrapper">
                             <code class="endpoint-command">curl -sSL https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
@@ -799,9 +807,10 @@
                         <li>📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
                         <li>📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
                         <li>📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
+                        <li>📦 <code>lsd</code> - <span data-i18n="descLsd">Modern ls replacement with colors and icons</span></li>
                     </ul>
                 </div>
-                
+
                 <div class="endpoint-section">
                     <h3 data-i18n="buildTools">Build Tools</h3>
                     <ul class="package-list">
@@ -858,7 +867,7 @@
                 footer: "[ © 2026 Oguz Kolukisa | All rights reserved ]",
                 modalTitle: "[ Installation Endpoints ]",
                 fullInstallation: "Full Installation",
-                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, and Tuxsay config",
+                fullInstallDesc: "Installs all components: Basic tools, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, LSD config, and Tuxsay config",
                 individualComponents: "Individual Components",
                 basicTools: "Basic development tools",
                 viewPackages: "[view packages]",
@@ -867,6 +876,7 @@
                 anacondaPython: "Anaconda Python distribution",
                 vsCode: "Visual Studio Code",
                 configuration: "Configuration",
+                lsdConfig: "LSD aliases configuration (ls, ll, lt)",
                 tuxsayConfig: "Tuxsay terminal configuration (Fortune + Cowsay)",
                 help: "Help",
                 helpDesc: "Show all available endpoints",
@@ -886,6 +896,7 @@
                 descCurl: "Command line tool for transferring data",
                 descVim: "Text editor",
                 descGit: "Version control system",
+                descLsd: "Modern ls replacement with colors and icons",
                 descCmake: "Cross-platform build system",
                 descPkgConfig: "Package configuration tool",
                 descNetTools: "Network utilities (ifconfig, netstat)",
@@ -913,7 +924,7 @@
                 footer: "[ © 2026 Oguz Kolukisa | Tüm hakları saklıdır ]",
                 modalTitle: "[ Kurulum Uç Noktaları ]",
                 fullInstallation: "Tam Kurulum",
-                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code ve Tuxsay yapılandırması",
+                fullInstallDesc: "Tüm bileşenleri kurar: Temel araçlar, GitHub CLI, GitHub Copilot CLI, Anaconda, VS Code, LSD ve Tuxsay yapılandırması",
                 individualComponents: "Tekil Bileşenler",
                 basicTools: "Temel geliştirme araçları",
                 viewPackages: "[paketleri görüntüle]",
@@ -922,6 +933,7 @@
                 anacondaPython: "Anaconda Python dağıtımı",
                 vsCode: "Visual Studio Code",
                 configuration: "Yapılandırma",
+                lsdConfig: "LSD takma ad yapılandırması (ls, ll, lt)",
                 tuxsayConfig: "Tuxsay terminal yapılandırması (Fortune + Cowsay)",
                 help: "Yardım",
                 helpDesc: "Tüm mevcut uç noktaları göster",
@@ -941,6 +953,7 @@
                 descCurl: "Veri aktarımı için komut satırı aracı",
                 descVim: "Metin düzenleyici",
                 descGit: "Sürüm kontrol sistemi",
+                descLsd: "Renk ve simgeli modern ls alternatifi",
                 descCmake: "Platformlar arası derleme sistemi",
                 descPkgConfig: "Paket yapılandırma aracı",
                 descNetTools: "Ağ araçları (ifconfig, netstat)",

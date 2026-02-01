@@ -14,6 +14,7 @@ sudo apt-get install -y \
   cmake pkg-config \
   net-tools openssh-client nmap telnet \
   zip unzip unrar \
-  htop tmux sysstat
+  htop tmux sysstat \
+  lsd
 
 printf "Basic command files installed successfully!\n"
