@@ -159,6 +159,11 @@
             color: var(--accent);
         }
 
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
         .terminal-body {
             padding: 30px;
             text-align: center;
@@ -250,9 +255,9 @@
             transform: translateX(5px);
         }
 
-        button:hover {
-            background: var(--accent) !important;
-            color: var(--terminal-bg) !important;
+        .action-btn:hover {
+            background: var(--accent);
+            color: var(--terminal-bg);
             box-shadow: 0 0 20px var(--accent);
         }
 
@@ -634,7 +639,7 @@
             </div>
         </div>
         <div class="terminal-body">
-            <div class="penguin">
+            <div class="penguin" role="img" aria-label="Penguin ASCII art">
     .--.
    |o_o |
    |:_/ |
@@ -679,7 +684,7 @@
             </div>
             
             <!-- Walking duck greeting -->
-            <div id="duck-container">
+            <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
             </div>
             
             <footer>
@@ -998,9 +1003,6 @@
             
             // Update translations
             updateTranslations();
-            
-            // Animate penguin on language change
-            animatePenguin(2000);
         }
 
         // Initialize language on page load
@@ -1073,19 +1075,22 @@
         // Basic Details Modal functions
         function openBasicDetailsModal() {
             const modal = document.getElementById('basic-details-modal');
-            modal.style.display = 'flex';
-            modal.focus();
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            setTimeout(() => {
+                const closeButton = modal.querySelector('.modal-close');
+                if (closeButton) closeButton.focus();
+            }, 100);
         }
 
         function closeBasicDetailsModal() {
-            const modal = document.getElementById('basic-details-modal');
-            modal.style.display = 'none';
+            document.getElementById('basic-details-modal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
         function closeBasicDetailsModalOnOverlay(event) {
-            if (event.target.classList.contains('modal-overlay')) {
+            if (event.target === event.currentTarget) {
                 closeBasicDetailsModal();
             }
         }
@@ -1163,9 +1168,6 @@
             populateDucks();
             startDuckAnimation();
         });
-
-        // Keep backward compat for language switch
-        function animatePenguin() {}
 
         // Matrix rain effect
         const canvas = document.getElementById('matrix-canvas');
