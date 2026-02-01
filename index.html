@@ -558,6 +558,8 @@
 
         .endpoint-section details .details-content {
             padding: 0 15px 15px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
         }
 
         .setup-box {
@@ -1402,6 +1404,45 @@
 
         window.addEventListener('resize', () => {
             initMatrix();
+        });
+
+        // Animated details/summary toggle
+        document.querySelectorAll('.endpoint-section details').forEach(details => {
+            const summary = details.querySelector('summary');
+            const content = details.querySelector('.details-content');
+
+            summary.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                if (details.open) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.opacity = '1';
+                    requestAnimationFrame(() => {
+                        content.style.maxHeight = '0';
+                        content.style.opacity = '0';
+                    });
+                    content.addEventListener('transitionend', function handler() {
+                        details.open = false;
+                        content.style.maxHeight = '';
+                        content.style.opacity = '';
+                        content.removeEventListener('transitionend', handler);
+                    });
+                } else {
+                    details.open = true;
+                    const height = content.scrollHeight;
+                    content.style.maxHeight = '0';
+                    content.style.opacity = '0';
+                    requestAnimationFrame(() => {
+                        content.style.maxHeight = height + 'px';
+                        content.style.opacity = '1';
+                    });
+                    content.addEventListener('transitionend', function handler() {
+                        content.style.maxHeight = '';
+                        content.style.opacity = '';
+                        content.removeEventListener('transitionend', handler);
+                    });
+                }
+            });
         });
     </script>
 </body>
