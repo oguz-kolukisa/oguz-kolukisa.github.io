@@ -50,6 +50,50 @@
             overflow-x: hidden;
         }
 
+        /* CRT Screen Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            animation: flicker 0.15s infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.96; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before {
+                animation: none;
+            }
+        }
+
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -195,6 +239,29 @@
             white-space: nowrap;
         }
 
+        .mute-toggle {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .mute-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .mute-toggle.muted {
+            color: #ff5f56;
+            border-color: #ff5f56;
+        }
+
         @media (max-width: 480px) {
             .system-stats {
                 display: none;
@@ -268,6 +335,7 @@
             text-align: left;
             margin-bottom: 10px;
             color: var(--text-secondary);
+            text-shadow: 0 0 5px var(--text-secondary);
         }
 
         .prompt::before {
@@ -279,7 +347,7 @@
             font-size: 2.5em;
             margin-bottom: 15px;
             color: var(--accent);
-            text-shadow: 0 0 10px var(--accent);
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
             font-weight: normal;
             letter-spacing: 2px;
         }
@@ -288,6 +356,7 @@
             font-size: 1.2em;
             color: var(--text-secondary);
             margin-bottom: 30px;
+            text-shadow: 0 0 5px var(--text-secondary);
         }
 
         .cursor {
@@ -459,6 +528,101 @@
             background: var(--accent);
             color: var(--terminal-bg);
             box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* Man Page Modal */
+        .man-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .man-modal.active {
+            display: flex;
+        }
+
+        .man-content {
+            background: var(--terminal-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.3);
+            text-shadow: 0 0 3px var(--text-primary);
+            position: relative;
+        }
+
+        .man-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .man-close:hover {
+            background: #ff5f56;
+            color: white;
+            border-color: #ff5f56;
+        }
+
+        .man-header {
+            color: var(--accent);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .man-section {
+            margin-bottom: 25px;
+        }
+
+        .man-section h2 {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px var(--text-secondary);
+        }
+
+        .man-section p, .man-section ul {
+            color: var(--text-primary);
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .man-section ul {
+            list-style: none;
+        }
+
+        .man-section ul li::before {
+            content: '> ';
+            color: var(--accent);
+        }
+
+        .man-flag {
+            color: var(--text-command);
+            font-weight: bold;
         }
 
         /* Collapsible details/summary sections */
@@ -835,6 +999,7 @@
                 <span class="stat" id="uptime" data-i18n-dynamic="uptime">UP: 0y 0d 0h 0m</span>
                 <span class="stat" id="cpu-load">LOAD: 0%</span>
             </div>
+            <button class="mute-toggle" id="mute-toggle" title="Toggle sound" aria-label="Toggle sound">🔈</button>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English" data-i18n-aria="ariaLangEn">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish" data-i18n-aria="ariaLangTr">TR</button>
@@ -1063,7 +1228,109 @@
         </div>
     </div>
 
+    <!-- Man Page Modal -->
+    <div class="man-modal" id="man-modal">
+        <div class="man-content">
+            <button class="man-close" id="man-close">[ X ]</button>
+            <div class="man-header">OGUZ(1) User Manual OGUZ(1)</div>
+            
+            <div class="man-section">
+                <h2>Name</h2>
+                <p>oguz - Humanoid Robot, Software Engineer, Terminal Enthusiast</p>
+            </div>
+
+            <div class="man-section">
+                <h2>Synopsis</h2>
+                <p><span class="man-flag">oguz</span> [--backend] [--frontend] [--devops] [--problem-solver]</p>
+            </div>
+
+            <div class="man-section">
+                <h2>Description</h2>
+                <p>
+                    A software engineer specializing in building scalable systems and elegant solutions.
+                    Passionate about clean code, automation, and terminal interfaces.
+                    Currently focusing on full-stack development with a strong emphasis on backend architecture.
+                </p>
+            </div>
+
+            <div class="man-section">
+                <h2>Flags (Skills)</h2>
+                <ul>
+                    <li><span class="man-flag">--backend</span> - Python, Go, Node.js, API design</li>
+                    <li><span class="man-flag">--frontend</span> - JavaScript, React, HTML/CSS, Terminal UIs</li>
+                    <li><span class="man-flag">--devops</span> - Docker, CI/CD, Linux, System Administration</li>
+                    <li><span class="man-flag">--database</span> - PostgreSQL, MongoDB, Redis</li>
+                    <li><span class="man-flag">--tools</span> - Git, Vim, Tmux, Shell Scripting</li>
+                </ul>
+            </div>
+
+            <div class="man-section">
+                <h2>See Also</h2>
+                <p>
+                    <span class="man-flag">contact</span> - Display contact information<br>
+                    <span class="man-flag">github</span> - View latest commits<br>
+                    <span class="man-flag">theme</span> - Change terminal theme
+                </p>
+            </div>
+
+            <div class="man-section">
+                <h2>Author</h2>
+                <p>Written by Oguz Kolukisa</p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // ========== Audio System ==========
+        const audioSystem = {
+            muted: localStorage.getItem('audioMuted') === 'true',
+            sounds: {
+                type: new Audio('/sounds/keypress.mp3'),  // Placeholder path
+                click: new Audio('/sounds/click.mp3'),    // Placeholder path
+                hover: new Audio('/sounds/hover.mp3')     // Placeholder path
+            },
+            
+            init() {
+                // Set volumes
+                this.sounds.type.volume = 0.3;
+                this.sounds.click.volume = 0.4;
+                this.sounds.hover.volume = 0.2;
+                
+                // Update mute button state
+                this.updateMuteButton();
+            },
+            
+            play(soundName) {
+                if (this.muted || !this.sounds[soundName]) return;
+                const sound = this.sounds[soundName].cloneNode();
+                sound.volume = this.sounds[soundName].volume;
+                sound.play().catch(() => {}); // Silently fail if autoplay blocked
+            },
+            
+            toggleMute() {
+                this.muted = !this.muted;
+                localStorage.setItem('audioMuted', this.muted);
+                this.updateMuteButton();
+            },
+            
+            updateMuteButton() {
+                const btn = document.getElementById('mute-toggle');
+                if (btn) {
+                    btn.textContent = this.muted ? '🔇' : '🔈';
+                    btn.classList.toggle('muted', this.muted);
+                }
+            }
+        };
+
+        // Initialize audio system
+        audioSystem.init();
+
+        // Mute toggle event
+        document.getElementById('mute-toggle')?.addEventListener('click', () => {
+            audioSystem.toggleMute();
+            audioSystem.play('click');
+        });
+
         // ========== Theme Definitions ==========
         const themes = {
             matrix: {
@@ -1182,7 +1449,7 @@
                 requiresApiKey: "⚠ Requires API Key",
                 requiresNerdFonts: "⚠ Requires Nerd Fonts",
                 // Shell command responses
-                shellHelp: "Available commands:\n  help      - Show this help message\n  contact   - Show contact information\n  clear     - Clear terminal history\n  whoami    - Display current user\n  theme     - Change terminal theme\n  sudo      - Try it and see ;)",
+                shellHelp: "Available commands:\n  help      - Show this help message\n  contact   - Show contact information\n  clear     - Clear terminal history\n  whoami    - Display current user\n  man/about - Show manual page\n  theme     - Change terminal theme (matrix, ubuntu, arch, random)\n  weather   - Get current weather\n  github    - Show latest commit\n  sudo      - Try it and see ;)",
                 shellContact: 'Contact:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  Email    - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
                 shellWhoami: "guest@kolukisa \u2014 Guest User",
                 shellSudo: "User is not in the sudoers file. This incident will be reported.",
@@ -1256,7 +1523,7 @@
                 requiresApiKey: "⚠ API Anahtarı Gerekli",
                 requiresNerdFonts: "⚠ Nerd Fonts Gerekli",
                 // Shell command responses
-                shellHelp: "Kullanılabilir komutlar:\n  help      - Bu yardım mesajını göster\n  contact   - İletişim bilgilerini göster\n  clear     - Terminal geçmişini temizle\n  whoami    - Mevcut kullanıcıyı göster\n  theme     - Terminal temasını değiştir\n  sudo      - Dene ve gör ;)",
+                shellHelp: "Kullanılabilir komutlar:\n  help      - Bu yardım mesajını göster\n  contact   - İletişim bilgilerini göster\n  clear     - Terminal geçmişini temizle\n  whoami    - Mevcut kullanıcıyı göster\n  man/about - Kılavuz sayfasını göster\n  theme     - Terminal temasını değiştir (matrix, ubuntu, arch, random)\n  weather   - Hava durumunu al\n  github    - Son commit'i göster\n  sudo      - Dene ve gör ;)",
                 shellContact: 'İletişim:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  E-posta  - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
                 shellWhoami: "guest@kolukisa \u2014 Misafir Kullanıcı",
                 shellSudo: "Kullanıcı sudoers dosyasında değil. Bu olay rapor edilecek.",
@@ -1414,6 +1681,7 @@
                 const originalText = i18n[currentLang].copy || 'COPY';
                 button.textContent = i18n[currentLang].copied || '✓';
                 button.classList.add('copied');
+                audioSystem.play('click');
 
                 setTimeout(() => {
                     button.textContent = originalText;
@@ -1423,6 +1691,15 @@
                 console.error('Failed to copy:', err);
             });
         }
+
+        // Add hover sound to all buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button, .copy-btn, .action-btn, .lang-btn, .status-icon').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    audioSystem.play('hover');
+                });
+            });
+        });
 
         // ========== Interactive Shell ==========
         const historyEl = document.getElementById('terminal-history');
@@ -1471,25 +1748,42 @@
             // Check for sudo prefix
             if (cmd === 'sudo') {
                 appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellSudo));
+                audioSystem.play('click');
                 return;
             }
 
             switch (cmd) {
                 case 'help':
                     appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellHelp));
+                    audioSystem.play('click');
                     break;
                 case 'contact':
                     appendToHistory(trimmed, i18n[currentLang].shellContact);
+                    audioSystem.play('click');
                     break;
                 case 'clear':
                     historyEl.innerHTML = '';
+                    audioSystem.play('click');
                     break;
                 case 'whoami':
                     appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellWhoami));
+                    audioSystem.play('click');
+                    break;
+                case 'man':
+                case 'about':
+                    if (args.length === 0 || args[0].toLowerCase() === 'oguz') {
+                        document.getElementById('man-modal').classList.add('active');
+                        audioSystem.play('click');
+                    } else {
+                        appendToHistory(trimmed, `No manual entry for ${args[0]}`);
+                    }
                     break;
                 case 'theme':
                     if (args.length === 0) {
                         appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellThemeList));
+                    } else if (args[0].toLowerCase() === 'random') {
+                        randomizeTheme();
+                        appendToHistory(trimmed, 'Theme randomized! 🎨');
                     } else {
                         const result = setTheme(args[0]);
                         if (result === 'ok') {
@@ -1498,12 +1792,107 @@
                             appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellThemeInvalid.replace('%s', args[0])));
                         }
                     }
+                    audioSystem.play('click');
+                    break;
+                case 'weather':
+                    appendToHistory(trimmed, 'Fetching weather data...');
+                    fetchWeather();
+                    audioSystem.play('click');
+                    break;
+                case 'github':
+                    appendToHistory(trimmed, 'Fetching latest commit...');
+                    fetchGitHubCommit();
+                    audioSystem.play('click');
                     break;
                 default:
                     appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellNotFound.replace('%s', cmd)));
+                    audioSystem.play('click');
                     break;
             }
         }
+
+        // ========== API Functions ==========
+        async function fetchWeather() {
+            try {
+                // Get user's IP-based location
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const ipData = await ipRes.json();
+                const { latitude, longitude, city, country } = ipData;
+                
+                // Fetch weather from OpenMeteo
+                const weatherRes = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+                );
+                const weatherData = await weatherRes.json();
+                const { temperature, windspeed, weathercode } = weatherData.current_weather;
+                
+                const weatherDesc = getWeatherDescription(weathercode);
+                const output = `Location: ${city}, ${country}\nTemperature: ${temperature}°C\nWind Speed: ${windspeed} km/h\nCondition: ${weatherDesc}`;
+                
+                appendToHistory('', escapeHtml(output));
+            } catch (error) {
+                appendToHistory('', 'Error fetching weather data. Please try again later.');
+            }
+        }
+
+        function getWeatherDescription(code) {
+            const codes = {
+                0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+                45: 'Foggy', 48: 'Foggy', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+                61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+                95: 'Thunderstorm', 96: 'Thunderstorm with hail', 99: 'Thunderstorm with hail'
+            };
+            return codes[code] || 'Unknown';
+        }
+
+        async function fetchGitHubCommit() {
+            try {
+                const res = await fetch('https://api.github.com/repos/oguz-kolukisa/oguz-kolukisa.github.io/commits?per_page=1');
+                const data = await res.json();
+                
+                if (data.length > 0) {
+                    const commit = data[0];
+                    const message = commit.commit.message;
+                    const author = commit.commit.author.name;
+                    const date = new Date(commit.commit.author.date).toLocaleString();
+                    const sha = commit.sha.substring(0, 7);
+                    
+                    const output = `Latest Commit [${sha}]\nAuthor: ${author}\nDate: ${date}\nMessage: ${message}`;
+                    appendToHistory('', escapeHtml(output));
+                } else {
+                    appendToHistory('', 'No commits found.');
+                }
+            } catch (error) {
+                appendToHistory('', 'Error fetching GitHub data. Please try again later.');
+            }
+        }
+
+        function randomizeTheme() {
+            const randomColor = () => {
+                const h = Math.floor(Math.random() * 360);
+                const s = 80 + Math.floor(Math.random() * 20);
+                const l = 50 + Math.floor(Math.random() * 20);
+                return `hsl(${h}, ${s}%, ${l}%)`;
+            };
+            
+            const accentColor = randomColor();
+            document.documentElement.style.setProperty('--accent', accentColor);
+            document.documentElement.style.setProperty('--border-color', accentColor);
+            document.documentElement.style.setProperty('--text-primary', accentColor);
+        }
+
+        // ========== Man Page Modal ==========
+        document.getElementById('man-close')?.addEventListener('click', () => {
+            document.getElementById('man-modal').classList.remove('active');
+            audioSystem.play('click');
+        });
+
+        document.getElementById('man-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'man-modal') {
+                document.getElementById('man-modal').classList.remove('active');
+                audioSystem.play('click');
+            }
+        });
 
         shellInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -1524,6 +1913,13 @@
                     historyIndex = commandHistory.length;
                     shellInput.value = '';
                 }
+            }
+        });
+
+        // Add typing sound to shell input
+        shellInput.addEventListener('keypress', (e) => {
+            if (e.key.length === 1) {  // Only for character keys
+                audioSystem.play('type');
             }
         });
 
