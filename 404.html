@@ -432,6 +432,46 @@
     </div>
 
     <script>
+        // ========== Theme Definitions ==========
+        const themes = {
+            matrix: {
+                '--bg-dark': '#0a0e27',
+                '--terminal-bg': '#1a1f35',
+                '--text-primary': '#00ff41',
+                '--text-secondary': '#33ff77',
+                '--text-muted': '#99ccaa',
+                '--border-color': '#00ff41',
+                '--accent': '#00ff41'
+            },
+            ubuntu: {
+                '--bg-dark': '#2c001e',
+                '--terminal-bg': '#300a24',
+                '--text-primary': '#e95420',
+                '--text-secondary': '#f0a070',
+                '--text-muted': '#c0a0b0',
+                '--border-color': '#e95420',
+                '--accent': '#e95420'
+            },
+            arch: {
+                '--bg-dark': '#0d1117',
+                '--terminal-bg': '#161b22',
+                '--text-primary': '#1793d1',
+                '--text-secondary': '#58a6e0',
+                '--text-muted': '#8b949e',
+                '--border-color': '#1793d1',
+                '--accent': '#1793d1'
+            }
+        };
+
+        // Apply saved theme
+        const savedTheme = localStorage.getItem('theme') || 'matrix';
+        if (savedTheme !== 'matrix' && themes[savedTheme]) {
+            const vars = themes[savedTheme];
+            for (const [prop, val] of Object.entries(vars)) {
+                document.documentElement.style.setProperty(prop, val);
+            }
+        }
+
         // Internationalization (i18n) for 404 page
         const i18n = {
             en: {
@@ -608,7 +648,8 @@
             ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#00ff41';
+            const style = getComputedStyle(document.documentElement);
+            ctx.fillStyle = style.getPropertyValue('--text-primary').trim() || '#00ff41';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {

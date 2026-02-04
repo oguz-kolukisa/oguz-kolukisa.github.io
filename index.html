@@ -109,6 +109,9 @@
             position: relative;
             z-index: 1;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
         }
 
         .terminal-header {
@@ -121,6 +124,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            flex-shrink: 0;
         }
 
         .header-cursor {
@@ -154,6 +158,47 @@
             margin-left: auto;
             color: var(--text-muted);
             font-size: 0.9em;
+        }
+
+        .header-contacts {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        .status-icon {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .status-icon:hover {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .system-stats {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        .stat {
+            color: var(--text-muted);
+            font-size: 0.75em;
+            font-family: 'Courier New', monospace;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .system-stats {
+                display: none;
+            }
         }
 
         .lang-switcher {
@@ -202,6 +247,8 @@
         .terminal-body {
             padding: 30px;
             text-align: center;
+            flex: 1;
+            overflow-y: auto;
         }
 
         .penguin {
@@ -256,45 +303,6 @@
             color: var(--text-muted);
             margin: 30px 0;
             font-size: 1.5em;
-        }
-
-        .links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background: transparent;
-            color: var(--accent);
-            text-decoration: none;
-            border: 2px solid var(--accent);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-button::before {
-            content: '> ';
-        }
-
-        .link-button:hover {
-            background: var(--accent);
-            color: var(--terminal-bg);
-            box-shadow: 0 0 20px var(--accent);
-        }
-
-        .action-btn:hover {
-            background: var(--accent);
-            color: var(--terminal-bg);
-            box-shadow: 0 0 20px var(--accent);
         }
 
         footer {
@@ -447,75 +455,10 @@
             color: var(--terminal-bg);
         }
 
-        /* Enhanced mobile responsiveness */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 2.2em;
-                letter-spacing: 1px;
-            }
-
-            .tagline {
-                font-size: 1.1em;
-            }
-
-            .terminal-body {
-                padding: 20px 15px;
-            }
-
-            .terminal-header {
-                padding: 12px;
-            }
-
-            .terminal-title {
-                font-size: 0.8em;
-            }
-
-            .penguin {
-                font-size: 9px;
-            }
-
-            .link-button {
-                padding: 14px 20px;
-                min-height: 44px;
-                min-width: 44px;
-                font-size: 1em;
-            }
-
-            .dragon-divider {
-                font-size: 1.3em;
-                margin: 20px 0;
-            }
-
-            button {
-                min-height: 44px;
-                min-width: 44px;
-                padding: 12px 18px;
-                font-size: 0.9em;
-            }
-
-            .modal-content {
-                width: 95%;
-                max-height: 85vh;
-            }
-
-            .modal-body {
-                padding: 15px;
-            }
-
-            .endpoint-command-wrapper {
-                flex-direction: column;
-            }
-
-            .copy-btn {
-                width: 100%;
-                padding: 14px 18px;
-                margin-top: 8px;
-            }
-
+        .action-btn:hover {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 20px var(--accent);
         }
 
         /* Collapsible details/summary sections */
@@ -544,7 +487,7 @@
         }
 
         .endpoint-section details summary::before {
-            content: '▶';
+            content: '\25B6';
             font-size: 0.7em;
             transition: transform 0.2s ease;
             display: inline-block;
@@ -694,6 +637,72 @@
             border-color: var(--accent);
         }
 
+        /* Terminal history */
+        .terminal-history {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .history-entry {
+            margin-bottom: 15px;
+        }
+
+        .history-prompt {
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .history-prompt .prompt-user {
+            color: var(--accent);
+        }
+
+        .history-output {
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-word;
+            padding-left: 5px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        .history-output a {
+            color: var(--text-command);
+            text-decoration: underline;
+        }
+
+        .history-output a:hover {
+            color: var(--accent);
+        }
+
+        /* Terminal input */
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #0d1117;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .terminal-input .input-prompt {
+            color: var(--accent);
+            white-space: nowrap;
+            font-size: 0.9em;
+            margin-right: 8px;
+        }
+
+        .terminal-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            outline: none;
+            caret-color: var(--accent);
+        }
+
         @keyframes lang-flash {
             0% { opacity: 1; }
             50% { opacity: 0.6; }
@@ -702,6 +711,79 @@
 
         .lang-switch-flash {
             animation: lang-flash 0.3s ease;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                letter-spacing: 1px;
+            }
+
+            .tagline {
+                font-size: 1.1em;
+            }
+
+            .terminal-body {
+                padding: 20px 15px;
+            }
+
+            .terminal-header {
+                padding: 12px;
+                flex-wrap: wrap;
+            }
+
+            .terminal-title {
+                font-size: 0.8em;
+            }
+
+            .penguin {
+                font-size: 9px;
+            }
+
+            .dragon-divider {
+                font-size: 1.3em;
+                margin: 20px 0;
+            }
+
+            button {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 18px;
+                font-size: 0.9em;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .modal-body {
+                padding: 15px;
+            }
+
+            .endpoint-command-wrapper {
+                flex-direction: column;
+            }
+
+            .copy-btn {
+                width: 100%;
+                padding: 14px 18px;
+                margin-top: 8px;
+            }
+
+            .header-contacts .status-icon {
+                font-size: 0.7em;
+            }
+
+            .terminal-input input {
+                min-height: 44px;
+                padding: 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -725,15 +807,6 @@
                 font-size: 7px;
             }
 
-            .links {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .link-button {
-                width: 100%;
-            }
-
             .dragon-divider {
                 font-size: 1.1em;
             }
@@ -753,6 +826,15 @@
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
             <div class="terminal-title">okolukisa@computer:~<span class="header-cursor">_</span></div>
+            <div class="header-contacts">
+                <a href="https://github.com/oguz-kolukisa" class="status-icon" title="GitHub" target="_blank" rel="noopener noreferrer">GH</a>
+                <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" class="status-icon" title="LinkedIn" target="_blank" rel="noopener noreferrer">IN</a>
+                <a href="mailto:oguzkolukisa@gmail.com" class="status-icon" title="Email">@</a>
+            </div>
+            <div class="system-stats">
+                <span class="stat" id="uptime" data-i18n-dynamic="uptime">UP: 0y 0d 0h 0m</span>
+                <span class="stat" id="cpu-load">LOAD: 0%</span>
+            </div>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English" data-i18n-aria="ariaLangEn">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish" data-i18n-aria="ariaLangTr">TR</button>
@@ -772,9 +854,9 @@
             <p class="prompt" data-i18n="prompt">cat /home/oguz/profile.txt</p>
             <h1>OGUZ KOLUKISA</h1>
             <p class="tagline"><span data-i18n="tagline">// Humanoid Robot</span><span class="cursor"></span></p>
-            
+
             <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
-            
+
             <div class="setup-box">
                 <div class="cmd-toggle">
                     <button class="cmd-toggle-btn active" onclick="setCommandMode('wget')">wget</button>
@@ -964,27 +1046,79 @@
                     </details>
                 </div>
             </div>
-            
-            <div class="dragon-divider" data-i18n="connections">[ ⚔ CONNECTIONS ⚔ ]</div>
-            
-            <div class="links">
-                <a href="https://github.com/oguz-kolukisa" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="github">github</a>
-                <a href="https://www.linkedin.com/in/oğuz-kolukısa-5351681a0/" class="link-button" target="_blank" rel="noopener noreferrer" data-i18n="linkedin">linkedin</a>
-                <a href="mailto:oguzkolukisa@gmail.com" class="link-button" data-i18n="email">email</a>
-            </div>
-            
+
             <!-- Walking duck greeting -->
             <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
             </div>
-            
+
             <footer>
                 <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
             </footer>
+
+            <div class="terminal-history" id="terminal-history"></div>
+        </div>
+        <div class="terminal-input">
+            <span class="input-prompt">visitor@kolukisa:~$</span>
+            <input type="text" id="shell-input" autocomplete="off" spellcheck="false" autofocus>
         </div>
     </div>
 
     <script>
-        // Internationalization (i18n)
+        // ========== Theme Definitions ==========
+        const themes = {
+            matrix: {
+                '--bg-dark': '#0a0e27',
+                '--terminal-bg': '#1a1f35',
+                '--text-primary': '#00ff41',
+                '--text-secondary': '#33ff77',
+                '--text-muted': '#99ccaa',
+                '--border-color': '#00ff41',
+                '--accent': '#00ff41',
+                '--text-command': '#00ffcc'
+            },
+            ubuntu: {
+                '--bg-dark': '#2c001e',
+                '--terminal-bg': '#300a24',
+                '--text-primary': '#e95420',
+                '--text-secondary': '#f0a070',
+                '--text-muted': '#c0a0b0',
+                '--border-color': '#e95420',
+                '--accent': '#e95420',
+                '--text-command': '#ff7733'
+            },
+            arch: {
+                '--bg-dark': '#0d1117',
+                '--terminal-bg': '#161b22',
+                '--text-primary': '#1793d1',
+                '--text-secondary': '#58a6e0',
+                '--text-muted': '#8b949e',
+                '--border-color': '#1793d1',
+                '--accent': '#1793d1',
+                '--text-command': '#79c0ff'
+            }
+        };
+
+        let currentTheme = localStorage.getItem('theme') || 'matrix';
+
+        function setTheme(name) {
+            if (!name) return null;
+            name = name.toLowerCase();
+            if (!themes[name]) return 'invalid';
+            const vars = themes[name];
+            for (const [prop, val] of Object.entries(vars)) {
+                document.documentElement.style.setProperty(prop, val);
+            }
+            currentTheme = name;
+            localStorage.setItem('theme', name);
+            return 'ok';
+        }
+
+        // Apply saved theme on load
+        if (currentTheme !== 'matrix') {
+            setTheme(currentTheme);
+        }
+
+        // ========== Internationalization (i18n) ==========
         const i18n = {
             en: {
                 prompt: "cat /home/oguz/profile.txt",
@@ -992,7 +1126,6 @@
                 quickSetup: "[ ⚔ QUICK SETUP ⚔ ]",
                 copy: "COPY",
                 viewEndpoints: "📋 View All Endpoints",
-                connections: "[ ⚔ CONNECTIONS ⚔ ]",
                 github: "github",
                 linkedin: "linkedin",
                 email: "email",
@@ -1047,7 +1180,19 @@
                 descTmux: "Terminal multiplexer",
                 descSysstat: "System performance tools",
                 requiresApiKey: "⚠ Requires API Key",
-                requiresNerdFonts: "⚠ Requires Nerd Fonts"
+                requiresNerdFonts: "⚠ Requires Nerd Fonts",
+                // Shell command responses
+                shellHelp: "Available commands:\n  help      - Show this help message\n  contact   - Show contact information\n  clear     - Clear terminal history\n  whoami    - Display current user\n  theme     - Change terminal theme\n  sudo      - Try it and see ;)",
+                shellContact: 'Contact:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  Email    - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
+                shellWhoami: "guest@kolukisa \u2014 Guest User",
+                shellSudo: "User is not in the sudoers file. This incident will be reported.",
+                shellNotFound: 'command not found: %s. Type \'help\' for available commands.',
+                shellThemeList: "Available themes: matrix, ubuntu, arch\nUsage: theme <name>",
+                shellThemeSet: "Theme changed to: %s",
+                shellThemeInvalid: "Unknown theme: %s. Available: matrix, ubuntu, arch",
+                // System stats
+                statsUp: "UP:",
+                statsLoad: "LOAD:"
             },
             tr: {
                 prompt: "cat /home/oguz/profil.txt",
@@ -1055,7 +1200,6 @@
                 quickSetup: "[ ⚔ HIZLI KURULUM ⚔ ]",
                 copy: "KOPYALA",
                 viewEndpoints: "📋 Tüm Uç Noktaları Göster",
-                connections: "[ ⚔ BAĞLANTILAR ⚔ ]",
                 github: "github",
                 linkedin: "linkedin",
                 email: "e-posta",
@@ -1110,7 +1254,19 @@
                 descTmux: "Terminal çoklayıcı",
                 descSysstat: "Sistem performans araçları",
                 requiresApiKey: "⚠ API Anahtarı Gerekli",
-                requiresNerdFonts: "⚠ Nerd Fonts Gerekli"
+                requiresNerdFonts: "⚠ Nerd Fonts Gerekli",
+                // Shell command responses
+                shellHelp: "Kullanılabilir komutlar:\n  help      - Bu yardım mesajını göster\n  contact   - İletişim bilgilerini göster\n  clear     - Terminal geçmişini temizle\n  whoami    - Mevcut kullanıcıyı göster\n  theme     - Terminal temasını değiştir\n  sudo      - Dene ve gör ;)",
+                shellContact: 'İletişim:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  E-posta  - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
+                shellWhoami: "guest@kolukisa \u2014 Misafir Kullanıcı",
+                shellSudo: "Kullanıcı sudoers dosyasında değil. Bu olay rapor edilecek.",
+                shellNotFound: 'komut bulunamadı: %s. Kullanılabilir komutlar için \'help\' yazın.',
+                shellThemeList: "Mevcut temalar: matrix, ubuntu, arch\nKullanım: theme <isim>",
+                shellThemeSet: "Tema değiştirildi: %s",
+                shellThemeInvalid: "Bilinmeyen tema: %s. Mevcut: matrix, ubuntu, arch",
+                // System stats
+                statsUp: "UP:",
+                statsLoad: "LOAD:"
             }
         };
 
@@ -1147,6 +1303,9 @@
             if (metaDesc && i18n[currentLang].metaDescription) {
                 metaDesc.setAttribute('content', i18n[currentLang].metaDescription);
             }
+
+            // Update system stats labels
+            updateSystemStats();
         }
 
         // Function to switch language
@@ -1177,12 +1336,52 @@
                 btn.classList.remove('active');
             });
             document.getElementById(`lang-${currentLang}`).classList.add('active');
-            
+
             // Update translations
             updateTranslations();
+
+            // Focus shell input
+            document.getElementById('shell-input').focus();
         });
 
-        // Command mode toggle (wget/curl)
+        // ========== System Stats ==========
+        const FIRST_COMMIT_DATE = new Date('2026-01-08T00:00:00');
+
+        function updateSystemStats() {
+            const now = new Date();
+            const diff = now - FIRST_COMMIT_DATE;
+            const totalMinutes = Math.floor(diff / 60000);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+            const years = Math.floor(totalDays / 365);
+            const days = totalDays % 365;
+            const hours = totalHours % 24;
+            const minutes = totalMinutes % 60;
+
+            const label = i18n[currentLang].statsUp || 'UP:';
+            document.getElementById('uptime').textContent = `${label} ${years}y ${days}d ${hours}h ${minutes}m`;
+
+            // Fake CPU load based on hour
+            const hour = now.getHours();
+            let base, range;
+            if (hour >= 0 && hour < 7) {
+                base = 15; range = 15;
+            } else if (hour >= 7 && hour < 12) {
+                base = 50; range = 20;
+            } else if (hour >= 12 && hour < 18) {
+                base = 70; range = 20;
+            } else {
+                base = 40; range = 20;
+            }
+            const load = base + Math.floor(Math.random() * range);
+            const loadLabel = i18n[currentLang].statsLoad || 'LOAD:';
+            document.getElementById('cpu-load').textContent = `${loadLabel} ${load}%`;
+        }
+
+        updateSystemStats();
+        setInterval(updateSystemStats, 60000);
+
+        // ========== Command mode toggle (wget/curl) ==========
         let commandMode = 'wget';
 
         function buildCommand(url) {
@@ -1225,7 +1424,117 @@
             });
         }
 
-        // Walking Duck Animation
+        // ========== Interactive Shell ==========
+        const historyEl = document.getElementById('terminal-history');
+        const shellInput = document.getElementById('shell-input');
+        const terminalBody = document.querySelector('.terminal-body');
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        function appendToHistory(command, outputHtml) {
+            const entry = document.createElement('div');
+            entry.className = 'history-entry';
+
+            const promptLine = document.createElement('div');
+            promptLine.className = 'history-prompt';
+            promptLine.innerHTML = '<span class="prompt-user">visitor@kolukisa:~$</span> ' + escapeHtml(command);
+            entry.appendChild(promptLine);
+
+            if (outputHtml !== null) {
+                const output = document.createElement('div');
+                output.className = 'history-output';
+                output.innerHTML = outputHtml;
+                entry.appendChild(output);
+            }
+
+            historyEl.appendChild(entry);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function handleCommand(input) {
+            const trimmed = input.trim();
+            if (!trimmed) return;
+
+            commandHistory.push(trimmed);
+            historyIndex = commandHistory.length;
+
+            const parts = trimmed.split(/\s+/);
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            // Check for sudo prefix
+            if (cmd === 'sudo') {
+                appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellSudo));
+                return;
+            }
+
+            switch (cmd) {
+                case 'help':
+                    appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellHelp));
+                    break;
+                case 'contact':
+                    appendToHistory(trimmed, i18n[currentLang].shellContact);
+                    break;
+                case 'clear':
+                    historyEl.innerHTML = '';
+                    break;
+                case 'whoami':
+                    appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellWhoami));
+                    break;
+                case 'theme':
+                    if (args.length === 0) {
+                        appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellThemeList));
+                    } else {
+                        const result = setTheme(args[0]);
+                        if (result === 'ok') {
+                            appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellThemeSet.replace('%s', args[0].toLowerCase())));
+                        } else {
+                            appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellThemeInvalid.replace('%s', args[0])));
+                        }
+                    }
+                    break;
+                default:
+                    appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellNotFound.replace('%s', cmd)));
+                    break;
+            }
+        }
+
+        shellInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleCommand(shellInput.value);
+                shellInput.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    shellInput.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    shellInput.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    shellInput.value = '';
+                }
+            }
+        });
+
+        // Click anywhere in terminal body to focus input
+        terminalBody.addEventListener('click', (e) => {
+            if (!e.target.closest('a, button, details, summary, input, .copy-btn')) {
+                shellInput.focus();
+            }
+        });
+
+        // ========== Walking Duck Animation ==========
         const duckFrames = [
             `   <(o )___\n    ( ._> /\n     \`---'`,
             `   <( o)___\n    ( ._>/\n     \`---'`,
@@ -1303,7 +1612,7 @@
             }
         });
 
-        // Matrix rain effect
+        // ========== Matrix rain effect ==========
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -1328,7 +1637,9 @@
             ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#00ff41';
+            // Use current theme's text-primary for matrix rain color
+            const style = getComputedStyle(document.documentElement);
+            ctx.fillStyle = style.getPropertyValue('--text-primary').trim() || '#00ff41';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
