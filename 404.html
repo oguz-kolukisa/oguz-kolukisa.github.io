@@ -92,6 +92,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-cursor {
+            animation: blink 1s infinite;
         }
 
         .terminal-button {
@@ -273,7 +280,6 @@
             background: var(--accent);
             color: var(--terminal-bg);
             box-shadow: 0 0 20px var(--accent);
-            transform: translateX(5px);
         }
 
         .cursor {
@@ -377,7 +383,7 @@
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
-            <div class="terminal-title">okolukisa@computer:~</div>
+            <div class="terminal-title">okolukisa@computer:~<span class="header-cursor">_</span></div>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English" data-i18n-aria="ariaLangEn">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish" data-i18n-aria="ariaLangTr">TR</button>

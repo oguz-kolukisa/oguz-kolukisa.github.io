@@ -118,6 +118,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-cursor {
+            animation: blink 1s infinite;
         }
 
         .terminal-button {
@@ -206,6 +213,8 @@
             display: inline-block;
             margin: 20px auto;
             text-shadow: 0 0 10px var(--accent);
+            max-width: 100%;
+            overflow-x: auto;
         }
 
         .prompt {
@@ -280,7 +289,6 @@
             background: var(--accent);
             color: var(--terminal-bg);
             box-shadow: 0 0 20px var(--accent);
-            transform: translateX(5px);
         }
 
         .action-btn:hover {
@@ -504,6 +512,8 @@
 
             .copy-btn {
                 width: 100%;
+                padding: 14px 18px;
+                margin-top: 8px;
             }
 
         }
@@ -606,15 +616,27 @@
             display: inline-block;
         }
 
-        .view-packages-link {
-            color: var(--accent);
-            text-decoration: underline;
-            margin-left: 5px;
-            font-size: 0.9em;
+        .packages-accordion {
+            margin-top: 10px;
+            border: none;
         }
 
-        .modal-content--narrow {
-            max-width: 600px;
+        .packages-accordion summary {
+            color: var(--accent);
+            font-size: 0.9em;
+            cursor: pointer;
+            text-decoration: underline;
+            list-style: none;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .packages-accordion summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .packages-accordion .details-content {
+            padding-top: 10px;
         }
 
         .package-list {
@@ -626,6 +648,50 @@
         .package-list li {
             padding: 5px 0;
             border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
+        .requirement-tag {
+            display: inline-block;
+            font-size: 0.75em;
+            padding: 2px 6px;
+            border: 1px solid #ffbd2e;
+            color: #ffbd2e;
+            border-radius: 3px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .cmd-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 15px;
+        }
+
+        .cmd-toggle-btn {
+            padding: 6px 14px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .cmd-toggle-btn:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .cmd-toggle-btn:last-child {
+            border-radius: 0 4px 4px 0;
+            border-left: none;
+        }
+
+        .cmd-toggle-btn.active {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            border-color: var(--accent);
         }
 
         @keyframes lang-flash {
@@ -686,7 +752,7 @@
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
             <div class="terminal-button"></div>
-            <div class="terminal-title">okolukisa@computer:~</div>
+            <div class="terminal-title">okolukisa@computer:~<span class="header-cursor">_</span></div>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" id="lang-en" aria-label="Switch to English" data-i18n-aria="ariaLangEn">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('tr')" id="lang-tr" aria-label="Switch to Turkish" data-i18n-aria="ariaLangTr">TR</button>
@@ -710,13 +776,18 @@
             <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
             
             <div class="setup-box">
+                <div class="cmd-toggle">
+                    <button class="cmd-toggle-btn active" onclick="setCommandMode('wget')">wget</button>
+                    <button class="cmd-toggle-btn" onclick="setCommandMode('curl')">curl</button>
+                </div>
+
                 <!-- Full Installation -->
                 <div class="endpoint-section">
                     <h3 data-i18n="fullInstallation">⚡ Full Installation</h3>
                     <div class="endpoint-item">
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install.sh | bash')">COPY</button>
+                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install.sh">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
                         </div>
                     </div>
                 </div>
@@ -726,16 +797,171 @@
                     <h3 data-i18n="configuration">⚙ Configuration</h3>
                     <div class="endpoint-item">
                         <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/config | bash')">COPY</button>
+                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/config">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="endpoints-btn-wrapper">
-                    <button class="action-btn" onclick="openModal()" aria-label="View all installation endpoints" data-i18n-aria="ariaViewEndpoints" data-i18n="viewEndpoints">
-                        📋 View All Endpoints
-                    </button>
+                <!-- Help -->
+                <div class="endpoint-section">
+                    <h3 data-i18n="help">❓ Help</h3>
+                    <div class="endpoint-item">
+                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
+                        <div class="endpoint-command-wrapper">
+                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/help">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
+                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Individual Configurations (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="individualConfigs">🔧 Individual configurations</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description"><span data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</span> <span class="requirement-tag" data-i18n="requiresNerdFonts">⚠ Requires Nerd Fonts</span></div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/lsd">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/tuxsay">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/grpadd">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Individual Components (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="individualComponents">📦 Individual Components</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description">
+                                    <span data-i18n="basicTools">Basic development tools</span>
+                                </div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/basic">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                                <details class="packages-accordion">
+                                    <summary data-i18n="viewPackages">[view packages]</summary>
+                                    <div class="details-content">
+                                        <div class="endpoint-section" style="margin-bottom: 15px;">
+                                            <h3 data-i18n="devTools">Development Tools</h3>
+                                            <ul class="package-list">
+                                                <li>📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
+                                                <li>📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
+                                                <li>📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
+                                                <li>📦 <code>lsd</code> - <span data-i18n="descLsd">Modern ls replacement with colors and icons</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="endpoint-section" style="margin-bottom: 15px;">
+                                            <h3 data-i18n="buildTools">Build Tools</h3>
+                                            <ul class="package-list">
+                                                <li>📦 <code>cmake</code> - <span data-i18n="descCmake">Cross-platform build system</span></li>
+                                                <li>📦 <code>pkg-config</code> - <span data-i18n="descPkgConfig">Package configuration tool</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="endpoint-section" style="margin-bottom: 15px;">
+                                            <h3 data-i18n="networkTools">Network Tools</h3>
+                                            <ul class="package-list">
+                                                <li>📦 <code>net-tools</code> - <span data-i18n="descNetTools">Network utilities (ifconfig, netstat)</span></li>
+                                                <li>📦 <code>openssh-client</code> - <span data-i18n="descOpenssh">SSH client</span></li>
+                                                <li>📦 <code>nmap</code> - <span data-i18n="descNmap">Network scanner</span></li>
+                                                <li>📦 <code>telnet</code> - <span data-i18n="descTelnet">Telnet client</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="endpoint-section" style="margin-bottom: 15px;">
+                                            <h3 data-i18n="compressionTools">Compression Tools</h3>
+                                            <ul class="package-list">
+                                                <li>📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="descZip">ZIP archive tools</span></li>
+                                                <li>📦 <code>unrar</code> - <span data-i18n="descUnrar">RAR archive extractor</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="endpoint-section" style="margin-bottom: 0;">
+                                            <h3 data-i18n="systemMonitoring">System Monitoring</h3>
+                                            <ul class="package-list">
+                                                <li>📦 <code>htop</code> - <span data-i18n="descHtop">Interactive process viewer</span></li>
+                                                <li>📦 <code>tmux</code> - <span data-i18n="descTmux">Terminal multiplexer</span></li>
+                                                <li>📦 <code>sysstat</code> - <span data-i18n="descSysstat">System performance tools</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/github">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/anaconda">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/code">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- AI Coding Assistants (collapsible) -->
+                <div class="endpoint-section">
+                    <details>
+                        <summary data-i18n="aiCodingAssistants">🤖 AI Coding Assistants</summary>
+                        <div class="details-content">
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/cursor">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+                            <div class="endpoint-item">
+                                <div class="endpoint-description"><span data-i18n="claudeCode">Claude Code (AI coding assistant)</span> <span class="requirement-tag" data-i18n="requiresApiKey">⚠ Requires API Key</span></div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/claude">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+                            <div class="endpoint-item">
+                                <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
+                                <div class="endpoint-command-wrapper">
+                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/copilot">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
+                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </div>
             
@@ -754,191 +980,6 @@
             <footer>
                 <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
             </footer>
-        </div>
-    </div>
-
-    <!-- Modal for all endpoints -->
-    <div id="endpoints-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeModalOnOverlay(event)">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div id="modal-title" class="modal-title" data-i18n="modalTitle">[ Installation Endpoints ]</div>
-                <button class="modal-close" onclick="closeModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
-            </div>
-            <div class="modal-body">
-                <!-- 1. Help -->
-                <div class="endpoint-section">
-                    <h3 data-i18n="help">❓ Help</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/help | bash')">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Individual Configurations (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="individualConfigs">🔧 Individual configurations</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash')">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-
-                <!-- 3. Individual Components (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="individualComponents">📦 Individual Components</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description">
-                                    <span data-i18n="basicTools">Basic development tools</span>
-                                    <a href="#" onclick="event.preventDefault(); openBasicDetailsModal();" class="view-packages-link" data-i18n="viewPackages">[view packages]</a>
-                                </div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/basic | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/github | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash')">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/code | bash')">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-
-                <!-- 4. AI Coding Assistants (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="aiCodingAssistants">🤖 AI Coding Assistants</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash')">COPY</button>
-                                </div>
-                            </div>
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="claudeCode">Claude Code (AI coding assistant)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash')">COPY</button>
-                                </div>
-                            </div>
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyEndpoint(this, 'wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash')">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Basic Tools Details -->
-    <div id="basic-details-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="basic-modal-title" onclick="closeBasicDetailsModalOnOverlay(event)">
-        <div class="modal-content modal-content--narrow">
-            <div class="modal-header">
-                <div id="basic-modal-title" class="modal-title" data-i18n="basicModalTitle">[ Basic Tools Packages ]</div>
-                <button class="modal-close" onclick="closeBasicDetailsModal()" aria-label="Close modal" data-i18n-aria="ariaCloseModal">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="endpoint-section">
-                    <h3 data-i18n="devTools">Development Tools</h3>
-                    <ul class="package-list">
-                        <li>📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
-                        <li>📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
-                        <li>📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
-                        <li>📦 <code>lsd</code> - <span data-i18n="descLsd">Modern ls replacement with colors and icons</span></li>
-                    </ul>
-                </div>
-
-                <div class="endpoint-section">
-                    <h3 data-i18n="buildTools">Build Tools</h3>
-                    <ul class="package-list">
-                        <li>📦 <code>cmake</code> - <span data-i18n="descCmake">Cross-platform build system</span></li>
-                        <li>📦 <code>pkg-config</code> - <span data-i18n="descPkgConfig">Package configuration tool</span></li>
-                    </ul>
-                </div>
-                
-                <div class="endpoint-section">
-                    <h3 data-i18n="networkTools">Network Tools</h3>
-                    <ul class="package-list">
-                        <li>📦 <code>net-tools</code> - <span data-i18n="descNetTools">Network utilities (ifconfig, netstat)</span></li>
-                        <li>📦 <code>openssh-client</code> - <span data-i18n="descOpenssh">SSH client</span></li>
-                        <li>📦 <code>nmap</code> - <span data-i18n="descNmap">Network scanner</span></li>
-                        <li>📦 <code>telnet</code> - <span data-i18n="descTelnet">Telnet client</span></li>
-                    </ul>
-                </div>
-                
-                <div class="endpoint-section">
-                    <h3 data-i18n="compressionTools">Compression Tools</h3>
-                    <ul class="package-list">
-                        <li>📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="descZip">ZIP archive tools</span></li>
-                        <li>📦 <code>unrar</code> - <span data-i18n="descUnrar">RAR archive extractor</span></li>
-                    </ul>
-                </div>
-                
-                <div class="endpoint-section">
-                    <h3 data-i18n="systemMonitoring">System Monitoring</h3>
-                    <ul class="package-list">
-                        <li>📦 <code>htop</code> - <span data-i18n="descHtop">Interactive process viewer</span></li>
-                        <li>📦 <code>tmux</code> - <span data-i18n="descTmux">Terminal multiplexer</span></li>
-                        <li>📦 <code>sysstat</code> - <span data-i18n="descSysstat">System performance tools</span></li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1004,7 +1045,9 @@
                 descUnrar: "RAR archive extractor",
                 descHtop: "Interactive process viewer",
                 descTmux: "Terminal multiplexer",
-                descSysstat: "System performance tools"
+                descSysstat: "System performance tools",
+                requiresApiKey: "⚠ Requires API Key",
+                requiresNerdFonts: "⚠ Requires Nerd Fonts"
             },
             tr: {
                 prompt: "cat /home/oguz/profil.txt",
@@ -1065,7 +1108,9 @@
                 descUnrar: "RAR arşiv çıkarıcı",
                 descHtop: "Etkileşimli süreç görüntüleyici",
                 descTmux: "Terminal çoklayıcı",
-                descSysstat: "Sistem performans araçları"
+                descSysstat: "Sistem performans araçları",
+                requiresApiKey: "⚠ API Anahtarı Gerekli",
+                requiresNerdFonts: "⚠ Nerd Fonts Gerekli"
             }
         };
 
@@ -1137,64 +1182,38 @@
             updateTranslations();
         });
 
-        // Focus trap for modals
-        let activeFocusTrap = null;
+        // Command mode toggle (wget/curl)
+        let commandMode = 'wget';
 
-        function trapFocus(modal) {
-            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-
-            activeFocusTrap = function(e) {
-                if (e.key !== 'Tab') return;
-                if (e.shiftKey) {
-                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-                } else {
-                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-                }
-            };
-            modal.addEventListener('keydown', activeFocusTrap);
-        }
-
-        function removeFocusTrap(modal) {
-            if (activeFocusTrap) {
-                modal.removeEventListener('keydown', activeFocusTrap);
-                activeFocusTrap = null;
+        function buildCommand(url) {
+            if (commandMode === 'curl') {
+                return `curl -fsSL ${url} | bash`;
             }
+            return `wget -qO- ${url} | bash`;
         }
 
-        // Modal functions
-        function openModal() {
-            const modal = document.getElementById('endpoints-modal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Set focus to close button for accessibility
-            setTimeout(() => {
-                const closeButton = modal.querySelector('.modal-close');
-                if (closeButton) closeButton.focus();
-                trapFocus(modal);
-            }, 100);
+        function updateAllCommands() {
+            document.querySelectorAll('.endpoint-command[data-url]').forEach(el => {
+                el.textContent = buildCommand(el.getAttribute('data-url'));
+            });
         }
 
-        function closeModal() {
-            const modal = document.getElementById('endpoints-modal');
-            removeFocusTrap(modal);
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+        function setCommandMode(mode) {
+            commandMode = mode;
+            document.querySelectorAll('.cmd-toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim() === mode);
+            });
+            updateAllCommands();
         }
 
-        function closeModalOnOverlay(event) {
-            // Only close if clicking directly on the overlay, not its children
-            if (event.target === event.currentTarget) {
-                closeModal();
-            }
-        }
+        function copyCurrentCommand(button) {
+            const wrapper = button.closest('.endpoint-command-wrapper');
+            const code = wrapper.querySelector('.endpoint-command');
+            const text = code.textContent;
 
-        function copyEndpoint(button, text) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = i18n[currentLang].copy || 'COPY';
-                button.textContent = i18n[currentLang].copied || '✓ COPIED';
+                button.textContent = i18n[currentLang].copied || '✓';
                 button.classList.add('copied');
 
                 setTimeout(() => {
@@ -1205,40 +1224,6 @@
                 console.error('Failed to copy:', err);
             });
         }
-
-        // Basic Details Modal functions
-        function openBasicDetailsModal() {
-            const modal = document.getElementById('basic-details-modal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            setTimeout(() => {
-                const closeButton = modal.querySelector('.modal-close');
-                if (closeButton) closeButton.focus();
-                trapFocus(modal);
-            }, 100);
-        }
-
-        function closeBasicDetailsModal() {
-            const modal = document.getElementById('basic-details-modal');
-            removeFocusTrap(modal);
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function closeBasicDetailsModalOnOverlay(event) {
-            if (event.target === event.currentTarget) {
-                closeBasicDetailsModal();
-            }
-        }
-
-        // Close modals on Escape key
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeModal();
-                closeBasicDetailsModal();
-            }
-        });
 
         // Walking Duck Animation
         const duckFrames = [
