@@ -1895,6 +1895,17 @@
             }
         });
 
+        // Close man page modal with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const manModal = document.getElementById('man-modal');
+                if (manModal && manModal.classList.contains('active')) {
+                    manModal.classList.remove('active');
+                    audioSystem.play('click');
+                }
+            }
+        });
+
         shellInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 handleCommand(shellInput.value);
