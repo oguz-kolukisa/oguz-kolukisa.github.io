@@ -312,10 +312,39 @@
         }
 
         .terminal-body {
-            padding: 30px;
-            text-align: center;
+            padding: 0;
             flex: 1;
             overflow-y: auto;
+            display: flex;
+            gap: 0;
+        }
+
+        .terminal-left {
+            flex: 1;
+            padding: 30px;
+            text-align: center;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-right {
+            flex: 1;
+            padding: 30px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .terminal-body {
+                flex-direction: column;
+            }
+            
+            .terminal-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
         }
 
         .penguin {
@@ -948,6 +977,11 @@
                 min-height: 44px;
                 padding: 8px;
             }
+
+            .terminal-left,
+            .terminal-right {
+                padding: 20px 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -963,7 +997,8 @@
                 font-size: 1em;
             }
 
-            .terminal-body {
+            .terminal-left,
+            .terminal-right {
                 padding: 15px 10px;
             }
 
@@ -1006,7 +1041,9 @@
             </div>
         </div>
         <div class="terminal-body">
-            <div class="penguin" role="img" aria-label="Penguin ASCII art">
+            <!-- LEFT COLUMN: CLI Interface -->
+            <div class="terminal-left">
+                <div class="penguin" role="img" aria-label="Penguin ASCII art">
     .--.
    |o_o |
    |:_/ |
@@ -1014,13 +1051,26 @@
  (|     | )
 /'\_   _/`\
 \___)=(___/
+                </div>
+
+                <p class="prompt" data-i18n="prompt">cat /home/oguz/profile.txt</p>
+                <h1>OGUZ KOLUKISA</h1>
+                <p class="tagline"><span data-i18n="tagline">// Humanoid Robot</span><span class="cursor"></span></p>
+
+                <!-- Walking duck greeting -->
+                <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
+                </div>
+
+                <footer>
+                    <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
+                </footer>
+
+                <div class="terminal-history" id="terminal-history"></div>
             </div>
 
-            <p class="prompt" data-i18n="prompt">cat /home/oguz/profile.txt</p>
-            <h1>OGUZ KOLUKISA</h1>
-            <p class="tagline"><span data-i18n="tagline">// Humanoid Robot</span><span class="cursor"></span></p>
-
-            <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
+            <!-- RIGHT COLUMN: Quick Setup -->
+            <div class="terminal-right">
+                <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
 
             <div class="setup-box">
                 <div class="cmd-toggle">
@@ -1211,16 +1261,8 @@
                     </details>
                 </div>
             </div>
-
-            <!-- Walking duck greeting -->
-            <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
+            <!-- End of terminal-right -->
             </div>
-
-            <footer>
-                <p data-i18n="footer">[ © 2026 Oguz Kolukisa | All rights reserved ]</p>
-            </footer>
-
-            <div class="terminal-history" id="terminal-history"></div>
         </div>
         <div class="terminal-input">
             <span class="input-prompt">visitor@kolukisa:~$</span>
