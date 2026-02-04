@@ -72,9 +72,11 @@
         }
 
         .container {
-            background: var(--terminal-bg);
+            background: rgba(26, 31, 53, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.15), 0 0 120px rgba(0, 0, 0, 0.5);
             max-width: 800px;
             width: 100%;
             border: 2px solid var(--border-color);
