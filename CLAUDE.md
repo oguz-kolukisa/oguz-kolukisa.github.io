@@ -143,18 +143,83 @@ Configurations are managed via a shared config file, not directly in `~/.bashrc`
 
 - **Config file location:** `~/.config/oguz-setup/shell-config.sh`
 - **Sourced from:** `~/.bashrc` (one line added: `[ -f "~/.config/oguz-setup/shell-config.sh" ] && . "~/.config/oguz-setup/shell-config.sh"`)
-- **Section markers:** Config blocks use delimiters for idempotent updates:
+- **`OGUZ_SHELL_CONFIG` env var:** Exported by `install_all_configs.sh` so all sub-scripts know where to write config without hardcoding the path
+- **Section markers:** Config blocks use delimiters for idempotent updates. Two valid forms exist:
   ```
   # ========== SECTION NAME START ==========
   ...config content...
   # ========== END ==========
   ```
+  or (legacy/named end):
+  ```
+  # ========== SECTION NAME START ==========
+  ...config content...
+  # ========== SECTION NAME END ==========
+  ```
 
 The `install_all_configs.sh` script handles:
 - Creating the config directory/file
 - Adding the source line to `~/.bashrc` (once, idempotently)
-- Migrating legacy config blocks out of `~/.bashrc`
+- **Migrating legacy config** — actively removes old `LSD`, `TUXSAY`, `PENGUIN`, and local bin PATH blocks from `~/.bashrc` if present, moving them to `shell-config.sh`
+- Adding `$HOME/.local/bin` to `PATH` in `shell-config.sh` (under `# ========== OGUZ LOCAL BIN PATH ==========` marker)
 - Exporting `OGUZ_SHELL_CONFIG` so sub-scripts write to the right file
+
+## install.sh Flags
+
+The master installer supports a `-y` flag for non-interactive use (auto-yes to all prompts):
+
+```bash
+wget -qO- https://oguz-kolukisa.github.io/install.sh | bash -s -- -y
+```
+
+When `-y` is set, all `read` prompts are skipped and every component is installed automatically.
+
+## Adding a New Config
+
+To add a new shell configuration (e.g., `myalias`):
+
+1. **Create the implementation script** at `scripts/config_settings/myalias.sh`:
+   ```bash
+   #!/bin/bash
+   set -euo pipefail
+   CONFIG_FILE="${OGUZ_SHELL_CONFIG:-$HOME/.config/oguz-setup/shell-config.sh}"
+   MARKER="# ========== MYALIAS CONFIG START =========="
+   if grep -qF "$MARKER" "$CONFIG_FILE" 2>/dev/null; then
+     printf "myalias config already present. Skipping.\n"
+     exit 0
+   fi
+   printf "Adding myalias config...\n"
+   cat >> "$CONFIG_FILE" <<'EOF'
+   # ========== MYALIAS CONFIG START ==========
+   alias myalias='echo hello'
+   # ========== END ==========
+   EOF
+   printf "myalias config added.\n"
+   ```
+
+2. **Create the entry point** at `config/myalias` (no extension):
+   ```bash
+   #!/bin/bash
+   set -euo pipefail
+   BASE_URL="https://oguz-kolukisa.github.io"
+   TEMP_SCRIPT=$(mktemp)
+   wget -q "$BASE_URL/scripts/config_settings/myalias.sh" -O "$TEMP_SCRIPT"
+   if [ ! -s "$TEMP_SCRIPT" ]; then
+     printf "Error: Failed to download script.\n" >&2
+     rm -f "$TEMP_SCRIPT"
+     exit 1
+   fi
+   chmod +x "$TEMP_SCRIPT"
+   bash "$TEMP_SCRIPT"
+   rm -f "$TEMP_SCRIPT"
+   printf "================================\n"
+   printf "myalias config complete!\n"
+   printf "================================\n"
+   ```
+
+3. **Add it to `scripts/config_settings/install_all_configs.sh`** — download and run in the config block.
+
+4. **Update `index.html`** and **`README.md`** to document the new config command.
 
 ## Adding a New Installer
 
