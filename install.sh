@@ -10,7 +10,7 @@ while getopts "y" opt; do
       AUTO_YES=true
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      printf "Invalid option: -%s\n" "$OPTARG" >&2
       exit 1
       ;;
   esac
