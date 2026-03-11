@@ -56,7 +56,7 @@ grpadd() {
       continue
     fi
     for group in \$groups; do
-      if getent group \"\$group\" | grep -q \"\\\b\$user\\\b\"; then
+      if getent group \"\$group\" | grep -qw \"\$user\"; then
         printf \"User '%s' already in group '%s'.\n\" \"\$user\" \"\$group\"
       else
         printf \"Adding user '%s' to group '%s'...\n\" \"\$user\" \"\$group\"
@@ -90,6 +90,6 @@ fi
 
 # Add new grpadd configuration to target
 printf "Adding grpadd configuration to %s...\n" "$TARGET"
-echo "$GRPADD_CONFIG" >> "$TARGET"
+printf "%s\n" "$GRPADD_CONFIG" >> "$TARGET"
 
 printf "grpadd configuration complete!\n"

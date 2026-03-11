@@ -7,10 +7,10 @@ BASE_URL="https://oguz-kolukisa.github.io"
 
 printf "Downloading tuxsay.sh script...\n"
 TEMP_SCRIPT=$(mktemp)
+trap 'rm -f "$TEMP_SCRIPT"' EXIT
 wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$TEMP_SCRIPT"
 if [ ! -s "$TEMP_SCRIPT" ]; then
   printf "Error: Failed to download script.\n" >&2
-  rm -f "$TEMP_SCRIPT"
   exit 1
 fi
 chmod +x "$TEMP_SCRIPT"
@@ -21,9 +21,6 @@ printf "Downloading tuxsay.sh script... Done\n"
 
 printf "Running Tuxsay configuration...\n"
 bash "$TEMP_SCRIPT"
-
-# Cleanup
-rm -f "$TEMP_SCRIPT"
 
 printf "\n"
 printf "================================\n"

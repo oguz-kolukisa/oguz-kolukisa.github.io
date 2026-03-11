@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Install lsd if not already installed
-if ! command -v lsd &> /dev/null; then
+if ! command -v lsd &>/dev/null; then
   printf "Installing lsd...\n"
   sudo apt-get update -qq
   sudo apt-get install -y lsd
@@ -52,6 +52,6 @@ fi
 
 # Add new lsd configuration to target
 printf "Adding lsd configuration to %s...\n" "$TARGET"
-echo "$LSD_CONFIG" >> "$TARGET"
+printf "%s\n" "$LSD_CONFIG" >> "$TARGET"
 
 printf "LSD configuration complete!\n"

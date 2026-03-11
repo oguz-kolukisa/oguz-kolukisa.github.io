@@ -8,7 +8,7 @@ if command -v claude &>/dev/null; then
 fi
 
 printf "Installing Claude Code...\n"
-wget -qO- https://claude.ai/install.sh | bash
+wget -qO- https://claude.ai/install.sh | bash || { printf "Error: Claude Code installation script failed.\n" >&2; exit 1; }
 
 # Verify installation
 if ! command -v claude &>/dev/null; then

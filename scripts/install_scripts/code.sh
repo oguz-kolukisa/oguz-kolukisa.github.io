@@ -17,6 +17,10 @@ trap 'rm -f "$TEMP_GPG"' EXIT
 # Download and install Microsoft GPG key
 printf "Adding Microsoft GPG key...\n"
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > "$TEMP_GPG"
+if [ ! -s "$TEMP_GPG" ]; then
+  printf "Error: Failed to download Microsoft GPG key.\n" >&2
+  exit 1
+fi
 sudo install -D -o root -g root -m 644 "$TEMP_GPG" /etc/apt/keyrings/packages.microsoft.gpg
 
 # Add VS Code repository to APT sources

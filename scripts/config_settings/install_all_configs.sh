@@ -14,9 +14,9 @@ touch "$CONFIG_FILE"
 # Add source line to bashrc if not present
 if ! grep -qF "oguz-setup/shell-config.sh" ~/.bashrc 2>/dev/null; then
   printf "Adding source line to ~/.bashrc...\n"
-  echo "" >> ~/.bashrc
-  echo "# oguz-setup: load shared shell config" >> ~/.bashrc
-  echo "$SOURCE_LINE" >> ~/.bashrc
+  printf "\n" >> ~/.bashrc
+  printf "# oguz-setup: load shared shell config\n" >> ~/.bashrc
+  printf "%s\n" "$SOURCE_LINE" >> ~/.bashrc
 fi
 
 # Remove old config blocks from bashrc (so all config lives in shell-config.sh)
@@ -46,10 +46,10 @@ fi
 PATH_MARKER="# ========== OGUZ LOCAL BIN PATH =========="
 if ! grep -qF "$PATH_MARKER" "$CONFIG_FILE" 2>/dev/null; then
   printf "Adding .local/bin to PATH in shared config...\n"
-  echo "" >> "$CONFIG_FILE"
-  echo "$PATH_MARKER" >> "$CONFIG_FILE"
-  echo 'export PATH="$PATH:$HOME/.local/bin"' >> "$CONFIG_FILE"
-  echo "# ========== END ==========" >> "$CONFIG_FILE"
+  printf "\n" >> "$CONFIG_FILE"
+  printf "%s\n" "$PATH_MARKER" >> "$CONFIG_FILE"
+  printf 'export PATH="$PATH:$HOME/.local/bin"\n' >> "$CONFIG_FILE"
+  printf "# ========== END ==========\n" >> "$CONFIG_FILE"
 fi
 
 # Export so lsd.sh and tuxsay.sh write to CONFIG_FILE
@@ -61,8 +61,17 @@ trap 'rm -rf "$TEMP_DIR"' EXIT
 
 printf "Downloading config scripts...\n"
 wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$TEMP_DIR/lsd.sh"
+if [ ! -s "$TEMP_DIR/lsd.sh" ]; then
+  printf "Error: Failed to download lsd.sh\n" >&2; exit 1
+fi
 wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$TEMP_DIR/tuxsay.sh"
+if [ ! -s "$TEMP_DIR/tuxsay.sh" ]; then
+  printf "Error: Failed to download tuxsay.sh\n" >&2; exit 1
+fi
 wget -q "$BASE_URL/scripts/config_settings/sudo_users.sh" -O "$TEMP_DIR/sudo_users.sh"
+if [ ! -s "$TEMP_DIR/sudo_users.sh" ]; then
+  printf "Error: Failed to download sudo_users.sh\n" >&2; exit 1
+fi
 chmod +x "$TEMP_DIR"/lsd.sh "$TEMP_DIR"/tuxsay.sh "$TEMP_DIR"/sudo_users.sh
 
 printf "\n--- LSD configuration ---\n"
