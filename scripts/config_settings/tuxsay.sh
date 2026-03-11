@@ -2,13 +2,18 @@
 
 set -euo pipefail
 
+# Update apt cache once if any package is missing
+if ! command -v fortune &>/dev/null || ! command -v cowsay &>/dev/null; then
+  sudo apt-get update -qq
+fi
+
 # Install fortune and cowsay if not already installed
-if ! command -v fortune &> /dev/null; then
+if ! command -v fortune &>/dev/null; then
   printf "Installing fortune...\n"
   sudo apt-get install -y fortune-mod fortunes
 fi
 
-if ! command -v cowsay &> /dev/null; then
+if ! command -v cowsay &>/dev/null; then
   printf "Installing cowsay...\n"
   sudo apt-get install -y cowsay
 fi
@@ -58,6 +63,6 @@ fi
 
 # Add new tuxsay configuration to target
 printf "Adding fortune tuxsay configuration to %s...\n" "$TARGET"
-echo "$TUXSAY_CONFIG" >> "$TARGET"
+printf "%s\n" "$TUXSAY_CONFIG" >> "$TARGET"
 
 printf "Fortune Tuxsay configuration complete!\n"

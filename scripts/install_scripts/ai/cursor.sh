@@ -9,7 +9,7 @@ if command -v cursor &>/dev/null; then
 fi
 
 printf "Installing Cursor (official install script)...\n"
-wget -qO- https://cursor.com/install | bash
+wget -qO- https://cursor.com/install | bash || { printf "Error: Cursor installation script failed.\n" >&2; exit 1; }
 
 if ! command -v cursor &>/dev/null; then
   printf "Warning: Cursor may not be in PATH. Restart your terminal or run 'source ~/.bashrc'.\n" >&2

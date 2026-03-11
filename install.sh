@@ -20,25 +20,33 @@ done
 BASE_URL="https://oguz-kolukisa.github.io"
 
 # Create temporary directory for scripts
-printf "Downloading installation scripts...\n"
 TEMP_DIR=$(mktemp -d)
 SCRIPT_DIR="$TEMP_DIR"
 mkdir -p "$SCRIPT_DIR/install_scripts/ai"
+trap 'rm -rf "$TEMP_DIR"' EXIT
+
+# Helper: download and validate a script
+_dl() {
+  local src="$1" dest="$2"
+  wget -q "$BASE_URL/$src" -O "$dest"
+  if [ ! -s "$dest" ]; then
+    printf "Error: Failed to download %s\n" "$src" >&2
+    exit 1
+  fi
+}
 
 # Download install scripts only (config is applied via single config installer at the end)
-wget -q "$BASE_URL/scripts/install_scripts/basic.sh" -O "$SCRIPT_DIR/install_scripts/basic.sh"
-wget -q "$BASE_URL/scripts/install_scripts/github.sh" -O "$SCRIPT_DIR/install_scripts/github.sh"
-wget -q "$BASE_URL/scripts/install_scripts/ai/copilot.sh" -O "$SCRIPT_DIR/install_scripts/ai/copilot.sh"
-wget -q "$BASE_URL/scripts/install_scripts/ai/cursor.sh" -O "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
-wget -q "$BASE_URL/scripts/install_scripts/ai/claude.sh" -O "$SCRIPT_DIR/install_scripts/ai/claude.sh"
-wget -q "$BASE_URL/scripts/install_scripts/anaconda.sh" -O "$SCRIPT_DIR/install_scripts/anaconda.sh"
-wget -q "$BASE_URL/scripts/install_scripts/code.sh" -O "$SCRIPT_DIR/install_scripts/code.sh"
+printf "Downloading installation scripts...\n"
+_dl "scripts/install_scripts/basic.sh"          "$SCRIPT_DIR/install_scripts/basic.sh"
+_dl "scripts/install_scripts/github.sh"         "$SCRIPT_DIR/install_scripts/github.sh"
+_dl "scripts/install_scripts/ai/copilot.sh"     "$SCRIPT_DIR/install_scripts/ai/copilot.sh"
+_dl "scripts/install_scripts/ai/cursor.sh"      "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
+_dl "scripts/install_scripts/ai/claude.sh"      "$SCRIPT_DIR/install_scripts/ai/claude.sh"
+_dl "scripts/install_scripts/anaconda.sh"       "$SCRIPT_DIR/install_scripts/anaconda.sh"
+_dl "scripts/install_scripts/code.sh"           "$SCRIPT_DIR/install_scripts/code.sh"
 printf "Download complete!\n"
 
 chmod +x "$SCRIPT_DIR/install_scripts/"*.sh "$SCRIPT_DIR/install_scripts/ai/"*.sh
-
-# Cleanup function to remove temp directory on exit
-trap 'rm -rf "$TEMP_DIR"' EXIT
 
 printf "\nUpdating system packages...\n"
 sudo apt-get update -qq >/dev/null 2>&1
@@ -131,11 +139,10 @@ fi
 
 # Apply all configurations (LSD, Tuxsay, grpadd) via single config installer
 printf "\n--- Configurations ---\n"
-TEMP_CONFIG=$(mktemp)
-wget -q "$BASE_URL/scripts/config_settings/install_all_configs.sh" -O "$TEMP_CONFIG"
+TEMP_CONFIG="$TEMP_DIR/install_all_configs.sh"
+_dl "scripts/config_settings/install_all_configs.sh" "$TEMP_CONFIG"
 chmod +x "$TEMP_CONFIG"
 bash "$TEMP_CONFIG"
-rm -f "$TEMP_CONFIG"
 
 printf "\n"
 printf "================================\n"
