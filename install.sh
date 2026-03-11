@@ -43,6 +43,7 @@ _dl "scripts/install_scripts/ai/copilot.sh"     "$SCRIPT_DIR/install_scripts/ai/
 _dl "scripts/install_scripts/ai/cursor.sh"      "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
 _dl "scripts/install_scripts/ai/claude.sh"      "$SCRIPT_DIR/install_scripts/ai/claude.sh"
 _dl "scripts/install_scripts/anaconda.sh"       "$SCRIPT_DIR/install_scripts/anaconda.sh"
+_dl "scripts/install_scripts/uv.sh"             "$SCRIPT_DIR/install_scripts/uv.sh"
 _dl "scripts/install_scripts/code.sh"           "$SCRIPT_DIR/install_scripts/code.sh"
 printf "Download complete!\n"
 
@@ -113,6 +114,9 @@ else
   printf "Skipping GitHub Copilot CLI installation.\n"
 fi
 
+# --- Python Package Managers ---
+printf "\n--- Python Package Managers ---\n"
+
 # Ask to install Anaconda
 if [ "$AUTO_YES" = true ]; then
   install_anaconda="y"
@@ -123,6 +127,18 @@ if [[ "$install_anaconda" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
 else
   printf "Skipping Anaconda installation.\n"
+fi
+
+# Ask to install uv
+if [ "$AUTO_YES" = true ]; then
+  install_uv="y"
+else
+  read -p "Do you want to install uv (fast Python package manager)? (y/n): " install_uv </dev/tty
+fi
+if [[ "$install_uv" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/uv.sh"
+else
+  printf "Skipping uv installation.\n"
 fi
 
 # Ask to install VS Code

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+printf "Downloading uv.sh script...\n"
+TEMP_SCRIPT=$(mktemp)
+trap 'rm -f "$TEMP_SCRIPT"' EXIT
+wget -q "$BASE_URL/scripts/install_scripts/uv.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  printf "Error: Failed to download script.\n" >&2
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+printf "Downloading uv.sh script... Done\n"
+
+printf "Running uv installation...\n"
+bash "$TEMP_SCRIPT"
+
+printf "\n"
+printf "================================\n"
+printf "uv installation complete!\n"
+printf "================================\n"
