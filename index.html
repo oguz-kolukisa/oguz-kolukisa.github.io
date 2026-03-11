@@ -323,28 +323,32 @@
             flex: 1;
             padding: 30px;
             text-align: center;
-            border-right: 1px solid var(--border-color);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
         }
 
-        .terminal-right {
-            flex: 1;
-            padding: 30px;
-            text-align: center;
-            overflow-y: auto;
+        .nav-install-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 28px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
         }
 
-        @media (max-width: 768px) {
-            .terminal-body {
-                flex-direction: column;
-            }
-            
-            .terminal-left {
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
+        .nav-install-btn:hover {
+            background: var(--accent);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 20px var(--accent);
         }
 
         .penguin {
@@ -395,12 +399,6 @@
             background: var(--accent);
             animation: blink 1s infinite;
             margin-left: 5px;
-        }
-
-        .dragon-divider {
-            color: var(--text-muted);
-            margin: 30px 0;
-            font-size: 1.5em;
         }
 
         footer {
@@ -921,10 +919,6 @@
                 font-size: 1.1em;
             }
 
-            .terminal-body {
-                padding: 20px 15px;
-            }
-
             .terminal-header {
                 padding: 12px;
                 flex-wrap: wrap;
@@ -938,35 +932,11 @@
                 font-size: 9px;
             }
 
-            .dragon-divider {
-                font-size: 1.3em;
-                margin: 20px 0;
-            }
-
             button {
                 min-height: 44px;
                 min-width: 44px;
                 padding: 12px 18px;
                 font-size: 0.9em;
-            }
-
-            .modal-content {
-                width: 95%;
-                max-height: 85vh;
-            }
-
-            .modal-body {
-                padding: 15px;
-            }
-
-            .endpoint-command-wrapper {
-                flex-direction: column;
-            }
-
-            .copy-btn {
-                width: 100%;
-                padding: 14px 18px;
-                margin-top: 8px;
             }
 
             .header-contacts .status-icon {
@@ -978,8 +948,7 @@
                 padding: 8px;
             }
 
-            .terminal-left,
-            .terminal-right {
+            .terminal-left {
                 padding: 20px 15px;
             }
         }
@@ -997,17 +966,12 @@
                 font-size: 1em;
             }
 
-            .terminal-left,
-            .terminal-right {
+            .terminal-left {
                 padding: 15px 10px;
             }
 
             .penguin {
                 font-size: 7px;
-            }
-
-            .dragon-divider {
-                font-size: 1.1em;
             }
 
             footer {
@@ -1041,7 +1005,7 @@
             </div>
         </div>
         <div class="terminal-body">
-            <!-- LEFT COLUMN: CLI Interface -->
+            <!-- FULL WIDTH: CLI Interface -->
             <div class="terminal-left">
                 <div class="penguin" role="img" aria-label="Penguin ASCII art">
     .--.
@@ -1057,6 +1021,8 @@
                 <h1>OGUZ KOLUKISA</h1>
                 <p class="tagline"><span data-i18n="tagline">// Humanoid Robot</span><span class="cursor"></span></p>
 
+                <a href="/install.html" class="nav-install-btn" data-i18n="navInstall">⚡ QUICK SETUP &amp; INSTALL</a>
+
                 <!-- Walking duck greeting -->
                 <div id="duck-container" role="img" aria-label="Animated duck ASCII art">
                 </div>
@@ -1066,202 +1032,6 @@
                 </footer>
 
                 <div class="terminal-history" id="terminal-history"></div>
-            </div>
-
-            <!-- RIGHT COLUMN: Quick Setup -->
-            <div class="terminal-right">
-                <div class="dragon-divider" data-i18n="quickSetup">[ ⚔ QUICK SETUP ⚔ ]</div>
-
-            <div class="setup-box">
-                <div class="cmd-toggle">
-                    <button class="cmd-toggle-btn active" onclick="setCommandMode('wget')">wget</button>
-                    <button class="cmd-toggle-btn" onclick="setCommandMode('curl')">curl</button>
-                </div>
-
-                <!-- Full Installation -->
-                <div class="endpoint-section">
-                    <h3 data-i18n="fullInstallation">⚡ Full Installation</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install.sh">wget -qO- https://oguz-kolukisa.github.io/install.sh | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Configuration -->
-                <div class="endpoint-section">
-                    <h3 data-i18n="configuration">⚙ Configuration</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/config">wget -qO- https://oguz-kolukisa.github.io/install/config | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Help -->
-                <div class="endpoint-section">
-                    <h3 data-i18n="help">❓ Help</h3>
-                    <div class="endpoint-item">
-                        <div class="endpoint-description" data-i18n="helpDesc">Show all available endpoints</div>
-                        <div class="endpoint-command-wrapper">
-                            <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/help">wget -qO- https://oguz-kolukisa.github.io/help | bash</code>
-                            <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Individual Configurations (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="individualConfigs">🔧 Individual configurations</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description"><span data-i18n="lsdConfig">LSD aliases configuration (ls, ll, lt)</span> <span class="requirement-tag" data-i18n="requiresNerdFonts">⚠ Requires Nerd Fonts</span></div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/lsd">wget -qO- https://oguz-kolukisa.github.io/config/lsd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="tuxsayConfig">Tuxsay terminal configuration (Fortune + Cowsay)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/tuxsay">wget -qO- https://oguz-kolukisa.github.io/config/tuxsay | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="grpaddConfig">Install grpadd command (add users to groups: grpadd -u user1,user2 -g sudo,docker)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/config/grpadd">wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-
-                <!-- Individual Components (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="individualComponents">📦 Individual Components</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description">
-                                    <span data-i18n="basicTools">Basic development tools</span>
-                                </div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/basic">wget -qO- https://oguz-kolukisa.github.io/install/basic | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                                <details class="packages-accordion">
-                                    <summary data-i18n="viewPackages">[view packages]</summary>
-                                    <div class="details-content">
-                                        <div class="endpoint-section" style="margin-bottom: 15px;">
-                                            <h3 data-i18n="devTools">Development Tools</h3>
-                                            <ul class="package-list">
-                                                <li>📦 <code>curl</code> - <span data-i18n="descCurl">Command line tool for transferring data</span></li>
-                                                <li>📦 <code>vim</code> - <span data-i18n="descVim">Text editor</span></li>
-                                                <li>📦 <code>git</code> - <span data-i18n="descGit">Version control system</span></li>
-                                                <li>📦 <code>lsd</code> - <span data-i18n="descLsd">Modern ls replacement with colors and icons</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="endpoint-section" style="margin-bottom: 15px;">
-                                            <h3 data-i18n="buildTools">Build Tools</h3>
-                                            <ul class="package-list">
-                                                <li>📦 <code>cmake</code> - <span data-i18n="descCmake">Cross-platform build system</span></li>
-                                                <li>📦 <code>pkg-config</code> - <span data-i18n="descPkgConfig">Package configuration tool</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="endpoint-section" style="margin-bottom: 15px;">
-                                            <h3 data-i18n="networkTools">Network Tools</h3>
-                                            <ul class="package-list">
-                                                <li>📦 <code>net-tools</code> - <span data-i18n="descNetTools">Network utilities (ifconfig, netstat)</span></li>
-                                                <li>📦 <code>openssh-client</code> - <span data-i18n="descOpenssh">SSH client</span></li>
-                                                <li>📦 <code>nmap</code> - <span data-i18n="descNmap">Network scanner</span></li>
-                                                <li>📦 <code>telnet</code> - <span data-i18n="descTelnet">Telnet client</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="endpoint-section" style="margin-bottom: 15px;">
-                                            <h3 data-i18n="compressionTools">Compression Tools</h3>
-                                            <ul class="package-list">
-                                                <li>📦 <code>zip</code> / <code>unzip</code> - <span data-i18n="descZip">ZIP archive tools</span></li>
-                                                <li>📦 <code>unrar</code> - <span data-i18n="descUnrar">RAR archive extractor</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="endpoint-section" style="margin-bottom: 0;">
-                                            <h3 data-i18n="systemMonitoring">System Monitoring</h3>
-                                            <ul class="package-list">
-                                                <li>📦 <code>htop</code> - <span data-i18n="descHtop">Interactive process viewer</span></li>
-                                                <li>📦 <code>tmux</code> - <span data-i18n="descTmux">Terminal multiplexer</span></li>
-                                                <li>📦 <code>sysstat</code> - <span data-i18n="descSysstat">System performance tools</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </details>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="githubCLI">GitHub CLI (gh)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/github">wget -qO- https://oguz-kolukisa.github.io/install/github | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="anacondaPython">Anaconda Python distribution</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/anaconda">wget -qO- https://oguz-kolukisa.github.io/install/anaconda | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="vsCode">Visual Studio Code</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/code">wget -qO- https://oguz-kolukisa.github.io/install/code | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-
-                <!-- AI Coding Assistants (collapsible) -->
-                <div class="endpoint-section">
-                    <details>
-                        <summary data-i18n="aiCodingAssistants">🤖 AI Coding Assistants</summary>
-                        <div class="details-content">
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="cursorDesc">Cursor agent CLI (terminal; not IDE)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/cursor">wget -qO- https://oguz-kolukisa.github.io/install/ai/cursor | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-                            <div class="endpoint-item">
-                                <div class="endpoint-description"><span data-i18n="claudeCode">Claude Code (AI coding assistant)</span> <span class="requirement-tag" data-i18n="requiresApiKey">⚠ Requires API Key</span></div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/claude">wget -qO- https://oguz-kolukisa.github.io/install/ai/claude | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-                            <div class="endpoint-item">
-                                <div class="endpoint-description" data-i18n="copilotCLI">GitHub Copilot CLI (requires GitHub CLI)</div>
-                                <div class="endpoint-command-wrapper">
-                                    <code class="endpoint-command" data-url="https://oguz-kolukisa.github.io/install/ai/copilot">wget -qO- https://oguz-kolukisa.github.io/install/ai/copilot | bash</code>
-                                    <button class="copy-btn" data-i18n="copy" onclick="copyCurrentCommand(this)">COPY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-            </div>
-            <!-- End of terminal-right -->
             </div>
         </div>
         <div class="terminal-input">
@@ -1500,6 +1270,7 @@
                 shellThemeList: "Available themes: matrix, ubuntu, arch\nUsage: theme <name>",
                 shellThemeSet: "Theme changed to: %s",
                 shellThemeInvalid: "Unknown theme: %s. Available: matrix, ubuntu, arch",
+                navInstall: "⚡ QUICK SETUP & INSTALL",
                 // System stats
                 statsUp: "UP:",
                 statsLoad: "LOAD:"
@@ -1574,6 +1345,7 @@
                 shellThemeList: "Mevcut temalar: matrix, ubuntu, arch\nKullanım: theme <isim>",
                 shellThemeSet: "Tema değiştirildi: %s",
                 shellThemeInvalid: "Bilinmeyen tema: %s. Mevcut: matrix, ubuntu, arch",
+                navInstall: "⚡ HIZLI KURULUM & YÜKLE",
                 // System stats
                 statsUp: "UP:",
                 statsLoad: "LOAD:"
