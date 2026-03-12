@@ -15,7 +15,8 @@ sudo apt-get install -y \
   net-tools openssh-client nmap telnet \
   zip unzip unrar \
   htop tmux sysstat \
-  lsd
+  lsd \
+  fzf ripgrep fd-find
 
 # Verify installation
 if ! command -v git &>/dev/null; then

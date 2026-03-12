@@ -1263,7 +1263,7 @@
                 requiresApiKey: "⚠ Requires API Key",
                 requiresNerdFonts: "⚠ Requires Nerd Fonts",
                 // Shell command responses
-                shellHelp: "Available commands:\n  help      - Show this help message\n  contact   - Show contact information\n  clear     - Clear terminal history\n  whoami    - Display current user\n  man/about - Show manual page\n  theme     - Change terminal theme (matrix, ubuntu, arch, random)\n  weather   - Get current weather\n  github    - Show latest commit\n  sudo      - Try it and see ;)",
+                shellHelp: "Available commands:\n  help      - Show this help message\n  contact   - Show contact information\n  clear     - Clear terminal history\n  whoami    - Display current user\n  man/about - Show manual page\n  skills    - Show technical skills\n  projects  - Show GitHub projects\n  theme     - Change terminal theme (matrix, ubuntu, arch, random)\n  weather   - Get current weather\n  github    - Show latest commit\n  sudo      - Try it and see ;)",
                 shellContact: 'Contact:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  Email    - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
                 shellWhoami: "guest@kolukisa \u2014 Guest User",
                 shellSudo: "User is not in the sudoers file. This incident will be reported.",
@@ -1272,6 +1272,8 @@
                 shellThemeSet: "Theme changed to: %s",
                 shellThemeInvalid: "Unknown theme: %s. Available: matrix, ubuntu, arch",
                 navInstall: "⚡ QUICK SETUP & INSTALL",
+                shellSkills: "Technical Skills\n================\n  AI/ML       - Transformer LLMs, Vision-Language Models, Deep Learning\n  Frameworks  - PyTorch, TensorFlow, HuggingFace, OpenCV\n  MLOps       - Docker, Kubernetes, CI/CD, Model Deployment\n  Languages   - Python, Bash, C++, JavaScript\n  Tools       - Git, Vim, Tmux, Linux, VS Code\n  Cloud       - AWS, GCP, Azure (basics)",
+                shellProjects: 'GitHub Projects\n===============\n  oguz-kolukisa.github.io - <a href="https://github.com/oguz-kolukisa/oguz-kolukisa.github.io" target="_blank">Personal site & Linux setup scripts</a>\n\n  View all projects: <a href="https://github.com/oguz-kolukisa?tab=repositories" target="_blank">github.com/oguz-kolukisa</a>',
                 // System stats
                 statsUp: "UP:",
                 statsLoad: "LOAD:"
@@ -1339,7 +1341,7 @@
                 requiresApiKey: "⚠ API Anahtarı Gerekli",
                 requiresNerdFonts: "⚠ Nerd Fonts Gerekli",
                 // Shell command responses
-                shellHelp: "Kullanılabilir komutlar:\n  help      - Bu yardım mesajını göster\n  contact   - İletişim bilgilerini göster\n  clear     - Terminal geçmişini temizle\n  whoami    - Mevcut kullanıcıyı göster\n  man/about - Kılavuz sayfasını göster\n  theme     - Terminal temasını değiştir (matrix, ubuntu, arch, random)\n  weather   - Hava durumunu al\n  github    - Son commit'i göster\n  sudo      - Dene ve gör ;)",
+                shellHelp: "Kullanılabilir komutlar:\n  help      - Bu yardım mesajını göster\n  contact   - İletişim bilgilerini göster\n  clear     - Terminal geçmişini temizle\n  whoami    - Mevcut kullanıcıyı göster\n  man/about - Kılavuz sayfasını göster\n  skills    - Teknik becerileri göster\n  projects  - GitHub projelerini göster\n  theme     - Terminal temasını değiştir (matrix, ubuntu, arch, random)\n  weather   - Hava durumunu al\n  github    - Son commit'i göster\n  sudo      - Dene ve gör ;)",
                 shellContact: 'İletişim:\n  GitHub   - <a href="https://github.com/oguz-kolukisa" target="_blank">github.com/oguz-kolukisa</a>\n  LinkedIn - <a href="https://www.linkedin.com/in/o%C4%9Fuz-koluk%C4%B1sa-5351681a0/" target="_blank">linkedin.com/in/oguz-kolukisa</a>\n  E-posta  - <a href="mailto:oguzkolukisa@gmail.com">oguzkolukisa@gmail.com</a>',
                 shellWhoami: "guest@kolukisa \u2014 Misafir Kullanıcı",
                 shellSudo: "Kullanıcı sudoers dosyasında değil. Bu olay rapor edilecek.",
@@ -1348,6 +1350,8 @@
                 shellThemeSet: "Tema değiştirildi: %s",
                 shellThemeInvalid: "Bilinmeyen tema: %s. Mevcut: matrix, ubuntu, arch",
                 navInstall: "⚡ HIZLI KURULUM & YÜKLE",
+                shellSkills: "Teknik Beceriler\n================\n  YZ/ML       - Transformer LLM'ler, Görsel-Dil Modelleri, Derin Öğrenme\n  Kütüphaneler - PyTorch, TensorFlow, HuggingFace, OpenCV\n  MLOps       - Docker, Kubernetes, CI/CD, Model Dağıtımı\n  Diller      - Python, Bash, C++, JavaScript\n  Araçlar     - Git, Vim, Tmux, Linux, VS Code\n  Bulut       - AWS, GCP, Azure (temel)",
+                shellProjects: 'GitHub Projeleri\n================\n  oguz-kolukisa.github.io - <a href="https://github.com/oguz-kolukisa/oguz-kolukisa.github.io" target="_blank">Kişisel site ve Linux kurulum betikleri</a>\n\n  Tüm projeler: <a href="https://github.com/oguz-kolukisa?tab=repositories" target="_blank">github.com/oguz-kolukisa</a>',
                 // System stats
                 statsUp: "UP:",
                 statsLoad: "LOAD:"
@@ -1619,6 +1623,14 @@
                 case 'github':
                     appendToHistory(trimmed, 'Fetching latest commit...');
                     fetchGitHubCommit();
+                    audioSystem.play('click');
+                    break;
+                case 'skills':
+                    appendToHistory(trimmed, escapeHtml(i18n[currentLang].shellSkills));
+                    audioSystem.play('click');
+                    break;
+                case 'projects':
+                    appendToHistory(trimmed, i18n[currentLang].shellProjects);
                     audioSystem.play('click');
                     break;
                 default:

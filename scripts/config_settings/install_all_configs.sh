@@ -72,7 +72,20 @@ wget -q "$BASE_URL/scripts/config_settings/sudo_users.sh" -O "$TEMP_DIR/sudo_use
 if [ ! -s "$TEMP_DIR/sudo_users.sh" ]; then
   printf "Error: Failed to download sudo_users.sh\n" >&2; exit 1
 fi
-chmod +x "$TEMP_DIR"/lsd.sh "$TEMP_DIR"/tuxsay.sh "$TEMP_DIR"/sudo_users.sh
+wget -q "$BASE_URL/scripts/config_settings/tmux.sh" -O "$TEMP_DIR/tmux.sh"
+if [ ! -s "$TEMP_DIR/tmux.sh" ]; then
+  printf "Error: Failed to download tmux.sh\n" >&2; exit 1
+fi
+wget -q "$BASE_URL/scripts/config_settings/gitconfig.sh" -O "$TEMP_DIR/gitconfig.sh"
+if [ ! -s "$TEMP_DIR/gitconfig.sh" ]; then
+  printf "Error: Failed to download gitconfig.sh\n" >&2; exit 1
+fi
+wget -q "$BASE_URL/scripts/config_settings/vimconfig.sh" -O "$TEMP_DIR/vimconfig.sh"
+if [ ! -s "$TEMP_DIR/vimconfig.sh" ]; then
+  printf "Error: Failed to download vimconfig.sh\n" >&2; exit 1
+fi
+chmod +x "$TEMP_DIR"/lsd.sh "$TEMP_DIR"/tuxsay.sh "$TEMP_DIR"/sudo_users.sh \
+         "$TEMP_DIR"/tmux.sh "$TEMP_DIR"/gitconfig.sh "$TEMP_DIR"/vimconfig.sh
 
 printf "\n--- LSD configuration ---\n"
 bash "$TEMP_DIR/lsd.sh"
@@ -82,6 +95,15 @@ bash "$TEMP_DIR/tuxsay.sh"
 
 printf "\n--- grpadd shell function ---\n"
 bash "$TEMP_DIR/sudo_users.sh"
+
+printf "\n--- tmux configuration ---\n"
+bash "$TEMP_DIR/tmux.sh"
+
+printf "\n--- git configuration ---\n"
+bash "$TEMP_DIR/gitconfig.sh"
+
+printf "\n--- vim configuration ---\n"
+bash "$TEMP_DIR/vimconfig.sh"
 
 printf "\n================================\n"
 printf "All configurations installed.\n"
