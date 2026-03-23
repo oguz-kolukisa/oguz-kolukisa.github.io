@@ -45,6 +45,10 @@ _dl "scripts/install_scripts/ai/claude.sh"      "$SCRIPT_DIR/install_scripts/ai/
 _dl "scripts/install_scripts/anaconda.sh"       "$SCRIPT_DIR/install_scripts/anaconda.sh"
 _dl "scripts/install_scripts/uv.sh"             "$SCRIPT_DIR/install_scripts/uv.sh"
 _dl "scripts/install_scripts/code.sh"           "$SCRIPT_DIR/install_scripts/code.sh"
+_dl "scripts/install_scripts/neovim.sh"         "$SCRIPT_DIR/install_scripts/neovim.sh"
+_dl "scripts/install_scripts/docker.sh"         "$SCRIPT_DIR/install_scripts/docker.sh"
+_dl "scripts/install_scripts/nvm.sh"            "$SCRIPT_DIR/install_scripts/nvm.sh"
+_dl "scripts/install_scripts/neofetch.sh"       "$SCRIPT_DIR/install_scripts/neofetch.sh"
 printf "Download complete!\n"
 
 chmod +x "$SCRIPT_DIR/install_scripts/"*.sh "$SCRIPT_DIR/install_scripts/ai/"*.sh
@@ -151,6 +155,54 @@ if [[ "$install_code" =~ ^[Yy]$ ]]; then
   bash "$SCRIPT_DIR/install_scripts/code.sh"
 else
   printf "Skipping Visual Studio Code installation.\n"
+fi
+
+# Ask to install Neovim
+if [ "$AUTO_YES" = true ]; then
+  install_neovim="y"
+else
+  read -p "Do you want to install Neovim? (y/n): " install_neovim </dev/tty
+fi
+if [[ "$install_neovim" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/neovim.sh"
+else
+  printf "Skipping Neovim installation.\n"
+fi
+
+# Ask to install Docker
+if [ "$AUTO_YES" = true ]; then
+  install_docker="y"
+else
+  read -p "Do you want to install Docker? (y/n): " install_docker </dev/tty
+fi
+if [[ "$install_docker" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/docker.sh"
+else
+  printf "Skipping Docker installation.\n"
+fi
+
+# Ask to install nvm
+if [ "$AUTO_YES" = true ]; then
+  install_nvm="y"
+else
+  read -p "Do you want to install nvm (Node Version Manager)? (y/n): " install_nvm </dev/tty
+fi
+if [[ "$install_nvm" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/nvm.sh"
+else
+  printf "Skipping nvm installation.\n"
+fi
+
+# Ask to install neofetch
+if [ "$AUTO_YES" = true ]; then
+  install_neofetch="y"
+else
+  read -p "Do you want to install neofetch (system info display)? (y/n): " install_neofetch </dev/tty
+fi
+if [[ "$install_neofetch" =~ ^[Yy]$ ]]; then
+  bash "$SCRIPT_DIR/install_scripts/neofetch.sh"
+else
+  printf "Skipping neofetch installation.\n"
 fi
 
 # Apply all configurations (LSD, Tuxsay, grpadd) via single config installer

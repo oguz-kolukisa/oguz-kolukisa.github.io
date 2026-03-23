@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -euo pipefail
+
+BASE_URL="https://oguz-kolukisa.github.io"
+TEMP_SCRIPT=$(mktemp)
+wget -q "$BASE_URL/scripts/install_scripts/nvm.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  printf "Error: Failed to download script.\n" >&2
+  rm -f "$TEMP_SCRIPT"
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+bash "$TEMP_SCRIPT"
+rm -f "$TEMP_SCRIPT"
+printf "================================\n"
+printf "nvm installation complete!\n"
+printf "================================\n"
