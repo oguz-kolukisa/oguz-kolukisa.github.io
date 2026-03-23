@@ -86,7 +86,7 @@ fi
 printf "\n--- AI Coding Assistants ---\n"
 
 if [ "$AUTO_YES" = true ]; then
-  install_cursor="y"
+  install_cursor="n"
 else
   read -p "Do you want to install Cursor agent CLI? (y/n): " install_cursor </dev/tty
 fi
@@ -108,7 +108,7 @@ else
 fi
 
 if [ "$AUTO_YES" = true ]; then
-  install_copilot="y"
+  install_copilot="n"
 else
   read -p "Do you want to install GitHub Copilot CLI? (y/n): " install_copilot </dev/tty
 fi
@@ -123,7 +123,7 @@ printf "\n--- Python Package Managers ---\n"
 
 # Ask to install Anaconda
 if [ "$AUTO_YES" = true ]; then
-  install_anaconda="y"
+  install_anaconda="n"
 else
   read -p "Do you want to install Anaconda? (y/n): " install_anaconda </dev/tty
 fi
