@@ -73,3 +73,20 @@ EOF
 
 printf "tmux configuration complete!\n"
 printf "Run 'tmux source ~/.tmux.conf' to apply in a running session.\n"
+
+# Add tmux shell alias to shared config
+CONFIG_FILE="${OGUZ_SHELL_CONFIG:-$HOME/.config/oguz-setup/shell-config.sh}"
+ALIAS_MARKER="# ========== TMUX ALIAS CONFIG START =========="
+
+if grep -qF "$ALIAS_MARKER" "$CONFIG_FILE" 2>/dev/null; then
+  printf "tmux alias config already present. Skipping.\n"
+else
+  printf "Adding tmux alias to %s...\n" "$CONFIG_FILE"
+  cat >> "$CONFIG_FILE" <<'ALIASEOF'
+
+# ========== TMUX ALIAS CONFIG START ==========
+alias tat='tmux attach -t'
+# ========== END ==========
+ALIASEOF
+  printf "tmux alias config added.\n"
+fi
