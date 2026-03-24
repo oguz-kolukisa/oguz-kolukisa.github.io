@@ -11,6 +11,8 @@ if [ -d "$HOME/.nvm" ] && [ -s "$HOME/.nvm/nvm.sh" ]; then
   exit 0
 fi
 
+NVM_FALLBACK_VERSION="v0.40.1"
+
 printf "Installing nvm (Node Version Manager)...\n"
 
 # Get latest nvm version tag
@@ -18,7 +20,7 @@ NVM_VERSION=$(wget -qO- https://api.github.com/repos/nvm-sh/nvm/releases/latest 
   | grep '"tag_name"' | sed 's/.*"tag_name": "\(.*\)".*/\1/')
 
 if [ -z "$NVM_VERSION" ]; then
-  NVM_VERSION="v0.40.1"
+  NVM_VERSION="$NVM_FALLBACK_VERSION"
   printf "Could not fetch latest version, using fallback: %s\n" "$NVM_VERSION"
 fi
 
