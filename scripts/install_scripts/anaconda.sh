@@ -7,12 +7,13 @@ if command -v conda &>/dev/null; then
   exit 0
 fi
 
+ANACONDA_VERSION="2025.12-1"
+
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
 printf "Downloading Anaconda installer...\n"
-# NOTE: Update this version string when a new Anaconda release is available.
-wget -q "https://repo.anaconda.com/archive/Anaconda3-2025.12-1-Linux-x86_64.sh" -O "$TEMP_DIR/anaconda.sh"
+wget -q "https://repo.anaconda.com/archive/Anaconda3-${ANACONDA_VERSION}-Linux-x86_64.sh" -O "$TEMP_DIR/anaconda.sh"
 printf "Download complete!\n"
 
 printf "Installing Anaconda (this may take a few minutes)...\n"

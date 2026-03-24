@@ -303,6 +303,55 @@ When editing `index.html`:
 - **Do not use `echo`** for output in scripts — use `printf` for consistent cross-platform behavior
 - **Do not skip the `[ ! -s "$TEMP_SCRIPT" ]` validation** in entry point wrappers
 
+## Clean Code Standards (Uncle Bob)
+
+This project follows Robert C. Martin's Clean Code principles. **After every code change, verify the code adheres to these standards. If it does not, refactor until it does.**
+
+### Functions
+- **Small**: Each function/script should do one thing only. Keep functions short and focused.
+- **One level of abstraction**: Don't mix high-level orchestration with low-level details in the same function.
+- **Minimal arguments**: Prefer fewer parameters. Use well-named variables instead of positional magic.
+- **No side effects**: Functions should do what their name says and nothing else.
+- **Command-Query Separation**: A function either performs an action or returns data, not both.
+
+### Naming
+- **Intention-revealing names**: Variable and function names must clearly describe their purpose (`TEMP_SCRIPT`, `CONFIG_FILE`, `_dl`, `install_basics` — not `x`, `tmp`, `f`).
+- **No abbreviations**: Avoid cryptic short names. `SEPARATOR_START` is better than `SEP_S`.
+- **Consistent vocabulary**: Use the same word for the same concept everywhere (e.g., always `TEMP_SCRIPT` for temporary downloaded scripts, always `TARGET` for the config write destination).
+
+### DRY (Don't Repeat Yourself)
+- **Extract repeated patterns into functions**: If 3+ scripts share the same boilerplate, extract it into a reusable function.
+- **Entry point wrappers** use a shared `download_and_run` function pattern — do not duplicate download/validate/execute/cleanup logic across files.
+- **Prompt-and-install blocks** in `install.sh` use the `prompt_and_run` helper — do not repeat the if/else AUTO_YES pattern inline.
+- **Download-and-validate blocks** in `install_all_configs.sh` use the `_dl_config` helper — do not repeat wget/validate for each config script.
+
+### Consistency
+- **Always use `trap` for cleanup** — never use manual `rm -f` after execution. Trap guarantees cleanup even on errors.
+- **Always use `printf`** — never use `echo` for output (cross-platform consistency).
+- **Always use `set -euo pipefail`** — every script starts with this.
+- **Always validate downloads** — `[ ! -s "$TEMP_SCRIPT" ]` check after every wget.
+- **Consistent error format** — all errors use `printf "Error: ...\n" >&2`.
+- **Consistent grep flags** — use `grep -qF` for fixed-string matching, `grep -q` for regex.
+
+### Constants Over Magic Values
+- **Extract version numbers** into named constants at the top of the script (e.g., `ANACONDA_VERSION`, `NVM_FALLBACK_VERSION`).
+- **Use `BASE_URL` variable** — never hardcode the site URL inline.
+
+### Boy Scout Rule
+- Leave every file cleaner than you found it. When touching a file, fix any nearby violations of these standards.
+
+### Post-Write Checklist
+After writing or modifying any code, verify:
+1. No duplicated boilerplate (DRY)
+2. Functions do one thing (SRP)
+3. Names reveal intent
+4. No `echo` usage (use `printf`)
+5. Cleanup uses `trap`, not manual `rm`
+6. No magic values — constants are named
+7. Consistent patterns across similar files
+8. `set -euo pipefail` header present
+9. Download validation present for all wget calls
+
 ## Requirements
 
 Target environment for all scripts:

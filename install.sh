@@ -35,7 +35,27 @@ _dl() {
   fi
 }
 
-# Download install scripts only (config is applied via single config installer at the end)
+# Helper: prompt user and run a script if accepted
+prompt_and_run() {
+  local prompt_text="$1"
+  local script_path="$2"
+  local skip_label="$3"
+  local answer
+
+  if [ "$AUTO_YES" = true ]; then
+    answer="y"
+  else
+    read -p "$prompt_text (y/n): " answer </dev/tty
+  fi
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    bash "$script_path"
+  else
+    printf "Skipping %s.\n" "$skip_label"
+  fi
+}
+
+# Download install scripts
 printf "Downloading installation scripts...\n"
 _dl "scripts/install_scripts/basic.sh"          "$SCRIPT_DIR/install_scripts/basic.sh"
 _dl "scripts/install_scripts/github.sh"         "$SCRIPT_DIR/install_scripts/github.sh"
@@ -58,154 +78,47 @@ sudo apt-get update -qq >/dev/null 2>&1
 sudo apt-get upgrade -y -qq >/dev/null 2>&1
 printf "System packages updated!\n"
 
-# Ask to install basic command files
-if [ "$AUTO_YES" = true ]; then
-  install_basics="y"
-else
-  read -p "Do you want to install basic command files (curl, vim, git)? (y/n): " install_basics </dev/tty
-fi
-if [[ "$install_basics" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/basic.sh"
-else
-  printf "Skipping basic command files installation.\n"
-fi
+prompt_and_run "Do you want to install basic command files (curl, vim, git)?" \
+  "$SCRIPT_DIR/install_scripts/basic.sh" "basic command files installation"
 
-# Ask to install GitHub CLI
-if [ "$AUTO_YES" = true ]; then
-  install_gh="y"
-else
-  read -p "Do you want to install GitHub CLI (gh)? (y/n): " install_gh </dev/tty
-fi
-if [[ "$install_gh" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/github.sh"
-else
-  printf "Skipping GitHub CLI installation.\n"
-fi
+prompt_and_run "Do you want to install GitHub CLI (gh)?" \
+  "$SCRIPT_DIR/install_scripts/github.sh" "GitHub CLI installation"
 
-# --- AI Coding Assistants (Cursor, Claude Code, Copilot CLI) ---
 printf "\n--- AI Coding Assistants ---\n"
 
-if [ "$AUTO_YES" = true ]; then
-  install_cursor="y"
-else
-  read -p "Do you want to install Cursor agent CLI? (y/n): " install_cursor </dev/tty
-fi
-if [[ "$install_cursor" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/ai/cursor.sh"
-else
-  printf "Skipping Cursor installation.\n"
-fi
+prompt_and_run "Do you want to install Cursor agent CLI?" \
+  "$SCRIPT_DIR/install_scripts/ai/cursor.sh" "Cursor installation"
 
-if [ "$AUTO_YES" = true ]; then
-  install_claude="y"
-else
-  read -p "Do you want to install Claude Code (AI coding assistant)? (y/n): " install_claude </dev/tty
-fi
-if [[ "$install_claude" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/ai/claude.sh"
-else
-  printf "Skipping Claude Code installation.\n"
-fi
+prompt_and_run "Do you want to install Claude Code (AI coding assistant)?" \
+  "$SCRIPT_DIR/install_scripts/ai/claude.sh" "Claude Code installation"
 
-if [ "$AUTO_YES" = true ]; then
-  install_copilot="y"
-else
-  read -p "Do you want to install GitHub Copilot CLI? (y/n): " install_copilot </dev/tty
-fi
-if [[ "$install_copilot" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/ai/copilot.sh"
-else
-  printf "Skipping GitHub Copilot CLI installation.\n"
-fi
+prompt_and_run "Do you want to install GitHub Copilot CLI?" \
+  "$SCRIPT_DIR/install_scripts/ai/copilot.sh" "GitHub Copilot CLI installation"
 
-# --- Python Package Managers ---
 printf "\n--- Python Package Managers ---\n"
 
-# Ask to install Anaconda
-if [ "$AUTO_YES" = true ]; then
-  install_anaconda="y"
-else
-  read -p "Do you want to install Anaconda? (y/n): " install_anaconda </dev/tty
-fi
-if [[ "$install_anaconda" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/anaconda.sh"
-else
-  printf "Skipping Anaconda installation.\n"
-fi
+prompt_and_run "Do you want to install Anaconda?" \
+  "$SCRIPT_DIR/install_scripts/anaconda.sh" "Anaconda installation"
 
-# Ask to install uv
-if [ "$AUTO_YES" = true ]; then
-  install_uv="y"
-else
-  read -p "Do you want to install uv (fast Python package manager)? (y/n): " install_uv </dev/tty
-fi
-if [[ "$install_uv" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/uv.sh"
-else
-  printf "Skipping uv installation.\n"
-fi
+prompt_and_run "Do you want to install uv (fast Python package manager)?" \
+  "$SCRIPT_DIR/install_scripts/uv.sh" "uv installation"
 
-# Ask to install VS Code
-if [ "$AUTO_YES" = true ]; then
-  install_code="y"
-else
-  read -p "Do you want to install Visual Studio Code? (y/n): " install_code </dev/tty
-fi
-if [[ "$install_code" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/code.sh"
-else
-  printf "Skipping Visual Studio Code installation.\n"
-fi
+prompt_and_run "Do you want to install Visual Studio Code?" \
+  "$SCRIPT_DIR/install_scripts/code.sh" "Visual Studio Code installation"
 
-# Ask to install Neovim
-if [ "$AUTO_YES" = true ]; then
-  install_neovim="y"
-else
-  read -p "Do you want to install Neovim? (y/n): " install_neovim </dev/tty
-fi
-if [[ "$install_neovim" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/neovim.sh"
-else
-  printf "Skipping Neovim installation.\n"
-fi
+prompt_and_run "Do you want to install Neovim?" \
+  "$SCRIPT_DIR/install_scripts/neovim.sh" "Neovim installation"
 
-# Ask to install Docker
-if [ "$AUTO_YES" = true ]; then
-  install_docker="y"
-else
-  read -p "Do you want to install Docker? (y/n): " install_docker </dev/tty
-fi
-if [[ "$install_docker" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/docker.sh"
-else
-  printf "Skipping Docker installation.\n"
-fi
+prompt_and_run "Do you want to install Docker?" \
+  "$SCRIPT_DIR/install_scripts/docker.sh" "Docker installation"
 
-# Ask to install nvm
-if [ "$AUTO_YES" = true ]; then
-  install_nvm="y"
-else
-  read -p "Do you want to install nvm (Node Version Manager)? (y/n): " install_nvm </dev/tty
-fi
-if [[ "$install_nvm" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/nvm.sh"
-else
-  printf "Skipping nvm installation.\n"
-fi
+prompt_and_run "Do you want to install nvm (Node Version Manager)?" \
+  "$SCRIPT_DIR/install_scripts/nvm.sh" "nvm installation"
 
-# Ask to install neofetch
-if [ "$AUTO_YES" = true ]; then
-  install_neofetch="y"
-else
-  read -p "Do you want to install neofetch (system info display)? (y/n): " install_neofetch </dev/tty
-fi
-if [[ "$install_neofetch" =~ ^[Yy]$ ]]; then
-  bash "$SCRIPT_DIR/install_scripts/neofetch.sh"
-else
-  printf "Skipping neofetch installation.\n"
-fi
+prompt_and_run "Do you want to install neofetch (system info display)?" \
+  "$SCRIPT_DIR/install_scripts/neofetch.sh" "neofetch installation"
 
-# Apply all configurations (LSD, Tuxsay, grpadd) via single config installer
+# Apply all configurations via single config installer
 printf "\n--- Configurations ---\n"
 TEMP_CONFIG="$TEMP_DIR/install_all_configs.sh"
 _dl "scripts/config_settings/install_all_configs.sh" "$TEMP_CONFIG"

@@ -59,33 +59,25 @@ export OGUZ_SHELL_CONFIG="$CONFIG_FILE"
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
+# Helper: download and validate a config script
+_dl_config() {
+  local script_name="$1"
+  local dest="$TEMP_DIR/$script_name"
+  wget -q "$BASE_URL/scripts/config_settings/$script_name" -O "$dest"
+  if [ ! -s "$dest" ]; then
+    printf "Error: Failed to download %s\n" "$script_name" >&2
+    exit 1
+  fi
+  chmod +x "$dest"
+}
+
 printf "Downloading config scripts...\n"
-wget -q "$BASE_URL/scripts/config_settings/lsd.sh" -O "$TEMP_DIR/lsd.sh"
-if [ ! -s "$TEMP_DIR/lsd.sh" ]; then
-  printf "Error: Failed to download lsd.sh\n" >&2; exit 1
-fi
-wget -q "$BASE_URL/scripts/config_settings/tuxsay.sh" -O "$TEMP_DIR/tuxsay.sh"
-if [ ! -s "$TEMP_DIR/tuxsay.sh" ]; then
-  printf "Error: Failed to download tuxsay.sh\n" >&2; exit 1
-fi
-wget -q "$BASE_URL/scripts/config_settings/sudo_users.sh" -O "$TEMP_DIR/sudo_users.sh"
-if [ ! -s "$TEMP_DIR/sudo_users.sh" ]; then
-  printf "Error: Failed to download sudo_users.sh\n" >&2; exit 1
-fi
-wget -q "$BASE_URL/scripts/config_settings/tmux.sh" -O "$TEMP_DIR/tmux.sh"
-if [ ! -s "$TEMP_DIR/tmux.sh" ]; then
-  printf "Error: Failed to download tmux.sh\n" >&2; exit 1
-fi
-wget -q "$BASE_URL/scripts/config_settings/gitconfig.sh" -O "$TEMP_DIR/gitconfig.sh"
-if [ ! -s "$TEMP_DIR/gitconfig.sh" ]; then
-  printf "Error: Failed to download gitconfig.sh\n" >&2; exit 1
-fi
-wget -q "$BASE_URL/scripts/config_settings/vimconfig.sh" -O "$TEMP_DIR/vimconfig.sh"
-if [ ! -s "$TEMP_DIR/vimconfig.sh" ]; then
-  printf "Error: Failed to download vimconfig.sh\n" >&2; exit 1
-fi
-chmod +x "$TEMP_DIR"/lsd.sh "$TEMP_DIR"/tuxsay.sh "$TEMP_DIR"/sudo_users.sh \
-         "$TEMP_DIR"/tmux.sh "$TEMP_DIR"/gitconfig.sh "$TEMP_DIR"/vimconfig.sh
+_dl_config "lsd.sh"
+_dl_config "tuxsay.sh"
+_dl_config "sudo_users.sh"
+_dl_config "tmux.sh"
+_dl_config "gitconfig.sh"
+_dl_config "vimconfig.sh"
 
 printf "\n--- LSD configuration ---\n"
 bash "$TEMP_DIR/lsd.sh"
