@@ -50,6 +50,11 @@ CONFIGURATION:
     wget -qO- https://oguz-kolukisa.github.io/config/grpadd | bash
     Then use:  grpadd -u user1,user2 -g sudo,docker
 
+  GUI Toggle (stop-gui / start-gui aliases):
+    wget -qO- https://oguz-kolukisa.github.io/config/gui-toggle | bash
+    Then use:  stop-gui  (disable desktop, free GPU)
+               start-gui (re-enable desktop)
+
 HELP & INFO:
 ────────────
   Show this help:

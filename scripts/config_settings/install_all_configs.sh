@@ -78,6 +78,7 @@ _dl_config "sudo_users.sh"
 _dl_config "tmux.sh"
 _dl_config "gitconfig.sh"
 _dl_config "vimconfig.sh"
+_dl_config "gui_toggle.sh"
 
 printf "\n--- LSD configuration ---\n"
 bash "$TEMP_DIR/lsd.sh"
@@ -96,6 +97,9 @@ bash "$TEMP_DIR/gitconfig.sh"
 
 printf "\n--- vim configuration ---\n"
 bash "$TEMP_DIR/vimconfig.sh"
+
+printf "\n--- GUI toggle aliases ---\n"
+bash "$TEMP_DIR/gui_toggle.sh"
 
 printf "\n================================\n"
 printf "All configurations installed.\n"

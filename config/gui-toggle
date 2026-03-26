@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Base URL for downloading scripts
+BASE_URL="https://oguz-kolukisa.github.io"
+
+printf "Downloading gui_toggle config script...\n"
+TEMP_SCRIPT=$(mktemp)
+trap 'rm -f "$TEMP_SCRIPT"' EXIT
+wget -q "$BASE_URL/scripts/config_settings/gui_toggle.sh" -O "$TEMP_SCRIPT"
+if [ ! -s "$TEMP_SCRIPT" ]; then
+  printf "Error: Failed to download script.\n" >&2
+  exit 1
+fi
+chmod +x "$TEMP_SCRIPT"
+printf "Downloading gui_toggle config script... Done\n"
+
+# Use shared config if present
+[ -f "${HOME}/.config/oguz-setup/shell-config.sh" ] && export OGUZ_SHELL_CONFIG="${HOME}/.config/oguz-setup/shell-config.sh"
+
+printf "Installing GUI toggle aliases...\n"
+bash "$TEMP_SCRIPT"
+
+printf "\n"
+printf "================================\n"
+printf "GUI toggle config complete!\n"
+printf "Commands: stop-gui / start-gui\n"
+printf "Restart your shell or run:\n"
+printf "  source ~/.bashrc\n"
+printf "================================\n"
